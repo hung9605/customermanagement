@@ -1,4 +1,4 @@
-package com.app.customermanagement.dto;
+package com.app.customermanagement.dto.model;
 
 public class ScheduleDto {
 
