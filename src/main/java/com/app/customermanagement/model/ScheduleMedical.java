@@ -22,5 +22,16 @@ public class ScheduleMedical {
     String timeRegister;
     String dateRegister;
     Integer status;
+    
+    
+    public ScheduleMedical(Integer id) {
+		super();
+		this.id = id;
+	}
+
+
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinColumn(columnDefinition = "customer_id")
+    Customer customer;
 
 }

@@ -7,8 +7,14 @@ public class ResponseBean {
     private Object data;
     private String message;
     private AppHttpStatus status = AppHttpStatus.SUCCESS;
+    
+    
 
-    public Object getData() {
+    public ResponseBean() {
+		super();
+	}
+
+	public Object getData() {
         return data;
     }
 
@@ -31,4 +37,11 @@ public class ResponseBean {
     public void setStatus(AppHttpStatus status) {
         this.status = status;
     }
+
+	public ResponseBean(Object data) {
+		super();
+		this.data = data;
+	}
+    
+    
 }

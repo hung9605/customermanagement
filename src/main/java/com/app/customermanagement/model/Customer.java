@@ -1,6 +1,8 @@
 package com.app.customermanagement.model;
 
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +26,7 @@ public class Customer extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String firstName;
+    Date dateOfBirth;
     String midName;
     String lastName;
     String phoneNumber;

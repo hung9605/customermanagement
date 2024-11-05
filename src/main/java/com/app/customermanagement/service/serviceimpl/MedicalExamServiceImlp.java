@@ -1,6 +1,8 @@
 package com.app.customermanagement.service.serviceimpl;
 
+import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
+import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.service.MedicalExamService;
 
 import java.util.List;
@@ -11,18 +13,23 @@ public class MedicalExamServiceImlp implements MedicalExamService {
         return null;
     }
 
-    @Override
-    public MedicalExamination getMedicalExamination(Integer medicalExaminationId) {
-        return null;
-    }
-
-    @Override
-    public List<MedicalExamination> getAllMedicalExaminations() {
-        return List.of();
-    }
-
+ 
     @Override
     public MedicalExamination updateMedicalExamination(MedicalExamination medicalExamination) {
         return null;
     }
+
+
+	@Override
+	public List<MedicalExamination> getListByCustormer(Customer customer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public MedicalExamination getByIdSchedule(ScheduleMedical sMedical) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

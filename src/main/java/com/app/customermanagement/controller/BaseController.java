@@ -13,8 +13,17 @@ public class BaseController {
 
     public static final String ERROR = "error";
     public static final String RESPONSE_NULL = "Response null!";
+    
+    /**
+     * logger
+     */
     public final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    
+    /**
+     * @param responseBean
+     * @return
+     */
     protected ResponseEntity<ResponseBean> response(ResponseBean responseBean) {
         if (responseBean == null) {
             throw new IllegalArgumentException(RESPONSE_NULL);
@@ -22,6 +31,12 @@ public class BaseController {
         return new ResponseEntity<ResponseBean>(responseBean, HttpStatus.OK);
     }
 
+    /**
+     * exception
+     * @param responseBean
+     * @param exception
+     * @return
+     */
     protected ResponseEntity<ResponseBean> responseError(ResponseBean responseBean, Exception exception) {
         logger.error(ERROR, exception);
         responseBean.setData(null);

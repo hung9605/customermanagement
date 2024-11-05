@@ -1,4 +1,43 @@
 package com.app.customermanagement.controller;
 
-public class MedicalExamController {
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.customermanagement.dto.response.ResponseBean;
+import com.app.customermanagement.model.MedicalExamination;
+import com.app.customermanagement.model.ScheduleMedical;
+import com.app.customermanagement.service.MedicalExamService;
+import com.app.customermanagement.service.serviceimpl.ScheduleServiceImpl;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+@RestController
+@RequestMapping("/medicalexam")
+@CrossOrigin("*")
+public class MedicalExamController extends BaseController{
+	
+	private final MedicalExamService medicalExamService;
+	
+	public ResponseEntity<?> list(){
+		return response(null);
+	}
+	
+	@PostMapping("/add")
+	public ResponseEntity<?> add(@RequestBody MedicalExamination medicalExamination){
+		return response(new ResponseBean(medicalExamService.addMedicalExamination(medicalExamination)));
+	}
+	
+	@GetMapping("getbyidschedule")
+	public ResponseEntity<?> getByIdSchedule(@RequestParam(name="idSchedule") int idSchedule){
+		return response(new ResponseBean(medicalExamService.getByIdSchedule(new ScheduleMedical(idSchedule))));
+	}
+	
 }
