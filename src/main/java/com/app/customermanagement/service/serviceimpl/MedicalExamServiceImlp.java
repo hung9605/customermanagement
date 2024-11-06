@@ -7,6 +7,9 @@ import com.app.customermanagement.service.MedicalExamService;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class MedicalExamServiceImlp implements MedicalExamService {
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {

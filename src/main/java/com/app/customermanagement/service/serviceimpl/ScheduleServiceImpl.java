@@ -6,6 +6,9 @@ import com.app.customermanagement.service.ScheduleSevice;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ScheduleServiceImpl implements ScheduleSevice {
 
 	@Override

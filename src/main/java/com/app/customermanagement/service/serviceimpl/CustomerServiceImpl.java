@@ -2,10 +2,13 @@ package com.app.customermanagement.service.serviceimpl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.app.customermanagement.dto.model.CustomerDto;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.service.CustomerService;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer addCustomer(CustomerDto customer) {
