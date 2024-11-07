@@ -29,8 +29,9 @@ public class ScheduleController extends BaseController {
 	
 	@GetMapping("/listname")
 	public ResponseEntity<?> listname(@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "name") String name){
-		return response(new ResponseBean(serviceImpl.getListByName(name)));
+			@RequestParam(name = "name") String name
+			,@RequestParam(name = "date") String date){
+		return response(new ResponseBean(serviceImpl.getListByName(name, date)));
 	}
 	
 	@PostMapping("/add")

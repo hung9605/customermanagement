@@ -9,7 +9,7 @@ public interface ScheduleSevice {
     ScheduleMedical register(ScheduleMedical scheduleMedical);
     List<ScheduleMedical> getListByDay(String day);
     ScheduleMedical updateScheduleMedical(ScheduleMedical scheduleMedical);
-    List<ScheduleMedical> getListByName( String name);
+    List<ScheduleMedical> getListByName(String name, String day);
     List<ScheduleDto> getListRegister();
     List<ScheduleDto> getListHistory(String date);
 }
