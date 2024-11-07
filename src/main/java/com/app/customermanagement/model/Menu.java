@@ -19,7 +19,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "menu")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Menu {
+public class Menu extends BaseEntity {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

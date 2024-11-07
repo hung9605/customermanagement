@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "schedule_medical")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ScheduleMedical {
+public class ScheduleMedical extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

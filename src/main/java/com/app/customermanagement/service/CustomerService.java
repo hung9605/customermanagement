@@ -14,5 +14,5 @@ public interface CustomerService {
     List<Customer> searchCustomerLastName(String name);
     List<Customer> searchCustomerFirstNameOrLastName(String name);
     List<Customer> searchCustomerFirstNameOrMidNameOrLastName(String name);
-    List<Customer> searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(String firstName, String midName, String lasrName, String phoneNumber);
+    List<Customer> searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(String firstName, String midName, String lastName, String phoneNumber);
 }
