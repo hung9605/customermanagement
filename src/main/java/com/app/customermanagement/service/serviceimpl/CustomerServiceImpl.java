@@ -56,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<Customer> searchCustomerFirstNameOrLastName(String name) {
 		// TODO Auto-generated method stub
-		return customerRepository.findByLastNameContainingOrFirstNameContainning(name, name);
+		return customerRepository.findByLastNameContainingOrFirstNameContaining(name, name);
 	}
 
 	@Override
