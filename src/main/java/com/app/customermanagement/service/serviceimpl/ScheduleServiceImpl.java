@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,9 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	public ScheduleMedical register(ScheduleMedical scheduleMedical) {
 		scheduleMedical.setCreatedAt(new Date());
 		scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
+		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
 		scheduleMedical.setStatus(0);
+		scheduleMedical.setDateRegister(dateRegister);
 		return scheduleMedicalRepository.save(scheduleMedical);
 	}
 
