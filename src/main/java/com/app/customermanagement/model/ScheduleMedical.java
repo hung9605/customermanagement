@@ -30,7 +30,7 @@ public class ScheduleMedical extends BaseEntity {
 	}
 
 
-	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(columnDefinition = "customer_id")
     Customer customer;
 
