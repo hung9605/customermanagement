@@ -10,6 +10,6 @@ public class CommonConstant {
 	public static final Integer LENGHT_ACCOUNT = 12;
 	public static final String DATE_PATTERN = "yyyy-MM-dd";
 	public static final Integer EXAMINED = 1;
-	public static final Integer NOT_EXAMINED = 0;
-	public static final Integer NO_EXAMINED = 2;
+	public static final Integer NO_EXAMINED = 0;
+	public static final Integer NOT_EXAMINED = 2;
 }

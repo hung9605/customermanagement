@@ -27,7 +27,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		scheduleMedical.setCreatedAt(new Date());
 		scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
-		scheduleMedical.setStatus(0);
+		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
 		scheduleMedical.setDateRegister(dateRegister);
 		return scheduleMedicalRepository.save(scheduleMedical);
 	}
@@ -41,6 +41,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	@Override
 	public ScheduleMedical updateScheduleMedical(ScheduleMedical scheduleMedical) {
 		// TODO Auto-generated method stub
+		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
 		return scheduleMedicalRepository.save(scheduleMedical);
 	}
 
@@ -53,7 +54,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	@Override
 	public List<ScheduleDto> getListRegister() {
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN, new Date());
-		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(dateRegister, CommonConstant.NOT_EXAMINED);
+		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(dateRegister, CommonConstant.NO_EXAMINED);
 		return new ScheduleMedicalMapperImpl().mapToDtos(sMedicals);
 	}
 

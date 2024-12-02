@@ -38,6 +38,11 @@ public class ScheduleController extends BaseController {
 	public ResponseEntity<?> add(@RequestBody ScheduleMedical sMedical){
 		return response(new ResponseBean(serviceImpl.register(sMedical)));
 	}
+
+	@PostMapping("/update")
+	public ResponseEntity<?> update(@RequestBody ScheduleMedical sMedical){
+		return response(new ResponseBean(serviceImpl.register(sMedical)));
+	}
 	
 	@GetMapping("/listregister")
 	public ResponseEntity<?> listRegister(){

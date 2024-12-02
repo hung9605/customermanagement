@@ -36,7 +36,7 @@ public class MedicalExamController extends BaseController{
 	}
 	
 	@GetMapping("getbyidschedule")
-	public ResponseEntity<?> getByIdSchedule(@RequestParam(name="idSchedule") int idSchedule){
+	public ResponseEntity<?> getByIdSchedule(@RequestParam(name="id") int idSchedule){
 		return response(new ResponseBean(medicalExamService.getByIdSchedule(new ScheduleMedical(idSchedule))));
 	}
 	
