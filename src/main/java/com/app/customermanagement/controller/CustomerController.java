@@ -50,6 +50,15 @@ public class CustomerController extends BaseController{
 		return response(new ResponseBean(customerService.addCustomer(customer)));
 	}
 	
+	@GetMapping("/listcustomer")
+	public ResponseEntity<?> listcustomer(
+			@RequestParam(name = "page" , defaultValue = "0") int page
+			){
+		ResponseBean responseBean = new ResponseBean();
+		responseBean.setData(customerService.list(page));
+		return response(responseBean);
+	}
+	
 	
 	
 }

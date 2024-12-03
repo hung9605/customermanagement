@@ -3,6 +3,9 @@ package com.app.customermanagement.service.serviceimpl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.constants.CommonConstant;
@@ -69,5 +72,12 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Customer> searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(String firstName, String midName, String lastName, String phoneNumber) {
 		// TODO Auto-generated method stub
 		return customerRepository.findByLastNameContainingAndFirstNameContainingAndMidNameContainingAndPhoneNumberContaining(lastName, firstName, midName, phoneNumber);
+	}
+
+	@Override
+	public List<Customer> list(Integer page) {
+		// TODO Auto-generated method stub
+		Pageable pageable =  PageRequest.of(page, 2);
+		return customerRepository.findAll(pageable).getContent();
 	}
 }
