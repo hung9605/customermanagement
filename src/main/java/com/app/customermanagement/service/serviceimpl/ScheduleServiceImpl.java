@@ -3,7 +3,9 @@ package com.app.customermanagement.service.serviceimpl;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.mapper.ScheduleMedicalMapperImpl;
+import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.ScheduleMedical;
+import com.app.customermanagement.repository.CustomerRepository;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
 import com.app.customermanagement.service.ScheduleSevice;
 import com.app.customermanagement.util.DateUtils;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class ScheduleServiceImpl implements ScheduleSevice {
 	
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
+	private final CustomerRepository customerRepository;
 
 	@Override
 	public ScheduleMedical register(ScheduleMedical scheduleMedical) {
@@ -60,9 +63,14 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 
 	@Override
 	public List<ScheduleDto> getListHistory(String date) {
-		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN, new Date());
-		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(dateRegister, CommonConstant.EXAMINED);
+		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(date, CommonConstant.EXAMINED);
 		return new ScheduleMedicalMapperImpl().mapToDtos(sMedicals);
+	}
+
+	@Override
+	public ScheduleMedical registerV1(ScheduleMedical scheduleMedical) {
+
+		return null;
 	}
    
 

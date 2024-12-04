@@ -12,4 +12,5 @@ public interface ScheduleSevice {
     List<ScheduleMedical> getListByName(String name, String day);
     List<ScheduleDto> getListRegister();
     List<ScheduleDto> getListHistory(String date);
+    ScheduleMedical registerV1(ScheduleMedical scheduleMedical);
 }

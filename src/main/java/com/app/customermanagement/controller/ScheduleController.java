@@ -57,4 +57,9 @@ public class ScheduleController extends BaseController {
 		return response(new ResponseBean(serviceImpl.getListHistory(date)));
 	}
 	
+	@PostMapping("/addv1")
+	public ResponseEntity<?> addV1(@RequestBody ScheduleMedical sMedical){
+		return response(new ResponseBean(serviceImpl.register(sMedical)));
+	}
+	
 }
