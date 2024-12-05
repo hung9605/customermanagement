@@ -14,5 +14,5 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 	List<Customer> findByLastNameContaining(String name);
 	List<Customer> findByLastNameContainingOrFirstNameContaining(String lastname, String firstName);
 	List<Customer> findByLastNameContainingOrFirstNameContainingOrMidNameContaining(String lastName,String firstName,String midName);
-	List<Customer> findByLastNameContainingAndFirstNameContainingAndMidNameContainingAndPhoneNumberContaining(String lastName,String firstName,String midName,String phoneNumber);
+	Customer findByLastNameContainingAndFirstNameContainingAndMidNameContainingAndPhoneNumberContaining(String lastName,String firstName,String midName,String phoneNumber);
 }
