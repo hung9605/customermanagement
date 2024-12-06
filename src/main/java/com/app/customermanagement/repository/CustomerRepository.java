@@ -10,7 +10,7 @@ import com.app.customermanagement.model.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 	
-	List<Customer> findByPhoneNumber(String phoneNumber);
+	Customer findByPhoneNumber(String phoneNumber);
 	List<Customer> findByLastNameContaining(String name);
 	List<Customer> findByLastNameContainingOrFirstNameContaining(String lastname, String firstName);
 	List<Customer> findByLastNameContainingOrFirstNameContainingOrMidNameContaining(String lastName,String firstName,String midName);

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.service.serviceimpl.ScheduleServiceImpl;
@@ -35,18 +37,22 @@ public class ScheduleController extends BaseController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<?> add(@RequestBody ScheduleMedical sMedical){
+	public ResponseEntity<?> add(@RequestBody ScheduleDto sMedical) throws Exception{
 		return response(new ResponseBean(serviceImpl.register(sMedical)));
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<?> update(@RequestBody ScheduleMedical sMedical){
+	public ResponseEntity<?> update(@RequestBody ScheduleDto sMedical) throws Exception{
 		return response(new ResponseBean(serviceImpl.register(sMedical)));
 	}
 	
 	@GetMapping("/listregister")
-	public ResponseEntity<?> listRegister(){
-		return response(new ResponseBean(serviceImpl.getListRegister()));
+	public ResponseEntity<?> listRegister() throws Exception{
+		try {
+			return response(new ResponseBean(serviceImpl.getListRegister()));
+		}catch (Exception e) {
+			return responseError(new ResponseBean(e), e);
+		}
 	}
 	
 	@GetMapping("/listhistory")
@@ -57,9 +63,9 @@ public class ScheduleController extends BaseController {
 		return response(new ResponseBean(serviceImpl.getListHistory(date)));
 	}
 	
-	@PostMapping("/addv1")
-	public ResponseEntity<?> addV1(@RequestBody ScheduleMedical sMedical){
-		return response(new ResponseBean(serviceImpl.register(sMedical)));
-	}
+//	@PostMapping("/addv1")
+//	public ResponseEntity<?> addV1(@RequestBody ScheduleMedical sMedical){
+//		return response(new ResponseBean(serviceImpl.register(sMedical)));
+//	}
 	
 }

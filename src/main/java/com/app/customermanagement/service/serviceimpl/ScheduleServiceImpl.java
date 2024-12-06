@@ -1,5 +1,12 @@
 package com.app.customermanagement.service.serviceimpl;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.mapper.ScheduleMedicalMapperImpl;
@@ -12,21 +19,17 @@ import com.app.customermanagement.util.DateUtils;
 
 import lombok.AllArgsConstructor;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
-import org.springframework.stereotype.Service;
-
 @Service
 @AllArgsConstructor
 public class ScheduleServiceImpl implements ScheduleSevice {
 	
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
 	private final CustomerRepository customerRepository;
-
 	@Override
-	public ScheduleMedical register(ScheduleMedical scheduleMedical) {
+	public ScheduleMedical register(ScheduleDto scheduleDto) throws Exception {
+		if(checkRegisterExists(scheduleDto.getFullName(), scheduleDto.getPhoneNumber()))
+			throw new Exception("User Registered");
+		ScheduleMedical scheduleMedical = new ScheduleMedicalMapperImpl().maptoModel(scheduleDto);
 		scheduleMedical.setCreatedAt(new Date());
 		scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
@@ -71,6 +74,17 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	public ScheduleMedical registerV1(ScheduleMedical scheduleMedical) {
 
 		return null;
+	}
+
+	@Override
+	public boolean checkRegisterExists(String fullName,String phoneNumber) {
+		// TODO Auto-generated method stub
+		List<ScheduleDto> listRegister = getListRegister();
+		List<ScheduleDto> listCheck = listRegister.stream().filter( item ->{
+			return fullName.equals(item.getFullName()) && phoneNumber.equals(item.getPhoneNumber());
+		}
+		).collect(Collectors.toList());
+		return listCheck.size() > 0 ;
 	}
    
 

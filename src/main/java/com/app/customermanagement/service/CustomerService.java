@@ -10,7 +10,7 @@ public interface CustomerService {
     Customer addCustomer(CustomerDto customer);
     Customer updateCustomer(Customer customer);
     Customer getCustomer(Customer customer);
-    List<Customer> searchCustomer(Customer customer);
+    Customer searchCustomer(Customer customer);
     List<Customer> searchCustomerLastName(String name);
     List<Customer> searchCustomerFirstNameOrLastName(String name);
     List<Customer> searchCustomerFirstNameOrMidNameOrLastName(String name);

@@ -12,6 +12,7 @@ import com.app.customermanagement.model.ScheduleMedical;
 public interface ScheduleMedicalMapper {
 	
 	ScheduleMedical maptoModel(ScheduleDto dto);
+	@Mapping(target = "phoneNumber", source = "customer.phoneNumber")
 	ScheduleDto mapToDto(ScheduleMedical medical);
 	List<ScheduleMedical> mapToModels(List<ScheduleDto> dtos);
 	List<ScheduleDto> mapToDtos(List<ScheduleMedical> models);
