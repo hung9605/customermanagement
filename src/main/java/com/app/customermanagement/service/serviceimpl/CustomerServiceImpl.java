@@ -77,7 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<Customer> list(Integer page) {
 		// TODO Auto-generated method stub
-		Pageable pageable =  PageRequest.of(page, 2);
+		Pageable pageable =  PageRequest.of(page, 10);
 		return customerRepository.findAll(pageable).getContent();
 	}
 }
