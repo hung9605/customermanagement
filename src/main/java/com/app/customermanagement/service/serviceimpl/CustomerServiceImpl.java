@@ -82,4 +82,12 @@ public class CustomerServiceImpl implements CustomerService {
 		//panigator at client
 		return customerRepository.findAll();
 	}
+
+	@Override
+	public Customer updateCustomer(CustomerDto customerDto) {
+		// TODO Auto-generated method stub
+		customerDto.setUpdatedBy("tnd");
+		customerDto.setUpdatedAt(new Date());
+		return customerRepository.save(new CustomerMapperImpl().maptoModel(customerDto));
+	}
 }

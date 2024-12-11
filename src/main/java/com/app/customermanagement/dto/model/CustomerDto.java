@@ -22,4 +22,8 @@ public class CustomerDto {
     String address;
     Integer status;
     Date dateOfBirth;
+    Date createdAt;
+    String createdBy;
+    Date updatedAt;
+    String updatedBy;
 }

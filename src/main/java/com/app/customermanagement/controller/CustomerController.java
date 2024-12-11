@@ -59,6 +59,11 @@ public class CustomerController extends BaseController{
 		return response(responseBean);
 	}
 	
+	@PostMapping("/update")
+	public ResponseEntity<?> update(@RequestBody CustomerDto customer){
+		return response(new ResponseBean(customerService.updateCustomer(customer)));
+	}
+	
 	
 	
 }
