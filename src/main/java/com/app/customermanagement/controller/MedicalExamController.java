@@ -39,5 +39,13 @@ public class MedicalExamController extends BaseController{
 	public ResponseEntity<?> getByIdSchedule(@RequestParam(name="id") int idSchedule){
 		return response(new ResponseBean(medicalExamService.getByIdSchedule(new ScheduleMedical(idSchedule))));
 	}
+
+	@GetMapping("/list")
+	public ResponseEntity<?> listMoney(
+			@RequestParam(name = "page", defaultValue = "0") int page
+			,@RequestParam(name = "date", defaultValue = "0") String date
+	){
+		return response(new ResponseBean(medicalExamService.listMoney(0,date)));
+	}
 	
 }

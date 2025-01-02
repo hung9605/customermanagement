@@ -18,11 +18,12 @@ public class MedicalExamination extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String dayOfExaminatiom;
+    String dayOfExamination;
     String sympton;
     String treatment;
     String typeOfMedicine;
     String money;
+    Integer status;
     
     @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_medical_id",referencedColumnName = "id")
