@@ -1,6 +1,7 @@
 package com.app.customermanagement.service.serviceimpl;
 
 import com.app.customermanagement.constants.CommonConstant;
+import com.app.customermanagement.dto.model.MoneyDto;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
@@ -48,5 +49,15 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	public MedicalExamination getByIdSchedule(ScheduleMedical sMedical) {
 		// TODO Auto-generated method stub
 		return medicalExaminationRepository.findByMedical(sMedical);
+	}
+
+	/**
+	 * @param page
+	 * @param date
+	 * @return
+	 */
+	@Override
+	public List<MoneyDto> listMoney(Integer page, String date) {
+		return medicalExaminationRepository.listMoney(date);
 	}
 }
