@@ -8,5 +8,7 @@ public class Test {
         if(a == null || b == null){
             System.out.println("a == null");
         }
+        Double a1 = 0.0;
+        System.out.println(a1 == 0 );
     }
 }
