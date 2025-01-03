@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputFilter.Config;
 import java.io.OutputStream;
 
 @RestController
@@ -23,32 +25,22 @@ import java.io.OutputStream;
 @Component
 public class AdminController extends  BaseController{
 	
-	@Value("${spring.datasource.username}")
-    private static String user;
-	@Value("${spring.datasource.password}")
-    private static String pazzword;
-	@Value("${urlDumpMac}")
-    private static String urlDumpMac;
-	@Value("${urlDumpWin}")
-    private static String urlDumpWin;
+	
 
 
     @GetMapping("/export-sql")
     public void exportSqlDump(HttpServletResponse response) throws IOException {
         // Định cấu hình kết nối MySQL
-
+    	ParamConfig paramConfig = new ParamConfig();
         String dbName = CommonConstant.DB_NAME;
         String host = CommonConstant.HOST;
         String osName = System.getProperty("os.name").toLowerCase();
-        String urlDump = "";
-        if(osName.equals("win")) {
-        	urlDump = urlDumpWin;
-        }else {
-        // Câu lệnh mysqldump macos
-        	urlDump = urlDumpMac;
+        String urlDump = paramConfig.getUrlDumpWin();
+        if(osName.equals("mac")) {
+        	urlDump = paramConfig.getUrlDumpMac();
         }
         
-        String command = String.format(urlDump, user, pazzword, host, dbName);
+        String command = String.format(urlDump, paramConfig.getUser(), paramConfig.getPazzword(), host, dbName);
         
         // Thiết lập response để tải file SQL dump
         response.setContentType("application/sql");
