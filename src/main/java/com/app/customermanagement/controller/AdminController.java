@@ -1,6 +1,7 @@
 package com.app.customermanagement.controller;
 
 import com.app.customermanagement.dto.model.CustomerDto;
+import com.app.customermanagement.dto.model.Login;
 import com.app.customermanagement.dto.response.ResponseBean;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -55,8 +56,8 @@ public class AdminController extends  BaseController{
         }
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody CustomerDto customer){
+    @PostMapping("/auth")
+    public ResponseEntity<?> add(@RequestBody Login login){
         return response(new ResponseBean(null));
     }
 
