@@ -17,6 +17,6 @@ public class MasterData extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String key;
-    String value;
+    String keyData;
+    String valueData;
 }

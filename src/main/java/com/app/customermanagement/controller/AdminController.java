@@ -37,7 +37,7 @@ public class AdminController extends  BaseController{
             urlDump = paramConfig.getUrlDumpMac();
         }
         String command = String.format(urlDump, paramConfig.getUser(), paramConfig.getPazzword(), host, dbName);
-        // Thiết lập response để tải file SQL dump
+        // Thiết lập response để tải file SQL dumpcmd
         response.setContentType("application/sql");
         response.setHeader("Content-Disposition", "attachment; filename=\"database_dump.sql\"");
         System.out.println(command);
