@@ -59,8 +59,9 @@ public class ScheduleController extends BaseController {
 	public ResponseEntity<?> listHistory(
 			 @RequestParam(name = "page", defaultValue = "0") int page
 			,@RequestParam(name = "date", defaultValue = "0") String date
+			,@RequestParam(name = "toDate", defaultValue = "0", required = false) String toDate
 			){
-		return response(new ResponseBean(serviceImpl.getListHistory(date)));
+		return response(new ResponseBean(serviceImpl.getListHistory(date,toDate)));
 	}
 	
 //	@PostMapping("/addv1")

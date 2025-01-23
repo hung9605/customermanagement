@@ -12,6 +12,7 @@ import com.app.customermanagement.model.ScheduleMedical;
 public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical, Integer> {
 	
 	List<ScheduleMedical> findByDateRegisterAndStatusOrderByTimeRegister(String date,Integer status);
+	List<ScheduleMedical> findByDateRegisterBetweenAndStatusOrderByTimeRegister(String startDate, String endDate, Integer status);
 	List<ScheduleMedical> findByFullNameAndDateRegister(String name,String date);
 	ScheduleMedical findByFullNameContainingIgnoreCase(String fullName);
 	ScheduleMedical findByCustomer(Customer customerOpt);

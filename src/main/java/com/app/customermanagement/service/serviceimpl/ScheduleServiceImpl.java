@@ -86,6 +86,12 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		).collect(Collectors.toList());
 		return listCheck.size() > 0 ;
 	}
+
+	@Override
+	public List<ScheduleDto> getListHistory(String formDate, String toDate) {
+		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterBetweenAndStatusOrderByTimeRegister(formDate,toDate, CommonConstant.EXAMINED);
+		return new ScheduleMedicalMapperImpl().mapToDtos(sMedicals);
+	}
    
 
 
