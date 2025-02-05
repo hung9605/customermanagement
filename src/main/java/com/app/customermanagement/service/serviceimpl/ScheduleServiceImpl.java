@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 public class ScheduleServiceImpl implements ScheduleSevice {
 	
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
+	
 	@Override
 	public ScheduleMedical register(ScheduleDto scheduleDto) throws Exception {
 		if(checkRegisterExists(scheduleDto.getFullName(), scheduleDto.getPhoneNumber()))

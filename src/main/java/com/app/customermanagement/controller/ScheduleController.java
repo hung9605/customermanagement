@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.service.serviceimpl.ScheduleServiceImpl;
@@ -40,14 +39,19 @@ public class ScheduleController extends BaseController {
 		try {
 			return response(new ResponseBean(serviceImpl.register(sMedical)));
 		}catch (Exception e) {
-			System.out.println("e.getMessage()"+e.getMessage());
 			return responseError(new ResponseBean(e.getMessage()), e);
 		}
 	}
 
 	@PostMapping("/update")
 	public ResponseEntity<?> update(@RequestBody ScheduleDto sMedical) throws Exception{
-		return response(new ResponseBean(serviceImpl.register(sMedical)));
+		try {
+			return response(new ResponseBean(serviceImpl.register(sMedical)));
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
 	}
 	
 	@GetMapping("/listregister")
@@ -55,16 +59,15 @@ public class ScheduleController extends BaseController {
 		try {
 			return response(new ResponseBean(serviceImpl.getListRegister()));
 		}catch (Exception e) {
-			System.out.println("e.getMessage()"+e.getMessage());
 			return responseError(new ResponseBean(e.getMessage()), e);
 		}
 	}
 	
 	@GetMapping("/listhistory")
 	public ResponseEntity<?> listHistory(
-			 @RequestParam(name = "page", defaultValue = "0") int page
-			,@RequestParam(name = "date", defaultValue = "0") String date
-			,@RequestParam(name = "toDate", defaultValue = "0", required = false) String toDate
+			 @RequestParam(defaultValue = "0") int page
+			,@RequestParam(defaultValue = "0") String date
+			,@RequestParam(defaultValue = "0", required = false) String toDate
 			){
 		return response(new ResponseBean(serviceImpl.getListHistory(date,toDate)));
 	}
@@ -75,7 +78,7 @@ public class ScheduleController extends BaseController {
 //	}
 	
 	@GetMapping("/checktime")
-	public ResponseEntity<?> checkTime(@RequestParam(name = "time", defaultValue = "0") String time) throws Exception{
+	public ResponseEntity<?> checkTime(@RequestParam(defaultValue = "0") String time) throws Exception{
 		try {
 			return response(new ResponseBean(serviceImpl.checkTimeRegister(time)));
 		}catch (Exception e) {

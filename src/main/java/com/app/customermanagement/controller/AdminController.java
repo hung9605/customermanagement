@@ -3,6 +3,8 @@ package com.app.customermanagement.controller;
 import com.app.customermanagement.dto.model.CustomerDto;
 import com.app.customermanagement.dto.model.Login;
 import com.app.customermanagement.dto.response.ResponseBean;
+import com.app.customermanagement.service.AdminService;
+
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 
@@ -27,33 +29,17 @@ import java.io.OutputStream;
 public class AdminController extends  BaseController{
 
     public final ParamConfig paramConfig;
+    private final AdminService adminService;
+    
     @GetMapping("/export-sql")
-    public void exportSqlDump(HttpServletResponse response) throws IOException {
-        // Định cấu hình kết nối MySQL
-        String dbName = CommonConstant.DB_NAME;
-        String host = CommonConstant.HOST;
-        String osName = System.getProperty("os.name").toLowerCase().substring(0, 3);
-        String urlDump = paramConfig.getUrlDumpWin();
-        if(osName.equals("mac")) {
-            urlDump = paramConfig.getUrlDumpMac();
-        }
-        String command = String.format(urlDump, paramConfig.getUser(), paramConfig.getPazzword(), host, dbName);
-        // Thiết lập response để tải file SQL dumpcmd
-        response.setContentType("application/sql");
-        response.setHeader("Content-Disposition", "attachment; filename=\"database_dump.sql\"");
-        System.out.println(command);
-        // Chạy câu lệnh và ghi kết quả vào response output stream
-        Process process = Runtime.getRuntime().exec(command);
-        try (InputStream inputStream = process.getInputStream();
-             OutputStream outputStream = response.getOutputStream()) {
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void exportSqlDump(HttpServletResponse response,@RequestParam String username,@RequestParam String password	) throws IOException {
+        try {
+        	Login login = new Login(username, password);
+			adminService.authentication(response, login);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     @PostMapping("/auth")

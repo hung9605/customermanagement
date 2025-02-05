@@ -57,7 +57,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	 * @return
 	 */
 	@Override
-	public List<MoneyDto> listMoney(Integer page, String date) {
-		return medicalExaminationRepository.listMoney(date);
+	public List<MoneyDto> listMoney(Integer page, String date, String toDate) {
+		return medicalExaminationRepository.listMoney(date,toDate);
 	}
 }

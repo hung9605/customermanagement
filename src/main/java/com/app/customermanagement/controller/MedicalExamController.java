@@ -7,14 +7,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.service.MedicalExamService;
-import com.app.customermanagement.service.serviceimpl.ScheduleServiceImpl;
 
 import lombok.AllArgsConstructor;
 
@@ -42,10 +40,11 @@ public class MedicalExamController extends BaseController{
 
 	@GetMapping("/list")
 	public ResponseEntity<?> listMoney(
-			@RequestParam(name = "page", defaultValue = "0") int page
-			,@RequestParam(name = "date", defaultValue = "0") String date
+			@RequestParam(defaultValue = "0") int page
+			,@RequestParam(defaultValue = "0") String date
+			,@RequestParam(defaultValue = "0") String toDate
 	){
-		return response(new ResponseBean(medicalExamService.listMoney(0,date)));
+		return response(new ResponseBean(medicalExamService.listMoney(0,date,toDate)));
 	}
 	
 }

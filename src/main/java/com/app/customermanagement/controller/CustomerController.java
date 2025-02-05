@@ -25,7 +25,7 @@ public class CustomerController extends BaseController{
 	
 	@GetMapping("/list")
 	public ResponseEntity<?> list(
-			@RequestParam(name = "page" , defaultValue = "0") int page,
+			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(name = "name") String name
 			){
 		ResponseBean responseBean = new ResponseBean();
@@ -35,10 +35,10 @@ public class CustomerController extends BaseController{
 	
 	@GetMapping("/checkcustomer")
 	public ResponseEntity<?> checkCustomer(
-			@RequestParam(name = "firstName") String firstName
-			,@RequestParam(name = "midName") String midName
-			,@RequestParam(name = "lastName") String lastName
-			,@RequestParam(name = "phoneNumber") String phoneNumber
+			@RequestParam String firstName
+			,@RequestParam String midName
+			,@RequestParam String lastName
+			,@RequestParam String phoneNumber
 			){
 		ResponseBean responseBean = new ResponseBean();
 		responseBean.setData(customerService.searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(firstName,midName,lastName,phoneNumber));
@@ -52,7 +52,7 @@ public class CustomerController extends BaseController{
 	
 	@GetMapping("/listcustomer")
 	public ResponseEntity<?> listcustomer(
-			@RequestParam(name = "page" , defaultValue = "0") int page){
+			@RequestParam(defaultValue = "0") int page){
 		ResponseBean responseBean = new ResponseBean();
 		responseBean.setData(customerService.list(page));						
 		return response(responseBean);

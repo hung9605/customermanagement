@@ -12,5 +12,5 @@ public interface MedicalExamService {
     MedicalExamination updateMedicalExamination(MedicalExamination medicalExamination);
     List<MedicalExamination> getListByCustormer(Customer customer);
     MedicalExamination getByIdSchedule(ScheduleMedical sMedical);
-    List<MoneyDto> listMoney(Integer page, String date);
+    List<MoneyDto> listMoney(Integer page, String date, String toDate);
 }
