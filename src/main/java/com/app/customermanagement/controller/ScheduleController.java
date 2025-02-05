@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.dto.response.ResponseBean;
-import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.service.serviceimpl.ScheduleServiceImpl;
 import lombok.AllArgsConstructor;
 
@@ -24,21 +23,26 @@ public class ScheduleController extends BaseController {
 	private final ScheduleServiceImpl serviceImpl;
 	
 	@GetMapping("/listday")
-	public ResponseEntity<?> listday(@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "date") String date){
+	public ResponseEntity<?> listday(@RequestParam(defaultValue = "0") int page,
+			@RequestParam String date){
 		return response(new ResponseBean(serviceImpl.getListByDay(date)));
 	}
 	
 	@GetMapping("/listname")
-	public ResponseEntity<?> listname(@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "name") String name
-			,@RequestParam(name = "date") String date){
+	public ResponseEntity<?> listname(@RequestParam(defaultValue = "0") int page,
+			@RequestParam String name
+			,@RequestParam String date){
 		return response(new ResponseBean(serviceImpl.getListByName(name, date)));
 	}
 	
 	@PostMapping("/add")
 	public ResponseEntity<?> add(@RequestBody ScheduleDto sMedical) throws Exception{
-		return response(new ResponseBean(serviceImpl.register(sMedical)));
+		try {
+			return response(new ResponseBean(serviceImpl.register(sMedical)));
+		}catch (Exception e) {
+			System.out.println("e.getMessage()"+e.getMessage());
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
 	}
 
 	@PostMapping("/update")
@@ -51,7 +55,8 @@ public class ScheduleController extends BaseController {
 		try {
 			return response(new ResponseBean(serviceImpl.getListRegister()));
 		}catch (Exception e) {
-			return responseError(new ResponseBean(e), e);
+			System.out.println("e.getMessage()"+e.getMessage());
+			return responseError(new ResponseBean(e.getMessage()), e);
 		}
 	}
 	
@@ -68,5 +73,14 @@ public class ScheduleController extends BaseController {
 //	public ResponseEntity<?> addV1(@RequestBody ScheduleMedical sMedical){
 //		return response(new ResponseBean(serviceImpl.register(sMedical)));
 //	}
+	
+	@GetMapping("/checktime")
+	public ResponseEntity<?> checkTime(@RequestParam(name = "time", defaultValue = "0") String time) throws Exception{
+		try {
+			return response(new ResponseBean(serviceImpl.checkTimeRegister(time)));
+		}catch (Exception e) {
+			return responseError(new ResponseBean(e), e);
+		}
+	}
 	
 }

@@ -2,7 +2,6 @@ package com.app.customermanagement.service.serviceimpl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -10,9 +9,7 @@ import org.springframework.stereotype.Service;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.mapper.ScheduleMedicalMapperImpl;
-import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.ScheduleMedical;
-import com.app.customermanagement.repository.CustomerRepository;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
 import com.app.customermanagement.service.ScheduleSevice;
 import com.app.customermanagement.util.DateUtils;
@@ -24,11 +21,12 @@ import lombok.AllArgsConstructor;
 public class ScheduleServiceImpl implements ScheduleSevice {
 	
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
-	private final CustomerRepository customerRepository;
 	@Override
 	public ScheduleMedical register(ScheduleDto scheduleDto) throws Exception {
 		if(checkRegisterExists(scheduleDto.getFullName(), scheduleDto.getPhoneNumber()))
 			throw new Exception("User Registered");
+		if(!checkTimeRegister(scheduleDto.getTimeRegister()))
+			throw new Exception("Time is exists!");
 		ScheduleMedical scheduleMedical = new ScheduleMedicalMapperImpl().maptoModel(scheduleDto);
 		scheduleMedical.setCreatedAt(new Date());
 		scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
@@ -91,6 +89,12 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	public List<ScheduleDto> getListHistory(String formDate, String toDate) {
 		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterBetweenAndStatusOrderByTimeRegister(formDate,toDate, CommonConstant.EXAMINED);
 		return new ScheduleMedicalMapperImpl().mapToDtos(sMedicals);
+	}
+
+	@Override
+	public boolean checkTimeRegister(String time) {
+		// TODO Auto-generated method stub
+		return null == scheduleMedicalRepository.findByTimeRegisterAndDateRegister(time,DateUtils.formatDate(CommonConstant.DATE_PATTERN, new Date()));
 	}
    
 

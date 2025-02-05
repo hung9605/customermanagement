@@ -14,4 +14,5 @@ public interface ScheduleSevice {
     List<ScheduleDto> getListHistory(String formDate, String toDate);
     ScheduleMedical registerV1(ScheduleMedical scheduleMedical);
     boolean checkRegisterExists(String fullName,String phoneNumber);
+    boolean checkTimeRegister(String time);
 }
