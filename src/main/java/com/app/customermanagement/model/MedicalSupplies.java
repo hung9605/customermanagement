@@ -21,4 +21,5 @@ public class MedicalSupplies extends BaseEntity{
     String medicineName;
     String unitPrice;
     String quantity;
+    Boolean status;
 }

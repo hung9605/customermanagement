@@ -11,39 +11,44 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.model.MedicalExamination;
+import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.service.MedicalExamService;
+import com.app.customermanagement.service.MedicalSupplyService;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/medicalexam")
+@RequestMapping("/medicalsupplies")
 @CrossOrigin("*")
-public class MedicalExamController extends BaseController{
+public class MedicalSuppliesController extends BaseController{
 	
-	private final MedicalExamService medicalExamService;
+	private final MedicalSupplyService medicalSupplyService;
 	
-	public ResponseEntity<?> list(){
-		return response(null);
-	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<?> add(@RequestBody MedicalExamination medicalExamination){
-		return response(new ResponseBean(medicalExamService.addMedicalExamination(medicalExamination)));
+	public ResponseEntity<?> add(@RequestBody MedicalSupplies medicalSupplies){
+		try {
+			return response(new ResponseBean(medicalSupplyService.add(medicalSupplies)));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
 	}
 	
-	@GetMapping("getbyidschedule")
-	public ResponseEntity<?> getByIdSchedule(@RequestParam(name="id") int idSchedule){
-		return response(new ResponseBean(medicalExamService.getByIdSchedule(new ScheduleMedical(idSchedule))));
-	}
+
 
 	@GetMapping("/list")
-	public ResponseEntity<?> listMoney(
-			@RequestParam(defaultValue = "0") int page
-			,@RequestParam(defaultValue = "0") String date
-			,@RequestParam(defaultValue = "0") String toDate){
-		return response(new ResponseBean(medicalExamService.listMoney(0,date,toDate)));
+	public ResponseEntity<?> list(){
+		try {
+			return response(new ResponseBean(medicalSupplyService.listMedicalSupplies()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
 	}
-	
+
 }
