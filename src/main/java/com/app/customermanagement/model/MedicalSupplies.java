@@ -1,5 +1,7 @@
 package com.app.customermanagement.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,4 +24,9 @@ public class MedicalSupplies extends BaseEntity{
     String unitPrice;
     String quantity;
     Boolean status;
+    
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "medical_supplies_id",referencedColumnName = "id")
+	List<Prescription> prescriptions;
 }

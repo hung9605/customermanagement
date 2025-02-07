@@ -6,6 +6,7 @@ import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.repository.MedicalExaminationRepository;
+import com.app.customermanagement.repository.PrescriptionRepository;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
 import com.app.customermanagement.service.MedicalExamService;
 
@@ -21,6 +22,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	
 	private final MedicalExaminationRepository medicalExaminationRepository;
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
+	private final PrescriptionRepository prescriptionRepository;
 	
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
@@ -28,6 +30,9 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(mExamination.getMedical().getId()).get();
     	scheduleMedical.setStatus(CommonConstant.EXAMINED);
     	scheduleMedicalRepository.save(scheduleMedical);
+    	
+    	
+    	
         return mExamination;
     }
 
