@@ -12,6 +12,7 @@ import com.app.customermanagement.service.MedicalExamService;
 
 import lombok.AllArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +27,14 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
+    	
+    	if(medicalExamination.getId()  == 0) {
+    		medicalExamination.setCreatedAt(new Date());
+        	medicalExamination.setCreatedBy(CommonConstant.ADMIN);
+    	}else {
+    		medicalExamination.setUpdatedAt(new Date());
+    		medicalExamination.setUpdatedBy(CommonConstant.ADMIN);
+    	}
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
     	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(mExamination.getMedical().getId()).get();
     	scheduleMedical.setStatus(CommonConstant.EXAMINED);
