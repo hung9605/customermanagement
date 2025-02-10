@@ -25,8 +25,8 @@ public class MedicalSupplies extends BaseEntity{
     String quantity;
     Boolean status;
     
-
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "medical_supplies_id",referencedColumnName = "id")
-	List<Prescription> prescriptions;
+//
+//	@OneToMany(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "medical_supplies_id",referencedColumnName = "id")
+//	List<Prescription> prescriptions;
 }
