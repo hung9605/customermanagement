@@ -30,4 +30,8 @@ public class Prescription extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "medical_supplies_id")
     MedicalSupplies medicalSupplies;
+    
+    @ManyToOne
+    @JoinColumn(name = "medical_examination_id")
+    MedicalExamination medicalExamination;
 }

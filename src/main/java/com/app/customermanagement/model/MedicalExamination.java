@@ -25,12 +25,11 @@ public class MedicalExamination extends BaseEntity {
     String money;
     Integer status;
     String totalMoney;
+    String quantity;
     
     @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_medical_id",referencedColumnName = "id")
     ScheduleMedical medical;
 
-    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "prescription_id",referencedColumnName = "id")
-    Prescription prescription;
+
 }
