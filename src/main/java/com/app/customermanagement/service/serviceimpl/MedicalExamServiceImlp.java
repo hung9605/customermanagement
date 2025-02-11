@@ -4,14 +4,18 @@ import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.MoneyDto;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
+import com.app.customermanagement.model.MedicalSupplies;
+import com.app.customermanagement.model.Prescription;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.repository.MedicalExaminationRepository;
+import com.app.customermanagement.repository.MedicalSuppliesRepository;
 import com.app.customermanagement.repository.PrescriptionRepository;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
 import com.app.customermanagement.service.MedicalExamService;
 
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +28,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	private final MedicalExaminationRepository medicalExaminationRepository;
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
 	private final PrescriptionRepository prescriptionRepository;
+	private final MedicalSuppliesRepository medicalSuppliesRepository;
 	
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
@@ -35,11 +40,26 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     		medicalExamination.setUpdatedAt(new Date());
     		medicalExamination.setUpdatedBy(CommonConstant.ADMIN);
     	}
+    	
+    	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findAll();
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
+    	List<Prescription> lstPrescription = new ArrayList<>();
+    	String[] typeMedicine = medicalExamination.getTypeOfMedicine().split(",");
+    	String[] quantity = medicalExamination.getQuantity().split(",");
+    	Prescription prescription;
+    	for (int i = 0; i < quantity.length; i++) {
+    		String typeMedicineVal = typeMedicine[i];
+    		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal)).findFirst().get();
+			prescription = new Prescription(0, quantity[i], supplies, mExamination);
+			prescription.setCreatedAt(new Date());
+			prescription.setCreatedBy(CommonConstant.ADMIN);
+			lstPrescription.add(prescription);
+		}
+    	
     	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(mExamination.getMedical().getId()).get();
     	scheduleMedical.setStatus(CommonConstant.EXAMINED);
     	scheduleMedicalRepository.save(scheduleMedical);
-    	
+    	prescriptionRepository.saveAll(lstPrescription);
     	
     	
         return mExamination;
