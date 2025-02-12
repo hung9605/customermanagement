@@ -32,16 +32,43 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
-    	
-    	if(medicalExamination.getId()  == 0) {
-    		medicalExamination.setCreatedAt(new Date());
-        	medicalExamination.setCreatedBy(CommonConstant.ADMIN);
-    	}else {
-    		medicalExamination.setUpdatedAt(new Date());
-    		medicalExamination.setUpdatedBy(CommonConstant.ADMIN);
-    	}
-    	
+    	medicalExamination.setCreatedAt(new Date());
+        medicalExamination.setCreatedBy(CommonConstant.ADMIN);
     	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findAll();
+    	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
+    	List<Prescription> lstPrescription = new ArrayList<>();
+    	String[] typeMedicine = medicalExamination.getTypeOfMedicine().split(",");
+    	String[] quantity = medicalExamination.getQuantity().split(",");
+    	Prescription prescription;
+    	List<MedicalSupplies> lMedicalSupplies = new ArrayList<>();
+    	for (int i = 0; i < quantity.length; i++) {
+    		String typeMedicineVal = typeMedicine[i];
+    		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal)).findFirst().get();
+			prescription = new Prescription(0, quantity[i], supplies, mExamination);
+			prescription.setCreatedAt(new Date());
+			prescription.setCreatedBy(CommonConstant.ADMIN);
+			lstPrescription.add(prescription);
+			supplies.setQuantity(String.valueOf(Integer.parseInt(supplies.getQuantity()) - Integer.parseInt(prescription.getQuantity())));
+			supplies.setUpdatedAt(new Date());
+			supplies.setUpdatedBy(CommonConstant.ADMIN);
+			lMedicalSupplies.add(supplies);
+		}
+    	
+    	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(mExamination.getMedical().getId()).get();
+    	scheduleMedical.setStatus(CommonConstant.EXAMINED);
+    	scheduleMedicalRepository.save(scheduleMedical);
+    	prescriptionRepository.saveAll(lstPrescription);
+    	medicalSuppliesRepository.saveAll(lMedicalSupplies);
+        return mExamination;
+    }
+
+ 
+    @Override
+    public MedicalExamination updateMedicalExamination(MedicalExamination medicalExamination) {
+    	prescriptionRepository.deletePrescription(medicalExamination);
+    	medicalExamination.setUpdatedAt(new Date());
+		medicalExamination.setUpdatedBy(CommonConstant.ADMIN);
+		List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findAll();
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
     	List<Prescription> lstPrescription = new ArrayList<>();
     	String[] typeMedicine = medicalExamination.getTypeOfMedicine().split(",");
@@ -55,20 +82,8 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 			prescription.setCreatedBy(CommonConstant.ADMIN);
 			lstPrescription.add(prescription);
 		}
-    	
-    	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(mExamination.getMedical().getId()).get();
-    	scheduleMedical.setStatus(CommonConstant.EXAMINED);
-    	scheduleMedicalRepository.save(scheduleMedical);
     	prescriptionRepository.saveAll(lstPrescription);
-    	
-    	
         return mExamination;
-    }
-
- 
-    @Override
-    public MedicalExamination updateMedicalExamination(MedicalExamination medicalExamination) {
-        return medicalExaminationRepository.save(medicalExamination);
     }
 
 
@@ -93,5 +108,9 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	@Override
 	public List<MoneyDto> listMoney(Integer page, String date, String toDate) {
 		return medicalExaminationRepository.listMoney(date,toDate);
+	}
+	
+	private void updateMedicalSupplies(List<MedicalSupplies> lstSupplies,Prescription prescription) {
+		MedicalSupplies medicalSupplies =  lstSupplies.stream().filter(item -> item.getId().equals(prescription.getMedicalSupplies().getId())).findFirst().get();
 	}
 }

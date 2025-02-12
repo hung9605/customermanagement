@@ -32,6 +32,10 @@ public class MedicalExamController extends BaseController{
 	public ResponseEntity<?> add(@RequestBody MedicalExamination medicalExamination){
 		return response(new ResponseBean(medicalExamService.addMedicalExamination(medicalExamination)));
 	}
+	@PostMapping("/update")
+	public ResponseEntity<?> update(@RequestBody MedicalExamination medicalExamination){
+		return response(new ResponseBean(medicalExamService.updateMedicalExamination(medicalExamination)));
+	}
 	
 	@GetMapping("getbyidschedule")
 	public ResponseEntity<?> getByIdSchedule(@RequestParam(name="id") int idSchedule){

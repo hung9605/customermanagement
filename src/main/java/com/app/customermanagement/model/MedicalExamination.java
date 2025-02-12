@@ -9,6 +9,8 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,8 +35,9 @@ public class MedicalExamination extends BaseEntity {
     @JoinColumn(name = "schedule_medical_id",referencedColumnName = "id")
     ScheduleMedical medical;
     
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "medical_examination_id",referencedColumnName = "id")
+    @JsonIgnore
     List<Prescription> prescription;
 
 }
