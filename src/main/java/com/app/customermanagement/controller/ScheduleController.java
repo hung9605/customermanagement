@@ -50,6 +50,7 @@ public class ScheduleController extends BaseController {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			return responseError(new ResponseBean(e.getMessage()), e);
 		}
 	}

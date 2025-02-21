@@ -16,6 +16,8 @@ public class ParamConfig {
 	public String urlDumpMac;
 	@Value("${urlDumpWin}")
 	public String urlDumpWin;
+	@Value("${urlUpload}")
+	public String urlUpload;
 	
 	
 

@@ -1,8 +1,10 @@
 package com.app.customermanagement.model;
 
-import java.util.List;
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +26,7 @@ public class MedicalSupplies extends BaseEntity{
     String unitPrice;
     String quantity;
     Boolean status;
+    String link;
     
 //
 //	@OneToMany(fetch = FetchType.LAZY)

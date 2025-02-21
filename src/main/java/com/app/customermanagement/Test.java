@@ -1,15 +1,18 @@
 package com.app.customermanagement;
 
+import java.io.File;
+
 public class Test {
 
     public static void main(String[] args) {
-        Integer a = 1;
-        Integer b = 2;
-        if(a == null || b == null){
-            System.out.println("a == null");
-        }
-        Double a1 = 0.0;
-        System.out.println(a1 == 0 );
+    	String uploadDir = "uploads/";
+        File directory = new File(uploadDir);
+        //if (!directory.exists()) {
+          boolean mk =   directory.mkdirs();
+          System.out.println(mk);
+        //}
+        String fileName = "test";
+        File dest = new File(uploadDir + fileName);
     }
     
 //    LOCK TABLES `menu` WRITE;

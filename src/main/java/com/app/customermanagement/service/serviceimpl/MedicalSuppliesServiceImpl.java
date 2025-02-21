@@ -1,9 +1,11 @@
 package com.app.customermanagement.service.serviceimpl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.repository.MedicalSuppliesRepository;
 import com.app.customermanagement.service.MedicalSupplyService;
@@ -19,6 +21,10 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	@Override
 	public MedicalSupplies add(MedicalSupplies medicalSupplies) throws Exception {
 		// TODO Auto-generated method stub
+		medicalSupplies.setId(null);
+		medicalSupplies.setCreatedAt(new Date());
+		medicalSupplies.setCreatedBy(CommonConstant.ADMIN);
+		medicalSupplies.setStatus(true);
 		return medicalSuppliesRepository.save(medicalSupplies);
 	}
 
