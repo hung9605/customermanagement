@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.repository.MedicalSuppliesRepository;
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	
 	private final MedicalSuppliesRepository medicalSuppliesRepository;
+	public final ParamConfig paramConfig;
 
 	@Override
 	public MedicalSupplies add(MedicalSupplies medicalSupplies) throws Exception {
@@ -25,6 +27,7 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 		medicalSupplies.setCreatedAt(new Date());
 		medicalSupplies.setCreatedBy(CommonConstant.ADMIN);
 		medicalSupplies.setStatus(true);
+		medicalSupplies.setLink(paramConfig.getUrlUpload() + medicalSupplies.getLink());
 		return medicalSuppliesRepository.save(medicalSupplies);
 	}
 

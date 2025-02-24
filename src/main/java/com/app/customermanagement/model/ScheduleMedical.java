@@ -23,12 +23,10 @@ public class ScheduleMedical extends BaseEntity {
     String dateRegister;
     Integer status;
     
-    
     public ScheduleMedical(Integer id) {
 		super();
 		this.id = id;
 	}
-
 
 	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(columnDefinition = "customer_id")
