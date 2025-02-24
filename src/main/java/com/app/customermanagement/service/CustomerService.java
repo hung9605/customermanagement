@@ -17,4 +17,5 @@ public interface CustomerService {
     Customer searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(String firstName, String midName, String lastName, String phoneNumber);
     List<Customer> list(Integer page);
     Customer updateCustomer(CustomerDto customerDto); 
+    Integer updateName(CustomerDto customerDto);
 }

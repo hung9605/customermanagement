@@ -90,4 +90,10 @@ public class CustomerServiceImpl implements CustomerService {
 		customerDto.setUpdatedAt(new Date());
 		return customerRepository.save(new CustomerMapperImpl().maptoModel(customerDto));
 	}
+
+	@Override
+	public Integer updateName(CustomerDto customerDto) {
+		// TODO Auto-generated method stub
+		return customerRepository.updateName(customerDto.getFirstName(), customerDto.getMidName(), customerDto.getLastName(), customerDto.getId());
+	}
 }

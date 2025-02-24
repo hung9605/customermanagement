@@ -46,7 +46,7 @@ public class ScheduleController extends BaseController {
 	@PostMapping("/update")
 	public ResponseEntity<?> update(@RequestBody ScheduleDto sMedical) throws Exception{
 		try {
-			return response(new ResponseBean(serviceImpl.register(sMedical)));
+			return response(new ResponseBean(serviceImpl.updateScheduleMedical(sMedical)));
 		}
 		catch (Exception e) {
 			// TODO: handle exception

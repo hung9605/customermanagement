@@ -44,10 +44,10 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	}
 
 	@Override
-	public ScheduleMedical updateScheduleMedical(ScheduleMedical scheduleMedical) {
+	public Integer updateScheduleMedical(ScheduleDto scheduleDto) {
 		// TODO Auto-generated method stub
-		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
-		return scheduleMedicalRepository.save(scheduleMedical);
+		
+		return scheduleMedicalRepository.updateSchedule(scheduleDto.getFullName(), scheduleDto.getTimeRegister(), scheduleDto.getId());
 	}
 
 	@Override
