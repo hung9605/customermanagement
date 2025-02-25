@@ -18,7 +18,6 @@ import lombok.AllArgsConstructor;
 public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	
 	private final MedicalSuppliesRepository medicalSuppliesRepository;
-	public final ParamConfig paramConfig;
 
 	@Override
 	public MedicalSupplies add(MedicalSupplies medicalSupplies) throws Exception {
@@ -27,7 +26,7 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 		medicalSupplies.setCreatedAt(new Date());
 		medicalSupplies.setCreatedBy(CommonConstant.ADMIN);
 		medicalSupplies.setStatus(true);
-		medicalSupplies.setLink(paramConfig.getUrlUpload() + medicalSupplies.getLink());
+		//medicalSupplies.setLink(paramConfig.getUrlUpload() + medicalSupplies.getLink());
 		return medicalSuppliesRepository.save(medicalSupplies);
 	}
 

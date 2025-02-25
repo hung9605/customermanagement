@@ -1,8 +1,11 @@
 package com.app.customermanagement.service.serviceimpl;
 
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,18 +24,19 @@ public class FileServiceImpl implements FileService{
 
 	@Override
 	public void uploadFile(MultipartFile file) throws Exception {
-
         if (file.isEmpty()) {
             throw new  Exception("File is not exists!");
         }
-
-        // Xử lý tệp: Lưu tệp vào thư mục tạm thời hoặc xử lý theo yêu cầu của bạn
         String fileName = file.getOriginalFilename();
-        // Giả sử bạn lưu tệp vào thư mục uploads trong dự án
         String uploadDir = paramConfig.getUrlUpload();
         Path path = Paths.get(uploadDir + fileName);
         file.transferTo(path);
-		
+	}
+
+	@Override
+	public Resource getImage(String imageName) throws MalformedURLException {
+		Path imagePath = Paths.get(paramConfig.getUrlUpload()).resolve(imageName).normalize();
+		return new UrlResource(imagePath.toUri());
 	}
 
 }

@@ -2,6 +2,7 @@ package com.app.customermanagement.controller;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.service.FileService;
 
@@ -28,6 +30,7 @@ import lombok.AllArgsConstructor;
 public class FileUploadController extends BaseController {
 
 	   public final FileService fileService;
+	   public final ParamConfig paramConfig;
 
 	    @PostMapping("/file")
 	    public ResponseEntity<ResponseBean> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -39,25 +42,23 @@ public class FileUploadController extends BaseController {
 	        }
 	    }
 	    
-//	    @GetMapping("/images/{imageName}")
-//	    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
-//	        try {
-//	            Path imagePath = imageLocation.resolve(imageName).normalize();
-//	            Resource resource = new UrlResource(imagePath.toUri());
-//
-//	            if (resource.exists()) {
-//	                // Lấy đúng Content-Type của file ảnh
-//	                String contentType = Files.probeContentType(imagePath);
-//	                return ResponseEntity.ok()
-//	                        .header(HttpHeaders.CONTENT_TYPE, contentType)
-//	                        .body(resource);
-//	            } else {
-//	                return ResponseEntity.notFound().build();
-//	            }
-//	        } catch (Exception e) {
-//	            return ResponseEntity.status(500).body(null);
-//	        }
-//	    }
+	    @GetMapping("/images/{imageName}")
+	    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
+	        try {
+	        	Resource resource = fileService.getImage(imageName);
+	            if (resource.exists()) {
+	                // Lấy đúng Content-Type của file ảnh
+	            	String contentType = Files.probeContentType(Paths.get(paramConfig.getUrlUpload()+imageName));
+	                return ResponseEntity.ok()
+	                        .header(HttpHeaders.CONTENT_TYPE,contentType )
+	                        .body(resource);
+	            } else {
+	                return ResponseEntity.notFound().build();
+	            }
+	        } catch (Exception e) {
+	            return ResponseEntity.status(500).body(null);
+	        }
+	    }
 	
 
 
