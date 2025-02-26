@@ -1,5 +1,7 @@
 package com.app.customermanagement.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,21 +17,14 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "medical_supplies")
+@Table(name = "image")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class MedicalSupplies extends BaseEntity{
-
-    @Id
+public class Image {
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String medicineName;
-    String unitPrice;
-    String quantity;
-    Boolean status;
-    String link;
-    String folderName;
-//
-//	@OneToMany(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "medical_supplies_id",referencedColumnName = "id")
-//	List<Prescription> prescriptions;
+	String folderName;
+	String fileName;
+
 }

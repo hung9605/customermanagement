@@ -3,6 +3,7 @@ package com.app.customermanagement.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -33,19 +34,34 @@ public class FileUploadController extends BaseController {
 	   public final ParamConfig paramConfig;
 
 	    @PostMapping("/file")
-	    public ResponseEntity<ResponseBean> uploadFile(@RequestParam("file") MultipartFile file) {
+	    public ResponseEntity<ResponseBean> uploadFile(@RequestParam("file") MultipartFile file, 
+                @RequestParam("foldername") String folderName) {
 	        try {
-	        	fileService.uploadFile(file);
+	        	fileService.uploadFile(file,folderName);
 	        	return response(new ResponseBean("Upload successfully !"));
 	        } catch (Exception e) {
 	            return responseError(new ResponseBean(e.getMessage()), e);
 	        }
 	    }
 	    
-	    @GetMapping("/images/{imageName}")
-	    public ResponseEntity<Resource> getImage(@PathVariable String imageName) {
+	    @PostMapping("/files")
+	    public ResponseEntity<ResponseBean> uploadFiles(@RequestParam("files") List<MultipartFile> files, 
+                @RequestParam("foldername") String foldername) {
 	        try {
-	        	Resource resource = fileService.getImage(imageName);
+	            for (MultipartFile file : files) {
+	                fileService.uploadFile(file,foldername); 
+	            }
+	            return response(new ResponseBean("Upload successfully!"));
+	        } catch (Exception e) {
+	            return responseError(new ResponseBean(e.getMessage()), e);
+	        }
+	    }
+
+	    
+	    @GetMapping("/images/{imageName}")
+	    public ResponseEntity<Resource> getImage(@PathVariable String imageName,@RequestParam("foldername") String foldername) {
+	        try {
+	        	Resource resource = fileService.getImage(imageName,foldername);
 	            if (resource.exists()) {
 	                // Lấy đúng Content-Type của file ảnh
 	            	String contentType = Files.probeContentType(Paths.get(paramConfig.getUrlUpload()+imageName));
