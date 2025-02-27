@@ -10,4 +10,5 @@ public interface MedicalSupplyService {
 	List<MedicalSupplies> listMedicalSupplies() throws Exception;
 	MedicalSupplies update(MedicalSupplies medicalSupplies) throws Exception;
 	MedicalSupplies remove(MedicalSupplies medicalSupplies) throws Exception;
+	MedicalSupplies getSupplies(String medicineName) throws Exception;
 }

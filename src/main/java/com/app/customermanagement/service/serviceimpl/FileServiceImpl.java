@@ -10,7 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.customermanagement.config.ParamConfig;
+import com.app.customermanagement.constants.CommonConstant;
+import com.app.customermanagement.model.Image;
+import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.service.FileService;
+import com.app.customermanagement.service.ImageService;
+import com.app.customermanagement.service.MedicalSupplyService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,21 +26,26 @@ import lombok.Data;
 public class FileServiceImpl implements FileService{
 	
 	public final ParamConfig paramConfig;
-
+	public final MedicalSupplyService medicalSupplyService;
+	public final ImageService imageService;
+	
 	@Override
 	public void uploadFile(MultipartFile file,String folderName) throws Exception {
         if (file.isEmpty()) {
             throw new  Exception("File is not exists!");
         }
         String fileName = file.getOriginalFilename();
-        String uploadDir = paramConfig.getUrlUpload()+folderName+"/";
+        String uploadDir = paramConfig.getUrlUpload()+folderName+CommonConstant.SLASH;
         Path path = Paths.get(uploadDir + fileName);
         file.transferTo(path);
+        MedicalSupplies mSupplies = medicalSupplyService.getSupplies(folderName);
+        Image image = new Image(0, folderName, fileName, mSupplies.getId());
+        imageService.addImage(image);
 	}
 
 	@Override
 	public Resource getImage(String imageName, String folderName) throws MalformedURLException {
-		String folder = paramConfig.getUrlUpload() + folderName + "/";
+		String folder = paramConfig.getUrlUpload() + folderName + CommonConstant.SLASH;
 		Path imagePath = Paths.get(folder).resolve(imageName).normalize();
 		return new UrlResource(imagePath.toUri());
 	}

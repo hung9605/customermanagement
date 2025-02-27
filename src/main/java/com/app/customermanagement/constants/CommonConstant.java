@@ -16,4 +16,6 @@ public class CommonConstant {
 	public static final Integer NOT_PAID = 0;
 	public static final String HOST = "localhost";
 	public static final String DB_NAME = "dbtest";
+	public static final String SLASH = "/";
+	public static final String HTTP = "http://";
 }

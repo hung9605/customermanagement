@@ -58,8 +58,8 @@ public class FileUploadController extends BaseController {
 	    }
 
 	    
-	    @GetMapping("/images/{imageName}")
-	    public ResponseEntity<Resource> getImage(@PathVariable String imageName,@RequestParam("foldername") String foldername) {
+	    @GetMapping("/images/{foldername}/{imageName}")
+	    public ResponseEntity<Resource> getImage(@PathVariable("foldername") String foldername,@PathVariable String imageName) {
 	        try {
 	        	Resource resource = fileService.getImage(imageName,foldername);
 	            if (resource.exists()) {

@@ -26,5 +26,6 @@ public class Image {
     Integer id;
 	String folderName;
 	String fileName;
+	Integer suppliesId;
 
 }
