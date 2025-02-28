@@ -12,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ImageDto {
 	
+	Integer id;
 	String itemImageSrc;
 	String thumbnailImageSrc;
 	String title;

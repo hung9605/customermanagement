@@ -28,7 +28,7 @@ public class ImageServiceImpl implements ImageService {
 		List<ImageDto> lstImageDtos = new ArrayList<>();
 		lstImage.stream().forEach(item ->{
 			String link = HTTP_IMAGE + item.getFolderName() + CommonConstant.SLASH + item.getFileName();
-			ImageDto imageDto = new ImageDto(link, link, "", "");
+			ImageDto imageDto = new ImageDto(item.getId(),link, link, "", "");
 			lstImageDtos.add(imageDto);
 		});
 		return lstImageDtos;
