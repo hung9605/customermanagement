@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.customermanagement.config.ParamConfig;
+import com.app.customermanagement.constants.CommonConstant;
+import com.app.customermanagement.dto.model.ImageDto;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.service.FileService;
 
@@ -75,6 +78,19 @@ public class FileUploadController extends BaseController {
 	            return ResponseEntity.status(500).body(null);
 	        }
 	    }
+	    
+	    @PostMapping("/remove")
+		public ResponseEntity<?> remove(@RequestBody List<ImageDto> imageDtos){
+			try {
+				fileService.remove(imageDtos);
+				return response(new ResponseBean(CommonConstant.OK));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return responseError(new ResponseBean(e.getMessage()), e);
+			}
+			
+		}
 	
 
 

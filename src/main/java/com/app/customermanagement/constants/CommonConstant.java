@@ -18,4 +18,5 @@ public class CommonConstant {
 	public static final String DB_NAME = "dbtest";
 	public static final String SLASH = "/";
 	public static final String HTTP = "http://";
+	public static final String OK = "OK";
 }

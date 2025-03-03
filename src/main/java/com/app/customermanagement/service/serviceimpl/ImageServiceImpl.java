@@ -2,10 +2,10 @@ package com.app.customermanagement.service.serviceimpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.ImageDto;
 import com.app.customermanagement.model.Image;
@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class ImageServiceImpl implements ImageService {
+public class ImageServiceImpl implements ImageService  {
 	
 	private final ImageRepository imageRepository;
 	private final String HTTP_IMAGE = "http://localhost:8085/api/upload/images/";
@@ -44,6 +44,12 @@ public class ImageServiceImpl implements ImageService {
 	public List<Image> addAll(List<Image> lstImages) {
 		// TODO Auto-generated method stub
 		return imageRepository.saveAll(lstImages);
+	}
+
+	@Override
+	public void remove(List<ImageDto> imageDto)  throws Exception{
+		List<Integer> idRemoves = imageDto.stream().map(ImageDto::getId).collect(Collectors.toList());
+		this.imageRepository.deleteAllById(idRemoves);
 	}
 
 }

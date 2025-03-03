@@ -10,5 +10,6 @@ public interface ImageService {
 	List<ImageDto> getImage(Integer suppliesId);
 	Image addImage(Image image);
 	List<Image> addAll(List<Image> lstImages);
+	void remove(List<ImageDto> imageDto) throws Exception;
 
 }

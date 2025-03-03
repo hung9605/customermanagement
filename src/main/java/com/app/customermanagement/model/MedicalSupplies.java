@@ -30,12 +30,10 @@ public class MedicalSupplies extends BaseEntity{
     Boolean status;
     String link;
     String folderName;
+    Boolean isDelete;
     
     @Lob
     @Column(name = "description", columnDefinition = "TEXT")
     String description;
-//
-//	@OneToMany(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "medical_supplies_id",referencedColumnName = "id")
-//	List<Prescription> prescriptions;
+
 }

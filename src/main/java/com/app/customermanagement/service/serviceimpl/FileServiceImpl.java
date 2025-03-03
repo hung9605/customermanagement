@@ -1,8 +1,12 @@
 package com.app.customermanagement.service.serviceimpl;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -11,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
+import com.app.customermanagement.dto.model.ImageDto;
 import com.app.customermanagement.model.Image;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.service.FileService;
@@ -50,4 +55,29 @@ public class FileServiceImpl implements FileService{
 		return new UrlResource(imagePath.toUri());
 	}
 
+	@Override
+	public void deleteFile(List<String> paths) throws Exception {
+		// TODO Auto-generated method stub
+			paths.stream().forEach(path -> {
+			Path pathFile = Paths.get(paramConfig.getUrlUpload()+path);
+			try {
+				Files.delete(pathFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+	}
+
+	@Override
+	public void remove(List<ImageDto> imageDto) throws Exception {
+		// TODO Auto-generated method stub
+		List<String> paths = imageDto.stream().map(item -> {
+			String url = item.getItemImageSrc();
+			int index = url.indexOf("images/");
+			return url.substring(index + "images/".length());
+		}).collect(Collectors.toList());
+		deleteFile(paths);	
+	}
 }
