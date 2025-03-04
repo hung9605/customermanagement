@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
+import com.app.customermanagement.dto.model.SuppliesListDto;
+import com.app.customermanagement.mapper.SuppliesMapperImpl;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.repository.MedicalSuppliesRepository;
 import com.app.customermanagement.service.MedicalSupplyService;
@@ -35,9 +37,9 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	}
 
 	@Override
-	public List<MedicalSupplies> listMedicalSupplies() throws Exception {
+	public List<SuppliesListDto> listMedicalSupplies() throws Exception {
 		// TODO Auto-generated method stub
-		return medicalSuppliesRepository.findAll();
+		return new SuppliesMapperImpl().mapToDtos(medicalSuppliesRepository.findByIsDeleteFalse());
 	}
 
 	@Override
@@ -47,9 +49,9 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	}
 
 	@Override
-	public MedicalSupplies remove(MedicalSupplies medicalSupplies) throws Exception {
+	public void remove(MedicalSupplies medicalSupplies) throws Exception {
 		// TODO Auto-generated method stub
-		return medicalSuppliesRepository.save(medicalSupplies);
+		 medicalSuppliesRepository.updateRemove(medicalSupplies.getIsDelete(),medicalSupplies.getId());
 	}
 	
 	private void createFolder(String folderName) {
@@ -61,6 +63,12 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	public MedicalSupplies getSupplies(String medicineName) throws Exception {
 		// TODO Auto-generated method stub
 		return medicalSuppliesRepository.findByMedicineName(medicineName);
+	}
+
+	@Override
+	public MedicalSupplies getDetailSupplies(Integer suppliesId) throws Exception {
+		// TODO Auto-generated method stub
+		return medicalSuppliesRepository.findById(suppliesId).get();
 	}
 	
 }

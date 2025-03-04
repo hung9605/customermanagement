@@ -1,5 +1,8 @@
 package com.app.customermanagement.model;
 
+import com.app.customermanagement.dto.model.Views;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
