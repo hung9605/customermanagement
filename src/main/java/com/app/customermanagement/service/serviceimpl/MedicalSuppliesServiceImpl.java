@@ -38,6 +38,7 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 		medicalSupplies.setCreatedAt(new Date());
 		medicalSupplies.setCreatedBy(CommonConstant.ADMIN);
 		medicalSupplies.setStatus(true);
+		medicalSupplies.setIsDelete(false);
 		medicalSupplies =  medicalSuppliesRepository.save(medicalSupplies);
 		createFolder(String.valueOf(medicalSupplies.getId()));
 		return medicalSupplies;
