@@ -1,7 +1,5 @@
 package com.app.customermanagement.controller;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.customermanagement.constants.CommonConstant;
-import com.app.customermanagement.dto.model.Views;
+import com.app.customermanagement.dto.model.SuppliesDetail;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.service.MedicalSupplyService;
-import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.AllArgsConstructor;
 
@@ -66,6 +63,18 @@ public class MedicalSuppliesController extends BaseController{
 	public ResponseEntity<?> delete(@RequestBody MedicalSupplies medicalSupplies){
 		try {
 			medicalSupplyService.remove(medicalSupplies);
+			return response(new ResponseBean(CommonConstant.OK));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
+	}
+	
+	@PostMapping("/updatedetail")
+	public ResponseEntity<?> updateDetail(@RequestBody SuppliesDetail suppliesDetail){
+		try {
+			medicalSupplyService.updateDetail(suppliesDetail);
 			return response(new ResponseBean(CommonConstant.OK));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

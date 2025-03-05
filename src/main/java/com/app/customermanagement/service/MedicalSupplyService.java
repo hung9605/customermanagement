@@ -2,6 +2,7 @@ package com.app.customermanagement.service;
 
 import java.util.List;
 
+import com.app.customermanagement.dto.model.SuppliesDetail;
 import com.app.customermanagement.dto.model.SuppliesListDto;
 import com.app.customermanagement.model.MedicalSupplies;
 
@@ -13,4 +14,6 @@ public interface MedicalSupplyService {
 	void remove(MedicalSupplies medicalSupplies) throws Exception;
 	MedicalSupplies getSupplies(String medicineName) throws Exception;
 	MedicalSupplies getDetailSupplies(Integer suppliesId) throws Exception;
+	void updateDetail(SuppliesDetail suppliesDetail) throws Exception;
+	
 }

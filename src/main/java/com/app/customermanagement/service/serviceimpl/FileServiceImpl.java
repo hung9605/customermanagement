@@ -43,8 +43,8 @@ public class FileServiceImpl implements FileService{
         String uploadDir = paramConfig.getUrlUpload()+folderName+CommonConstant.SLASH;
         Path path = Paths.get(uploadDir + fileName);
         file.transferTo(path);
-        MedicalSupplies mSupplies = medicalSupplyService.getSupplies(folderName);
-        Image image = new Image(0, folderName, fileName, mSupplies.getId());
+        //MedicalSupplies mSupplies = medicalSupplyService.getDetailSupplies(Integer.parseInt(folderName));
+        Image image = new Image(0, folderName, fileName, Integer.parseInt(folderName));
         imageService.addImage(image);
 	}
 

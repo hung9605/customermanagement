@@ -4,16 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class SuppliesListDto {
+public class SuppliesDetail {
+	
 	Integer id;
     String medicineName;
     String unitPrice;
     String quantity;
-    Boolean status;
+    String description;
     String link;
-    String folderName;
-    Boolean isDelete;
+
 }
+

@@ -1,8 +1,5 @@
 package com.app.customermanagement.model;
 
-import com.app.customermanagement.dto.model.Views;
-import com.fasterxml.jackson.annotation.JsonView;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +29,6 @@ public class MedicalSupplies extends BaseEntity{
     String quantity;
     Boolean status;
     String link;
-    String folderName;
     Boolean isDelete;
     
     @Lob
