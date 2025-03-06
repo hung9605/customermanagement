@@ -113,4 +113,5 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	private void updateMedicalSupplies(List<MedicalSupplies> lstSupplies,Prescription prescription) {
 		MedicalSupplies medicalSupplies =  lstSupplies.stream().filter(item -> item.getId().equals(prescription.getMedicalSupplies().getId())).findFirst().get();
 	}
+
 }

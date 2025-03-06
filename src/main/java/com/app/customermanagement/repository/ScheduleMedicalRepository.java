@@ -18,7 +18,7 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 	List<ScheduleMedical> findByDateRegisterBetweenAndStatusOrderByTimeRegister(String startDate, String endDate, Integer status);
 	List<ScheduleMedical> findByFullNameAndDateRegister(String name,String date);
 	ScheduleMedical findByFullNameContainingIgnoreCase(String fullName);
-	ScheduleMedical findByCustomer(Customer customerOpt);
+	List<ScheduleMedical> findByCustomer(Customer customerOpt);
 	ScheduleMedical findByTimeRegisterAndDateRegister(String timeRegister,String date);
 	
 	@Transactional

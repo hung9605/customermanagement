@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.mapper.ScheduleMedicalMapperImpl;
+import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
 import com.app.customermanagement.service.ScheduleSevice;
@@ -96,6 +97,13 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	public boolean checkTimeRegister(String time) {
 		// TODO Auto-generated method stub
 		return null == scheduleMedicalRepository.findByTimeRegisterAndDateRegister(time,DateUtils.formatDate(CommonConstant.DATE_PATTERN, new Date()));
+	}
+
+	@Override
+	public List<ScheduleDto> getListMedicalHistory(Customer customer) {
+		// TODO Auto-generated method stub
+		return new ScheduleMedicalMapperImpl().mapToDtos(scheduleMedicalRepository.findByCustomer(customer));
+		
 	}
    
 

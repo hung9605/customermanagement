@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.customermanagement.dto.response.ResponseBean;
+import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.service.MedicalExamService;
@@ -49,5 +50,6 @@ public class MedicalExamController extends BaseController{
 			,@RequestParam(defaultValue = "0") String toDate){
 		return response(new ResponseBean(medicalExamService.listMoney(0,date,toDate)));
 	}
+	
 	
 }

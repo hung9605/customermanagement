@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.dto.response.ResponseBean;
+import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.service.serviceimpl.ScheduleServiceImpl;
 import lombok.AllArgsConstructor;
 
@@ -85,6 +86,11 @@ public class ScheduleController extends BaseController {
 		}catch (Exception e) {
 			return responseError(new ResponseBean(e), e);
 		}
+	}
+	
+	@PostMapping("/listhistory")
+	public ResponseEntity<?> listhistory(@RequestBody Customer customer){
+		return response(new ResponseBean(serviceImpl.getListMedicalHistory(customer)));
 	}
 	
 }

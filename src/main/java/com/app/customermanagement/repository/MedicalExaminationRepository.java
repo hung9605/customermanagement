@@ -1,6 +1,7 @@
 package com.app.customermanagement.repository;
 
 import com.app.customermanagement.dto.model.MoneyDto;
+import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
 
@@ -18,5 +19,7 @@ public interface MedicalExaminationRepository extends JpaRepository<MedicalExami
 	@Query("select new com.app.customermanagement.dto.model.MoneyDto(se.id,se.fullName,se.dateRegister,me.totalMoney,me.status) from MedicalExamination me " +
 			"inner join ScheduleMedical se on me.medical.id = se.id where me.dayOfExamination >= :date and me.dayOfExamination <= :toDate")
 	List<MoneyDto> listMoney(String date, String toDate);
+	
+	
 	
 }

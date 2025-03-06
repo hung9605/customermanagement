@@ -1,6 +1,8 @@
 package com.app.customermanagement.service;
 
 import com.app.customermanagement.dto.model.ScheduleDto;
+import com.app.customermanagement.model.Customer;
+import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
 import java.util.List;
 
@@ -15,4 +17,5 @@ public interface ScheduleSevice {
     ScheduleMedical registerV1(ScheduleMedical scheduleMedical);
     boolean checkRegisterExists(String fullName,String phoneNumber);
     boolean checkTimeRegister(String time);
+    List<ScheduleDto> getListMedicalHistory(Customer customer);
 }
