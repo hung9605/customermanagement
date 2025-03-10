@@ -74,11 +74,6 @@ public class ScheduleController extends BaseController {
 		return response(new ResponseBean(serviceImpl.getListHistory(date,toDate)));
 	}
 	
-//	@PostMapping("/addv1")
-//	public ResponseEntity<?> addV1(@RequestBody ScheduleMedical sMedical){
-//		return response(new ResponseBean(serviceImpl.register(sMedical)));
-//	}
-	
 	@GetMapping("/checktime")
 	public ResponseEntity<?> checkTime(@RequestParam(defaultValue = "0") String time) throws Exception{
 		try {

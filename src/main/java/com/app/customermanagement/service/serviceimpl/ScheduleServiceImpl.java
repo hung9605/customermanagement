@@ -102,7 +102,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	@Override
 	public List<ScheduleDto> getListMedicalHistory(Customer customer) {
 		// TODO Auto-generated method stub
-		return new ScheduleMedicalMapperImpl().mapToDtos(scheduleMedicalRepository.findByCustomer(customer));
+		return new ScheduleMedicalMapperImpl().mapToDtos(scheduleMedicalRepository.findByCustomerAndStatusTrue(customer));
 		
 	}
    
