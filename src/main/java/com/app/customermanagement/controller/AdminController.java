@@ -2,8 +2,10 @@ package com.app.customermanagement.controller;
 
 import com.app.customermanagement.dto.model.CustomerDto;
 import com.app.customermanagement.dto.model.Login;
+import com.app.customermanagement.dto.model.TimeConfig;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.service.AdminService;
+import com.app.customermanagement.service.TimeService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -30,6 +32,7 @@ public class AdminController extends  BaseController{
 
     public final ParamConfig paramConfig;
     private final AdminService adminService;
+    private final TimeService timeService;
     
     @GetMapping("/export-sql")
     public void exportSqlDump(HttpServletResponse response,@RequestParam String username,@RequestParam String password	) throws IOException {
@@ -46,5 +49,31 @@ public class AdminController extends  BaseController{
     public ResponseEntity<?> add(@RequestBody Login login){
         return response(new ResponseBean(null));
     }
+    
+    @PostMapping("/configtime")
+    public ResponseEntity<?> configTimes(@RequestBody TimeConfig timeConfig){
+    	try {
+			timeService.configTime(timeConfig.getStartTime(), timeConfig.getEndTime(), timeConfig.getIntervalTime());
+			return response(new ResponseBean(CommonConstant.OK));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
+        
+    }
+    
+    @GetMapping("/gettime")
+    public ResponseEntity<?> getTime(){
+    	try {
+			return response(new ResponseBean(timeService.getTime()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
+        
+    }
+    
 
 }
