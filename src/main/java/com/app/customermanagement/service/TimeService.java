@@ -7,5 +7,7 @@ import com.app.customermanagement.model.Time;
 public interface TimeService {
 	
 	void configTime(String timeStart,String endTime,String timeInterval) throws Exception;
-	List<Time> getTime();
+	List<Time> getTime() throws Exception;
+	void resetStatusTime() throws Exception;
+	void updateTimeisRegister(String time) throws Exception;
 }

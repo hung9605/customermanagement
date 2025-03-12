@@ -27,7 +27,7 @@ public class TimeServiceImpl implements TimeService{
 		List<Time> times = new ArrayList<>();
         LocalTime currentTime = start;
         while(!currentTime.isAfter(end)) {
-        	times.add(new Time(0, currentTime.format(DateTimeFormatter.ofPattern("HH:mm"))));
+        	times.add(new Time(0, currentTime.format(DateTimeFormatter.ofPattern("HH:mm")),false));
             currentTime = currentTime.plusMinutes(Long.parseLong(timeInterval));
         }
         timeRepository.saveAll(times);
@@ -35,9 +35,19 @@ public class TimeServiceImpl implements TimeService{
 	}
 
 	@Override
-	public List<Time> getTime() {
+	public List<Time> getTime() throws Exception{
 		// TODO Auto-generated method stub
-		return timeRepository.findAll();
+		return timeRepository.findByStatusFalse();
+	}
+
+	@Override
+	public void resetStatusTime() throws Exception{
+		timeRepository.updateAllStatusToFalse();
+	}
+
+	@Override
+	public void updateTimeisRegister(String time) throws Exception {
+		timeRepository.updateTimeisRegister(time);
 	}
 	
 	

@@ -20,5 +20,6 @@ public class Time {
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 Integer id;
 	 String time;
+	 Boolean status;
 
 }

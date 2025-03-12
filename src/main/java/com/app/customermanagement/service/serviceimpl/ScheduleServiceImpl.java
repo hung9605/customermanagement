@@ -12,6 +12,7 @@ import com.app.customermanagement.mapper.ScheduleMedicalMapperImpl;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
+import com.app.customermanagement.repository.TimeRepository;
 import com.app.customermanagement.service.ScheduleSevice;
 import com.app.customermanagement.util.DateUtils;
 
@@ -22,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class ScheduleServiceImpl implements ScheduleSevice {
 	
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
+	private final TimeRepository timeRepository;
 	
 	@Override
 	public ScheduleMedical register(ScheduleDto scheduleDto) throws Exception {
@@ -35,6 +37,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
 		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
 		scheduleMedical.setDateRegister(dateRegister);
+		timeRepository.updateTimeisRegister(scheduleDto.getTimeRegister());
 		return scheduleMedicalRepository.save(scheduleMedical);
 	}
 
