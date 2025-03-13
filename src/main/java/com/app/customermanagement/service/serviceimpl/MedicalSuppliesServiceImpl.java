@@ -47,7 +47,7 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	@Override
 	public List<SuppliesListDto> listMedicalSupplies() throws Exception {
 		// TODO Auto-generated method stub
-		return new SuppliesMapperImpl().mapToDtos(medicalSuppliesRepository.findByIsDeleteFalse());
+		return new SuppliesMapperImpl().mapToDtos(medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero());
 	}
 
 	@Override
@@ -101,6 +101,8 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 		if (null != suppliesDetail.getLink()) {
 			update.set("link", suppliesDetail.getLink());
 		}
+		update.set("updatedBy", CommonConstant.ADMIN);
+		update.set("updatedAt", new Date());
 		update.where(criteriaBuilder.equal(root.get("id"), suppliesDetail.getId()));
 		entityManager.createQuery(update).executeUpdate();
 	}

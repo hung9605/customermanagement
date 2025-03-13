@@ -13,7 +13,10 @@ import com.app.customermanagement.model.MedicalSupplies;
 public interface MedicalSuppliesRepository extends JpaRepository<MedicalSupplies, Integer> {
 	
 	MedicalSupplies findByMedicineName(String medicineName);
-	List<MedicalSupplies> findByIsDeleteFalse();
+	
+	@Query("SELECT m FROM MedicalSupplies m WHERE m.isDelete = false AND CAST(m.quantity AS int) > 0")
+	List<MedicalSupplies> findByIsDeleteFalseAndQuantityGreaterThanZero();
+	
 	Optional<MedicalSupplies> findById(Integer suppliesId);
 	
 	@Transactional
