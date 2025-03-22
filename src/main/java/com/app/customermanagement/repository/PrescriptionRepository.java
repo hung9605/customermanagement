@@ -2,6 +2,7 @@ package com.app.customermanagement.repository;
 
 import java.util.List;
 
+import com.app.customermanagement.dto.model.PrescriptionDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,5 +21,11 @@ public interface PrescriptionRepository extends JpaRepository<Prescription, Inte
 	@Modifying
 	@Query("DELETE FROM Prescription p WHERE p.medicalExamination = :medicalExamination")
 	void deletePrescription(@Param("medicalExamination") MedicalExamination medicalExamination);
+
+	@Query("select new com.app.customermanagement.dto.model.PrescriptionDto(p.id,s.medicineName,p.quantity,s.unitPrice) from Prescription p " +
+			" inner join MedicalExamination  m on  p.medicalExamination.id = m.id " +
+			" inner join MedicalSupplies s on p.medicalSupplies.id = s.id" +
+			" where m.id = :id")
+	List<PrescriptionDto> getList(@Param("id") Integer id);
 	
 }

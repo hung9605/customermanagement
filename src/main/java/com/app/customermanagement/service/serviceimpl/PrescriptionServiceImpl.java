@@ -2,6 +2,7 @@ package com.app.customermanagement.service.serviceimpl;
 
 import java.util.List;
 
+import com.app.customermanagement.dto.model.PrescriptionDto;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.model.MedicalExamination;
@@ -41,4 +42,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 		return prescriptionRepository.findByMedicalExamination(medicalExamination);
 	}
 
+	@Override
+	public List<PrescriptionDto> getListSupplies(Integer id) throws Exception {
+		return prescriptionRepository.getList(id);
+	}
 }

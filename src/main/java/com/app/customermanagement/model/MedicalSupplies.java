@@ -30,8 +30,7 @@ public class MedicalSupplies extends BaseEntity{
     Boolean status;
     String link;
     Boolean isDelete;
-    
-    @Lob
+
     @Column(name = "description", columnDefinition = "TEXT")
     String description;
 

@@ -10,13 +10,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class MoneyDto {
+public class PrescriptionDto {
 
-     Integer id;
-     String fullName;
-     String dateExam;
-     String totalMoney;
-     Integer status;
-     Integer idExam;
-
+    Integer id;
+    String medicineName;
+    String quantity;
+    String unitPrice;
 }

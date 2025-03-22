@@ -20,7 +20,7 @@ public class ResetTime {
 	
 	private final TimeService timeService;
 	
-	@Scheduled(cron = "0 50 15 * * ?")  // Cron expression để chạy vào 10h sáng mỗi ngày
+	@Scheduled(cron = "0 45 09 * * ?")  // Cron expression để chạy vào 10h sáng mỗi ngày
 	public void updateTime() {		
 		logger.info("----------Starting reset time status");
 		try {

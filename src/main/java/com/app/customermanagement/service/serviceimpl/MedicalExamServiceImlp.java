@@ -34,7 +34,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
     	medicalExamination.setCreatedAt(new Date());
         medicalExamination.setCreatedBy(CommonConstant.ADMIN);
-    	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findAll();
+    	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero();
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
     	List<Prescription> lstPrescription = new ArrayList<>();
     	String[] typeMedicine = medicalExamination.getTypeOfMedicine().split(",");

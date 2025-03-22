@@ -25,9 +25,20 @@ public class PrescriptionController extends BaseController{
 	private final PrescriptionService prescriptionService;
 	
 	@PostMapping("/list")
-	public ResponseEntity<?> list(@RequestBody MedicalExamination medicalExamination){
+	public ResponseEntity<?> list(@RequestBody MedicalExamination medicalExamination) {
 		try {
 			return response(new ResponseBean(prescriptionService.list(medicalExamination)));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
+	}
+
+	@PostMapping("/listsupplies")
+	public ResponseEntity<?> listSupplies(@RequestBody MedicalExamination medicalExamination) {
+		try {
+			return response(new ResponseBean(prescriptionService.getListSupplies(medicalExamination.getId())));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

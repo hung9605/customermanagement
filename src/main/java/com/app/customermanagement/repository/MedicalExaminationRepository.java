@@ -16,7 +16,7 @@ public interface MedicalExaminationRepository extends JpaRepository<MedicalExami
 	
 	MedicalExamination findByMedical(ScheduleMedical medical);
 
-	@Query("select new com.app.customermanagement.dto.model.MoneyDto(se.id,se.fullName,se.dateRegister,me.totalMoney,me.status) from MedicalExamination me " +
+	@Query("select new com.app.customermanagement.dto.model.MoneyDto(se.id,se.fullName,se.dateRegister,me.totalMoney,me.status,me.id) from MedicalExamination me " +
 			"inner join ScheduleMedical se on me.medical.id = se.id where me.dayOfExamination >= :date and me.dayOfExamination <= :toDate")
 	List<MoneyDto> listMoney(String date, String toDate);
 	
