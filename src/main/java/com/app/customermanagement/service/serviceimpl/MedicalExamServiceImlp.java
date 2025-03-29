@@ -12,13 +12,10 @@ import com.app.customermanagement.repository.MedicalSuppliesRepository;
 import com.app.customermanagement.repository.PrescriptionRepository;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
 import com.app.customermanagement.service.MedicalExamService;
-
 import lombok.AllArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,7 +26,11 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
 	private final PrescriptionRepository prescriptionRepository;
 	private final MedicalSuppliesRepository medicalSuppliesRepository;
-	
+
+	/**
+	 * @param medicalExamination
+	 * @return
+	 */
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
     	medicalExamination.setCreatedAt(new Date());
@@ -62,8 +63,12 @@ public class MedicalExamServiceImlp implements MedicalExamService {
         return mExamination;
     }
 
- 
-    @Override
+	/**
+	 *
+	 * @param medicalExamination
+	 * @return
+	 */
+	@Override
     public MedicalExamination updateMedicalExamination(MedicalExamination medicalExamination) {
     	prescriptionRepository.deletePrescription(medicalExamination);
     	medicalExamination.setUpdatedAt(new Date());
@@ -86,14 +91,22 @@ public class MedicalExamServiceImlp implements MedicalExamService {
         return mExamination;
     }
 
-
+	/**
+	 *
+	 * @param customer
+	 * @return
+	 */
 	@Override
 	public List<MedicalExamination> getListByCustormer(Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	/**
+	 *
+	 * @param sMedical
+	 * @return
+	 */
 	@Override
 	public MedicalExamination getByIdSchedule(ScheduleMedical sMedical) {
 		// TODO Auto-generated method stub
@@ -109,7 +122,11 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	public List<MoneyDto> listMoney(Integer page, String date, String toDate) {
 		return medicalExaminationRepository.listMoney(date,toDate);
 	}
-	
+
+	/**
+	 * @param lstSupplies
+	 * @param prescription
+	 */
 	private void updateMedicalSupplies(List<MedicalSupplies> lstSupplies,Prescription prescription) {
 		MedicalSupplies medicalSupplies =  lstSupplies.stream().filter(item -> item.getId().equals(prescription.getMedicalSupplies().getId())).findFirst().get();
 	}

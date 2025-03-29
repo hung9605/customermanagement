@@ -14,9 +14,10 @@ public class CommonConstant {
 	public static final Integer NOT_EXAMINED = 2;
 	public static final Integer PAID = 1;
 	public static final Integer NOT_PAID = 0;
-	public static final String HOST = "localhost";
+	public static final String HOST = "mysql-353dbf25-hung9605-10df.i.aivencloud.com";
 	public static final String DB_NAME = "dbtest";
 	public static final String SLASH = "/";
 	public static final String HTTP = "http://";
 	public static final String OK = "OK";
+	public static final String PORT = "27562";
 }

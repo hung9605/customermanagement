@@ -27,12 +27,13 @@ public class AdminServiceImpl implements AdminService{
 		// TODO Auto-generated method stub
 		 String dbName = CommonConstant.DB_NAME;
 	        String host = CommonConstant.HOST;
+		String port = CommonConstant.PORT;
 	        String osName = System.getProperty("os.name").toLowerCase().substring(0, 3);
 	        String urlDump = paramConfig.getUrlDumpWin();
 	        if(osName.equals("mac")) {
 	            urlDump = paramConfig.getUrlDumpMac();
 	        }
-	        String command = String.format(urlDump, paramConfig.getUser(), paramConfig.getPazzword(), host, dbName);
+	        String command = String.format(urlDump, paramConfig.getUser(), paramConfig.getPazzword(), host,port, dbName);
 	        // Thiết lập response để tải file SQL dumpcmd
 	        response.setContentType("application/sql");
 	        response.setHeader("Content-Disposition", "attachment; filename=\"database_dump.sql\"");
