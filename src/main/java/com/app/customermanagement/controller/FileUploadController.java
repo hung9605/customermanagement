@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -51,8 +52,9 @@ public class FileUploadController extends BaseController {
 	    public ResponseEntity<ResponseBean> uploadFiles(@RequestParam("files") List<MultipartFile> files, 
                 @RequestParam("foldername") String foldername) {
 	        try {
+				Resource resource = new ClassPathResource("uploads");
 	            for (MultipartFile file : files) {
-	                fileService.uploadFile(file,foldername); 
+	                fileService.uploadFile(file,resource.getURI().toString());
 	            }
 	            return response(new ResponseBean("Upload successfully!"));
 	        } catch (Exception e) {

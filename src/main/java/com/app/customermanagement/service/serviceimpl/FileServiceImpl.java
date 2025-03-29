@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,14 @@ public class FileServiceImpl implements FileService{
 
 	@Override
 	public Resource getImage(String imageName, String folderName) throws MalformedURLException {
-		String folder = paramConfig.getUrlUpload() + folderName + CommonConstant.SLASH;
+		Resource uri = new ClassPathResource("upload");
+        String folder = null;
+        try {
+            folder = uri.getURI().toString()+ CommonConstant.SLASH  +folderName + CommonConstant.SLASH;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(folder);
 		Path imagePath = Paths.get(folder).resolve(imageName).normalize();
 		return new UrlResource(imagePath.toUri());
 	}
