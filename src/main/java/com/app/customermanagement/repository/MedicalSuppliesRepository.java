@@ -14,7 +14,8 @@ public interface MedicalSuppliesRepository extends JpaRepository<MedicalSupplies
 	
 	MedicalSupplies findByMedicineName(String medicineName);
 	
-	@Query("SELECT m FROM MedicalSupplies m WHERE m.isDelete = false AND CAST(m.quantity AS int) > 0")
+//	@Query("SELECT m FROM MedicalSupplies m WHERE m.isDelete = false AND CAST(m.quantity AS int) > 0")
+	@Query("SELECT m FROM MedicalSupplies m WHERE m.isDelete = false")
 	List<MedicalSupplies> findByIsDeleteFalseAndQuantityGreaterThanZero();
 	
 	Optional<MedicalSupplies> findById(Integer suppliesId);
