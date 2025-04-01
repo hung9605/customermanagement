@@ -23,6 +23,8 @@ public class MedicalExamination extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String dayOfExamination;
+    String temperature;
+    String healthCondition;
     String sympton;
     String treatment;
     String typeOfMedicine;
