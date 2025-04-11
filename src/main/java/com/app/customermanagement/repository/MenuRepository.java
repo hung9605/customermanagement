@@ -5,7 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import com.app.customermanagement.model.Menu;
 
+import java.util.List;
+
 @Repository
 public interface MenuRepository extends JpaRepository<Menu, Integer>{
+
+    List<Menu> findAllByOrderByOrderNumber();
+
 
 }

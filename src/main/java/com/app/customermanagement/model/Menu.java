@@ -28,4 +28,5 @@ public class Menu extends BaseEntity {
 	String routerLink;
 	String icon;
 	Integer idParent;
+	Integer orderNumber;
 }

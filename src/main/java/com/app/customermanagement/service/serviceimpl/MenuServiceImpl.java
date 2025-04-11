@@ -21,7 +21,7 @@ public class MenuServiceImpl implements MenuService{
 	@Override
 	public List<MenuDto> getAll() {
 		MenuMapper mapper = new MenuMapperImpl();
-		return mapper.mapToDtos(menuRepository.findAll());
+		return mapper.mapToDtos(menuRepository.findAllByOrderByOrderNumber());
 	}
 
 	@Override

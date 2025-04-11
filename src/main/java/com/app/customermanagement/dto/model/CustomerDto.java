@@ -26,4 +26,6 @@ public class CustomerDto {
     String createdBy;
     Date updatedAt;
     String updatedBy;
+    String gender;
+    String other;
 }
