@@ -44,6 +44,15 @@ public class ScheduleController extends BaseController {
 		}
 	}
 
+	@PostMapping("/addexistscustomer")
+	public ResponseEntity<?> addExistsCustomer(@RequestBody ScheduleDto sMedical) throws Exception{
+		try {
+			return response(new ResponseBean(serviceImpl.registerExistsCustomer(sMedical)));
+		}catch (Exception e) {
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
+	}
+
 	@PostMapping("/update")
 	public ResponseEntity<?> update(@RequestBody ScheduleDto sMedical) throws Exception{
 		try {

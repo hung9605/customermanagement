@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ScheduleSevice {
     ScheduleMedical register(ScheduleDto scheduleDto) throws Exception;
+    ScheduleMedical registerExistsCustomer(ScheduleDto scheduleDto) throws Exception;
     List<ScheduleMedical> getListByDay(String day);
     Integer updateScheduleMedical(ScheduleDto ScheduleDto);
     List<ScheduleMedical> getListByName(String name, String day);

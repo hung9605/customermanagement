@@ -41,6 +41,22 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return scheduleMedicalRepository.save(scheduleMedical);
 	}
 
+	/**
+	 * @param scheduleDto
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public ScheduleMedical registerExistsCustomer(ScheduleDto scheduleDto) throws Exception {
+		ScheduleMedical scheduleMedical = new ScheduleMedicalMapperImpl().maptoModel(scheduleDto);
+		scheduleMedical.setCreatedAt(new Date());
+		scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
+		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
+		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
+		scheduleMedical.setDateRegister(dateRegister);
+		return scheduleMedicalRepository.save(scheduleMedical);
+	}
+
 	@Override
 	public List<ScheduleMedical> getListByDay(String day) {
 		// TODO Auto-generated method stub
