@@ -16,6 +16,12 @@ public class MenuDto {
 	String label;
 	String link;
 	String icon;
+	String orderNumber;
+	String createdAt;
+	String createdBy;
+	String updatedAt;
+	String updatedBy;
 	Integer idParent;
+	Boolean visible;
 
 }

@@ -29,4 +29,5 @@ public class Menu extends BaseEntity {
 	String icon;
 	Integer idParent;
 	Integer orderNumber;
+	Boolean visible;
 }
