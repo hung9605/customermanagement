@@ -31,4 +31,14 @@ public class MenuController extends BaseController{
 	public ResponseEntity<?> add(@RequestBody MenuDto mDto){
 		return response(new ResponseBean(menuService.addMenu(mDto)));
 	}
+	
+	@GetMapping("/adlist")
+	public ResponseEntity<?> adList(){
+		return response(new ResponseBean(menuService.getAll()));
+	}
+	
+	@PostMapping("/updateVisible")
+	public ResponseEntity<?> updateVisible(@RequestBody MenuDto mDto){
+		return response(new ResponseBean(menuService.setVisible(mDto)));
+	}
 }

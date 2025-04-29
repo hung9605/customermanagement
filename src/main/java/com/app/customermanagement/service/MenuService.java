@@ -9,5 +9,8 @@ public interface MenuService {
 	
 	List<MenuDto> getAll();
 	Menu addMenu(MenuDto menu);
+//	List<MenuDto> getAllAdMenu();
+	
+	Integer setVisible(MenuDto dto);
 
 }

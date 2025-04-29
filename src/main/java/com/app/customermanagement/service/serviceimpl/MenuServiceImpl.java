@@ -31,4 +31,10 @@ public class MenuServiceImpl implements MenuService{
 		return menuRepository.save(mapper.mapToModel(menu));
 	}
 
+	@Override
+	public Integer setVisible(MenuDto dto) {
+		// TODO Auto-generated method stub
+		return menuRepository.updateVisible(dto.getVisible(), dto.getId());
+	}
+
 }
