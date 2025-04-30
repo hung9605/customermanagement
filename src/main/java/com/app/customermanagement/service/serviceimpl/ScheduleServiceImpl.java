@@ -32,8 +32,8 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		if(!checkTimeRegister(scheduleDto.getTimeRegister()))
 			throw new Exception("Time is exists!");
 		ScheduleMedical scheduleMedical = new ScheduleMedicalMapperImpl().maptoModel(scheduleDto);
-		scheduleMedical.setCreatedAt(new Date());
-		scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
+		//scheduleMedical.setCreatedAt(new Date());
+		//scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
 		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
 		scheduleMedical.setDateRegister(dateRegister);
@@ -49,8 +49,8 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	@Override
 	public ScheduleMedical registerExistsCustomer(ScheduleDto scheduleDto) throws Exception {
 		ScheduleMedical scheduleMedical = new ScheduleMedicalMapperImpl().maptoModel(scheduleDto);
-		scheduleMedical.setCreatedAt(new Date());
-		scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
+		//scheduleMedical.setCreatedAt(new Date());
+		//scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
 		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
 		scheduleMedical.setDateRegister(dateRegister);
