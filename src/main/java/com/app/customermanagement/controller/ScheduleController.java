@@ -82,6 +82,15 @@ public class ScheduleController extends BaseController {
 			){
 		return response(new ResponseBean(serviceImpl.getListHistory(date,toDate)));
 	}
+
+	@GetMapping("/listhistoryexport")
+	public ResponseEntity<?> listHistoryexport(
+			@RequestParam(defaultValue = "0") int page
+			,@RequestParam(defaultValue = "0") String date
+			,@RequestParam(defaultValue = "0", required = false) String toDate
+	){
+		return response(new ResponseBean(serviceImpl.getListHistoryExport(date,toDate)));
+	}
 	
 	@GetMapping("/checktime")
 	public ResponseEntity<?> checkTime(@RequestParam(defaultValue = "0") String time) throws Exception{
@@ -96,5 +105,7 @@ public class ScheduleController extends BaseController {
 	public ResponseEntity<?> listhistory(@RequestBody Customer customer){
 		return response(new ResponseBean(serviceImpl.getListMedicalHistory(customer)));
 	}
+
+
 	
 }

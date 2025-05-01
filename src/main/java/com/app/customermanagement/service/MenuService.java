@@ -12,5 +12,6 @@ public interface MenuService {
 //	List<MenuDto> getAllAdMenu();
 	
 	Integer setVisible(MenuDto dto);
+	void deleteMenu(MenuDto dto) throws Exception;
 
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.app.customermanagement.dto.model.ExamDetail;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.constants.CommonConstant;
@@ -124,7 +125,16 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return new ScheduleMedicalMapperImpl().mapToDtos(scheduleMedicalRepository.findByCustomerAndStatusTrue(customer));
 		
 	}
-   
+
+	/**
+	 * @param formDate
+	 * @param toDate
+	 * @return
+	 */
+	@Override
+	public List<ExamDetail> getListHistoryExport(String formDate, String toDate) {
+		return scheduleMedicalRepository.getListHistory(formDate,toDate);
+	}
 
 
 }

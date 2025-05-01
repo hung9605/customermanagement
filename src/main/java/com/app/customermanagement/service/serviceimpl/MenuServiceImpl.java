@@ -37,4 +37,12 @@ public class MenuServiceImpl implements MenuService{
 		return menuRepository.updateVisible(dto.getVisible(), dto.getId());
 	}
 
+	/**
+	 * @param dto
+	 */
+	@Override
+	public void deleteMenu(MenuDto dto) throws Exception {
+		menuRepository.deleteById(dto.getId());
+	}
+
 }

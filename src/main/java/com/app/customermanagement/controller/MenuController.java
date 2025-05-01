@@ -1,5 +1,6 @@
 package com.app.customermanagement.controller;
 
+import com.app.customermanagement.constants.CommonConstant;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,5 +41,16 @@ public class MenuController extends BaseController{
 	@PostMapping("/updateVisible")
 	public ResponseEntity<?> updateVisible(@RequestBody MenuDto mDto){
 		return response(new ResponseBean(menuService.setVisible(mDto)));
+	}
+
+	@PostMapping("/delete")
+	public ResponseEntity<?> delete(@RequestBody MenuDto mDto){
+        try {
+            menuService.deleteMenu(mDto);
+			return response(new ResponseBean(CommonConstant.OK));
+        } catch (Exception e) {
+            return responseError(new ResponseBean(e.getMessage()),e);
+        }
+
 	}
 }
