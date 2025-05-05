@@ -50,6 +50,17 @@ public class MedicalExamController extends BaseController{
 			,@RequestParam(defaultValue = "0") String toDate){
 		return response(new ResponseBean(medicalExamService.listMoney(0,date,toDate)));
 	}
-	
+
+	@GetMapping("/listmoneyexport")
+	public ResponseEntity<?> listMoneyExport(
+			@RequestParam(defaultValue = "0") int page
+			,@RequestParam(defaultValue = "0") String date
+			,@RequestParam(defaultValue = "0") String toDate){
+        try {
+            return response(new ResponseBean(medicalExamService.listMoneyExport(0,date,toDate)));
+        } catch (Exception e) {
+            return responseError(new ResponseBean(e.getMessage()),e);
+        }
+    }
 	
 }

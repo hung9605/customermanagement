@@ -1,6 +1,7 @@
 package com.app.customermanagement.service.serviceimpl;
 
 import com.app.customermanagement.constants.CommonConstant;
+import com.app.customermanagement.dto.model.MoneyDetail;
 import com.app.customermanagement.dto.model.MoneyDto;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
@@ -124,11 +125,24 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	}
 
 	/**
+	 * @param page
+	 * @param date
+	 * @param toDate
+	 * @return
+	 */
+	@Override
+	public List<MoneyDetail> listMoneyExport(Integer page, String date, String toDate) throws  Exception{
+		return medicalExaminationRepository.listMoneyExport(date,toDate);
+	}
+
+	/**
 	 * @param lstSupplies
 	 * @param prescription
 	 */
 	private void updateMedicalSupplies(List<MedicalSupplies> lstSupplies,Prescription prescription) {
 		MedicalSupplies medicalSupplies =  lstSupplies.stream().filter(item -> item.getId().equals(prescription.getMedicalSupplies().getId())).findFirst().get();
 	}
+
+
 
 }
