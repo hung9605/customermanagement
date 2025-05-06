@@ -13,6 +13,7 @@ public interface ScheduleMedicalMapper {
 	
 	ScheduleMedical maptoModel(ScheduleDto dto);
 	@Mapping(target = "phoneNumber", source = "customer.phoneNumber")
+	@Mapping(target = "gender", source = "customer.gender")
 	ScheduleDto mapToDto(ScheduleMedical medical);
 	List<ScheduleMedical> mapToModels(List<ScheduleDto> dtos);
 	List<ScheduleDto> mapToDtos(List<ScheduleMedical> models);

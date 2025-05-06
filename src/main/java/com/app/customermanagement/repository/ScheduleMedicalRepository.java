@@ -3,6 +3,8 @@ package com.app.customermanagement.repository;
 import java.util.List;
 
 import com.app.customermanagement.dto.model.ExamDetail;
+
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +17,7 @@ import com.app.customermanagement.model.ScheduleMedical;
 
 public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical, Integer> {
 	
+	@EntityGraph(attributePaths = {"customer", "customer.gender"})
 	List<ScheduleMedical> findByDateRegisterAndStatusOrderByTimeRegister(String date,Integer status);
 	List<ScheduleMedical> findByDateRegisterBetweenAndStatusOrderByTimeRegister(String startDate, String endDate, Integer status);
 	List<ScheduleMedical> findByFullNameAndDateRegister(String name,String date);

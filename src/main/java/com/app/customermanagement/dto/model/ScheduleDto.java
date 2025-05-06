@@ -21,6 +21,7 @@ public class ScheduleDto {
 	    String dateRegister;
 	    Integer status;
 	    Customer customer;
+	    String gender;
 
 
 }
