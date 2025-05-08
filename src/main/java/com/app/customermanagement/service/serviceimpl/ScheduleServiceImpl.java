@@ -50,9 +50,11 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	@Override
 	public ScheduleMedical registerExistsCustomer(ScheduleDto scheduleDto) throws Exception {
 		ScheduleMedical scheduleMedical = new ScheduleMedicalMapperImpl().maptoModel(scheduleDto);
-		//scheduleMedical.setCreatedAt(new Date());
-		//scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
+		
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
+		if(scheduleMedicalRepository.existsByCustomerAndDateRegister(scheduleDto.getCustomer(),dateRegister)) {
+			throw new Exception("Registration is available");
+		};
 		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
 		scheduleMedical.setDateRegister(dateRegister);
 		return scheduleMedicalRepository.save(scheduleMedical);

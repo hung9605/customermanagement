@@ -19,6 +19,7 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 	
 	@EntityGraph(attributePaths = {"customer", "customer.gender"})
 	List<ScheduleMedical> findByDateRegisterAndStatusOrderByTimeRegister(String date,Integer status);
+	@EntityGraph(attributePaths = {"customer", "customer.gender"})
 	List<ScheduleMedical> findByDateRegisterBetweenAndStatusOrderByTimeRegister(String startDate, String endDate, Integer status);
 	List<ScheduleMedical> findByFullNameAndDateRegister(String name,String date);
 	ScheduleMedical findByFullNameContainingIgnoreCase(String fullName);
@@ -37,4 +38,7 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 			"   inner join MedicalExamination m on s.id = m.medical.id \n" +
 			"   where s.dateRegister BETWEEN :startDate AND  :endDate ")
 	List<ExamDetail> getListHistory(String startDate, String endDate);
+	
+	boolean existsByCustomerAndDateRegister(Customer customer, String dateRegister);
+
 }
