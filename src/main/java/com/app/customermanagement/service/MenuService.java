@@ -13,5 +13,7 @@ public interface MenuService {
 	
 	Integer setVisible(MenuDto dto);
 	void deleteMenu(MenuDto dto) throws Exception;
+	
+	void refreshCache();
 
 }

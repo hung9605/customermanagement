@@ -15,5 +15,5 @@ public interface MedicalSupplyService {
 	MedicalSupplies getSupplies(String medicineName) throws Exception;
 	MedicalSupplies getDetailSupplies(Integer suppliesId) throws Exception;
 	void updateDetail(SuppliesDetail suppliesDetail) throws Exception;
-	
+	void clearCache();
 }

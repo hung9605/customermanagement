@@ -30,6 +30,7 @@ public class MenuController extends BaseController{
 	
 	@PostMapping("/add")
 	public ResponseEntity<?> add(@RequestBody MenuDto mDto){
+		menuService.refreshCache();
 		return response(new ResponseBean(menuService.addMenu(mDto)));
 	}
 	

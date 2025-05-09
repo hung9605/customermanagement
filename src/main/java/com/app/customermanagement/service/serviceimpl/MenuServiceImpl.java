@@ -2,6 +2,8 @@ package com.app.customermanagement.service.serviceimpl;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.dto.model.MenuDto;
@@ -18,6 +20,8 @@ import lombok.AllArgsConstructor;
 public class MenuServiceImpl implements MenuService{
 	
 	private final MenuRepository menuRepository;
+	
+	@Cacheable(value = "menuCache")
 	@Override
 	public List<MenuDto> getAll() {
 		MenuMapper mapper = new MenuMapperImpl();
@@ -43,6 +47,13 @@ public class MenuServiceImpl implements MenuService{
 	@Override
 	public void deleteMenu(MenuDto dto) throws Exception {
 		menuRepository.deleteById(dto.getId());
+	}
+
+	@CacheEvict(value = "menuCache", allEntries = true)
+	@Override
+	public void refreshCache() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -17,6 +17,8 @@ import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -119,6 +121,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	 * @param date
 	 * @return
 	 */
+	@Cacheable(value = "moneyCache", key = "#date + '_' + #toDate")
 	@Override
 	public List<MoneyDto> listMoney(Integer page, String date, String toDate) {
 		return medicalExaminationRepository.listMoney(date,toDate);
@@ -130,6 +133,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	 * @param toDate
 	 * @return
 	 */
+	@Cacheable(value = "moneyExportCache", key = "#date + '_' + #toDate")
 	@Override
 	public List<MoneyDetail> listMoneyExport(Integer page, String date, String toDate) throws  Exception{
 		return medicalExaminationRepository.listMoneyExport(date,toDate);

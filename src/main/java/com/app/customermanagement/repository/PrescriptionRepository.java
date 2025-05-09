@@ -22,7 +22,7 @@ public interface PrescriptionRepository extends JpaRepository<Prescription, Inte
 	@Query("DELETE FROM Prescription p WHERE p.medicalExamination = :medicalExamination")
 	void deletePrescription(@Param("medicalExamination") MedicalExamination medicalExamination);
 
-	@Query("select new com.app.customermanagement.dto.model.PrescriptionDto(p.id,s.medicineName,p.quantity,s.unitPrice) from Prescription p " +
+	@Query("select p.id as id,s.medicineName as medicineName,p.quantity as quantity,s.unitPrice as unitPrice from Prescription p " +
 			" inner join MedicalExamination  m on  p.medicalExamination.id = m.id " +
 			" inner join MedicalSupplies s on p.medicalSupplies.id = s.id" +
 			" where m.id = :id")

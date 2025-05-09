@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,13 +45,15 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 		createFolder(String.valueOf(medicalSupplies.getId()));
 		return medicalSupplies;
 	}   
-
+	
+	@Cacheable(value = "medicalSuppliesCache")
 	@Override
 	public List<SuppliesListDto> listMedicalSupplies() throws Exception {
 		// TODO Auto-generated method stub
 		return new SuppliesMapperImpl().mapToDtos(medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero());
 	}
-
+	
+	
 	@Override
 	public MedicalSupplies update(MedicalSupplies medicalSupplies) throws Exception {
 		// TODO Auto-generated method stub
@@ -106,5 +110,14 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 		update.where(criteriaBuilder.equal(root.get("id"), suppliesDetail.getId()));
 		entityManager.createQuery(update).executeUpdate();
 	}
+
+	@CacheEvict(value = "medicalSuppliesCache", allEntries = true)
+	@Override
+	public void clearCache() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 	
 }

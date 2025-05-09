@@ -1,23 +1,23 @@
 package com.app.customermanagement.repository;
 
-import com.app.customermanagement.dto.model.MoneyDetail;
-import com.app.customermanagement.dto.model.MoneyDto;
-import com.app.customermanagement.model.Customer;
-import com.app.customermanagement.model.MedicalExamination;
-import com.app.customermanagement.model.ScheduleMedical;
-
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import com.app.customermanagement.dto.model.MoneyDetail;
+import com.app.customermanagement.dto.model.MoneyDto;
+import com.app.customermanagement.model.MedicalExamination;
+import com.app.customermanagement.model.ScheduleMedical;
 
-import java.util.List;
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface MedicalExaminationRepository extends JpaRepository<MedicalExamination,Integer> {
 	
 	MedicalExamination findByMedical(ScheduleMedical medical);
 
-	@Query("select new com.app.customermanagement.dto.model.MoneyDto(se.id,se.fullName,se.dateRegister,me.totalMoney,me.status,me.id) from MedicalExamination me " +
+	@Transactional
+	@Query("select se.id as id,se.fullName as fullName,se.dateRegister as dateExam,me.totalMoney as totalMoney,me.status as status,me.id as idExam from MedicalExamination me " +
 			"inner join ScheduleMedical se on me.medical.id = se.id where me.dayOfExamination >= :date and me.dayOfExamination <= :toDate")
 	List<MoneyDto> listMoney(String date, String toDate);
 

@@ -29,6 +29,7 @@ public class MedicalSuppliesController extends BaseController{
 	@PostMapping("/add")
 	public ResponseEntity<?> add(@RequestBody MedicalSupplies medicalSupplies){
 		try {
+			medicalSupplyService.clearCache();
 			return response(new ResponseBean(medicalSupplyService.add(medicalSupplies)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -62,6 +63,7 @@ public class MedicalSuppliesController extends BaseController{
 	@PostMapping("/delete")
 	public ResponseEntity<?> delete(@RequestBody MedicalSupplies medicalSupplies){
 		try {
+			medicalSupplyService.clearCache();
 			medicalSupplyService.remove(medicalSupplies);
 			return response(new ResponseBean(CommonConstant.OK));
 		} catch (Exception e) {
@@ -74,6 +76,7 @@ public class MedicalSuppliesController extends BaseController{
 	@PostMapping("/updatedetail")
 	public ResponseEntity<?> updateDetail(@RequestBody SuppliesDetail suppliesDetail){
 		try {
+			medicalSupplyService.clearCache();
 			medicalSupplyService.updateDetail(suppliesDetail);
 			return response(new ResponseBean(CommonConstant.OK));
 		} catch (Exception e) {
