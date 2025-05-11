@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import com.app.customermanagement.mapper.SuppliesMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	private final MedicalSuppliesRepository medicalSuppliesRepository;
 	private final ParamConfig paramConfig;
 	private final EntityManager entityManager;
+	private final SuppliesMapper mapper;
 
 	@Override
 	public MedicalSupplies add(MedicalSupplies medicalSupplies) throws Exception {
@@ -50,7 +52,7 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	@Override
 	public List<SuppliesListDto> listMedicalSupplies() throws Exception {
 		// TODO Auto-generated method stub
-		return new SuppliesMapperImpl().mapToDtos(medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero());
+		return mapper.mapToDtos(medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero());
 	}
 	
 	

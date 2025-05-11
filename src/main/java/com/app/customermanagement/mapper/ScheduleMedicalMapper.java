@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.model.ScheduleMedical;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ScheduleMedicalMapper {
 	
 	ScheduleMedical maptoModel(ScheduleDto dto);

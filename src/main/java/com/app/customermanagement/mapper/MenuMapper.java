@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 import com.app.customermanagement.dto.model.MenuDto;
 import com.app.customermanagement.model.Menu;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface MenuMapper {
 	
 	@Mapping(source = "link", target = "routerLink")

@@ -22,12 +22,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 	private final CustomerRepository customerRepository;
+	private final CustomerMapper customerMapper;
 	
     @Override
     public Customer addCustomer(CustomerDto customer) {
-    	CustomerMapper mapper = new CustomerMapperImpl();
     	customer.setStatus(0);
-    	Customer customerModel = mapper.maptoModel(customer);
+    	Customer customerModel = customerMapper.maptoModel(customer);
     	customerModel.setCreatedBy(CommonConstant.ADMIN);
     	customerModel.setCreatedAt(new Date());
         return customerRepository.save(customerModel);
@@ -88,7 +88,7 @@ public class CustomerServiceImpl implements CustomerService {
 		// TODO Auto-generated method stub
 		customerDto.setUpdatedBy("tnd");
 		customerDto.setUpdatedAt(new Date());
-		return customerRepository.save(new CustomerMapperImpl().maptoModel(customerDto));
+		return customerRepository.save(customerMapper.maptoModel(customerDto));
 	}
 
 	@Override

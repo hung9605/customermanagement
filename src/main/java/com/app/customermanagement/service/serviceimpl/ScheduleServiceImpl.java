@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.app.customermanagement.dto.model.ExamDetail;
+import com.app.customermanagement.mapper.ScheduleMedicalMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.constants.CommonConstant;
@@ -25,14 +27,15 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
 	private final TimeRepository timeRepository;
+	private final ScheduleMedicalMapper scheduleMedicalMapper;
 	
 	@Override
 	public ScheduleMedical register(ScheduleDto scheduleDto) throws Exception {
 		if(checkRegisterExists(scheduleDto.getFullName(), scheduleDto.getPhoneNumber()))
 			throw new Exception("User Registered");
-		if(!checkTimeRegister(scheduleDto.getTimeRegister()))
-			throw new Exception("Time is exists!");
-		ScheduleMedical scheduleMedical = new ScheduleMedicalMapperImpl().maptoModel(scheduleDto);
+//		if(!checkTimeRegister(scheduleDto.getTimeRegister()))
+//			throw new Exception("Time is exists!");
+		ScheduleMedical scheduleMedical = scheduleMedicalMapper.maptoModel(scheduleDto);
 		//scheduleMedical.setCreatedAt(new Date());
 		//scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());

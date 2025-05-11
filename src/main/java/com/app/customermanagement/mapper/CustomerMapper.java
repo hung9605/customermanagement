@@ -4,7 +4,7 @@ import com.app.customermanagement.dto.model.CustomerDto;
 import com.app.customermanagement.model.Customer;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CustomerMapper {
 
     CustomerDto maptoDto(Customer customer);

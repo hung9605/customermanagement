@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import com.app.customermanagement.dto.model.SuppliesListDto;
 import com.app.customermanagement.model.MedicalSupplies;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SuppliesMapper {
 	
 	SuppliesListDto mapToDto(MedicalSupplies medicalSupplies);
