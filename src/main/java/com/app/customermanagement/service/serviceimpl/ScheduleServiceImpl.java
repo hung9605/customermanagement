@@ -86,13 +86,13 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	public List<ScheduleDto> getListRegister() {
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN, new Date());
 		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(dateRegister, CommonConstant.NO_EXAMINED);
-		return new ScheduleMedicalMapperImpl().mapToDtos(sMedicals);
+		return scheduleMedicalMapper.mapToDtos(sMedicals);
 	}
 
 	@Override
 	public List<ScheduleDto> getListHistory(String date) {
 		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(date, CommonConstant.EXAMINED);
-		return new ScheduleMedicalMapperImpl().mapToDtos(sMedicals);
+		return scheduleMedicalMapper.mapToDtos(sMedicals);
 	}
 
 	@Override
@@ -139,6 +139,12 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	@Override
 	public List<ExamDetail> getListHistoryExport(String formDate, String toDate) {
 		return scheduleMedicalRepository.getListHistory(formDate,toDate);
+	}
+
+	@Override
+	public List<ScheduleDto> getListRegisterAll(String fromDate, String toDate) {
+		// TODO Auto-generated method stub
+		return scheduleMedicalMapper.mapToDtos(scheduleMedicalRepository.findByDateRegisterBetweenOrderByTimeRegisterAscDateRegisterDesc(fromDate, toDate));
 	}
 
 

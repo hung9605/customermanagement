@@ -40,5 +40,9 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 	List<ExamDetail> getListHistory(String startDate, String endDate);
 	
 	boolean existsByCustomerAndDateRegister(Customer customer, String dateRegister);
+	
+	@EntityGraph(attributePaths = {"customer", "customer.gender"})
+	List<ScheduleMedical> findByDateRegisterBetweenOrderByTimeRegisterAscDateRegisterDesc(String startDate, String endDate);
+
 
 }

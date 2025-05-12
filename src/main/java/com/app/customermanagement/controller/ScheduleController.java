@@ -106,6 +106,14 @@ public class ScheduleController extends BaseController {
 		return response(new ResponseBean(serviceImpl.getListMedicalHistory(customer)));
 	}
 
+	@GetMapping("/listhistoryall")
+	public ResponseEntity<?> listHistoryAll(
+			 @RequestParam(defaultValue = "0") int page
+			,@RequestParam(defaultValue = "0") String date
+			,@RequestParam(defaultValue = "0", required = false) String toDate
+			){
+		return response(new ResponseBean(serviceImpl.getListRegisterAll(date,toDate)));
+	}
 
 	
 }
