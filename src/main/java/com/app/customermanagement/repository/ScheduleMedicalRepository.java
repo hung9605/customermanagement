@@ -26,6 +26,9 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 	List<ScheduleMedical> findByCustomerAndStatusTrue(Customer customerOpt);
 	ScheduleMedical findByTimeRegisterAndDateRegister(String timeRegister,String date);
 	
+	boolean existsByTimeRegisterAndDateRegister(String timeRegister, String dateRegister);
+
+	
 	@Transactional
 	@Modifying
 	@Query("UPDATE ScheduleMedical s SET s.fullName = :fullName, s.timeRegister = :timeRegister WHERE s.id = :id")

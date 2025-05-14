@@ -36,8 +36,6 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	 */
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
-    	//medicalExamination.setCreatedAt(new Date());
-        //medicalExamination.setCreatedBy(CommonConstant.ADMIN);
     	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero();
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
     	List<Prescription> lstPrescription = new ArrayList<>();

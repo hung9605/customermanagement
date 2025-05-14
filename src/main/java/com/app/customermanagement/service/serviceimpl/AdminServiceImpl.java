@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.Login;
 import com.app.customermanagement.service.AdminService;
+import com.app.customermanagement.util.StringUtils;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,7 @@ import lombok.AllArgsConstructor;
 public class AdminServiceImpl implements AdminService{
 	
 	public final ParamConfig paramConfig;
-	
+	private final MessageSource messageSource;
 	
 
 	@Override
@@ -58,7 +60,7 @@ public class AdminServiceImpl implements AdminService{
 		if(login.getUsername().equals("tnd") && login.getPassword().equals("tnd")) {
 			sqlDump(response);
 		}else {
-			throw new Exception("Authentication fail!");
+			throw new Exception(StringUtils.getMessage(messageSource, "error.auth.fail"));
 		}
 	}
 

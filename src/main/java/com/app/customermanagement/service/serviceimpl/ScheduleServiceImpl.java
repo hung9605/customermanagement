@@ -2,22 +2,22 @@ package com.app.customermanagement.service.serviceimpl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.app.customermanagement.dto.model.ExamDetail;
-import com.app.customermanagement.mapper.ScheduleMedicalMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.constants.CommonConstant;
+import com.app.customermanagement.dto.model.ExamDetail;
 import com.app.customermanagement.dto.model.ScheduleDto;
-import com.app.customermanagement.mapper.ScheduleMedicalMapperImpl;
+import com.app.customermanagement.mapper.ScheduleMedicalMapper;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
 import com.app.customermanagement.repository.TimeRepository;
 import com.app.customermanagement.service.ScheduleSevice;
 import com.app.customermanagement.util.DateUtils;
+import com.app.customermanagement.util.StringUtils;
 
 import lombok.AllArgsConstructor;
 
@@ -28,16 +28,13 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
 	private final TimeRepository timeRepository;
 	private final ScheduleMedicalMapper scheduleMedicalMapper;
+	private final MessageSource messageSource;
 	
 	@Override
 	public ScheduleMedical register(ScheduleDto scheduleDto) throws Exception {
 		if(checkRegisterExists(scheduleDto.getFullName(), scheduleDto.getPhoneNumber()))
-			throw new Exception("User Registered");
-//		if(!checkTimeRegister(scheduleDto.getTimeRegister()))
-//			throw new Exception("Time is exists!");
+			throw new Exception("Registration already exists for today !");
 		ScheduleMedical scheduleMedical = scheduleMedicalMapper.maptoModel(scheduleDto);
-		//scheduleMedical.setCreatedAt(new Date());
-		//scheduleMedical.setCreatedBy(CommonConstant.ADMIN);
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
 		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
 		scheduleMedical.setDateRegister(dateRegister);
@@ -52,11 +49,11 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	 */
 	@Override
 	public ScheduleMedical registerExistsCustomer(ScheduleDto scheduleDto) throws Exception {
-		ScheduleMedical scheduleMedical = new ScheduleMedicalMapperImpl().maptoModel(scheduleDto);
+		ScheduleMedical scheduleMedical = scheduleMedicalMapper.maptoModel(scheduleDto);
 		
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
 		if(scheduleMedicalRepository.existsByCustomerAndDateRegister(scheduleDto.getCustomer(),dateRegister)) {
-			throw new Exception("Registration is available");
+			throw new Exception(StringUtils.getMessage(messageSource,"error.schedule.exists"));
 		};
 		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
 		scheduleMedical.setDateRegister(dateRegister);
@@ -84,8 +81,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 
 	@Override
 	public List<ScheduleDto> getListRegister() {
-		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN, new Date());
-		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(dateRegister, CommonConstant.NO_EXAMINED);
+		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(getToday(), CommonConstant.NO_EXAMINED);
 		return scheduleMedicalMapper.mapToDtos(sMedicals);
 	}
 
@@ -104,30 +100,34 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	@Override
 	public boolean checkRegisterExists(String fullName,String phoneNumber) {
 		// TODO Auto-generated method stub
-		List<ScheduleDto> listRegister = getListRegister();
-		List<ScheduleDto> listCheck = listRegister.stream().filter( item ->{
-			return fullName.equals(item.getFullName()) && phoneNumber.equals(item.getPhoneNumber());
-		}
-		).collect(Collectors.toList());
-		return listCheck.size() > 0 ;
+//		List<ScheduleDto> listRegister = getListRegister();
+//		List<ScheduleDto> listCheck = listRegister.stream().filter( item ->{
+//			return fullName.equals(item.getFullName()) && phoneNumber.equals(item.getPhoneNumber());
+//		}
+//		).collect(Collectors.toList());
+//		return listCheck.size() > 0 ;
+		
+		return getListRegister().stream()
+			    .anyMatch(item -> fullName.equals(item.getFullName()) && phoneNumber.equals(item.getPhoneNumber()));
+
 	}
 
 	@Override
 	public List<ScheduleDto> getListHistory(String formDate, String toDate) {
 		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterBetweenAndStatusOrderByTimeRegister(formDate,toDate, CommonConstant.EXAMINED);
-		return new ScheduleMedicalMapperImpl().mapToDtos(sMedicals);
+		return scheduleMedicalMapper.mapToDtos(sMedicals);
 	}
 
 	@Override
 	public boolean checkTimeRegister(String time) {
 		// TODO Auto-generated method stub
-		return null == scheduleMedicalRepository.findByTimeRegisterAndDateRegister(time,DateUtils.formatDate(CommonConstant.DATE_PATTERN, new Date()));
+	    return !scheduleMedicalRepository.existsByTimeRegisterAndDateRegister(time, getToday());
 	}
 
 	@Override
 	public List<ScheduleDto> getListMedicalHistory(Customer customer) {
 		// TODO Auto-generated method stub
-		return new ScheduleMedicalMapperImpl().mapToDtos(scheduleMedicalRepository.findByCustomerAndStatusTrue(customer));
+		return scheduleMedicalMapper.mapToDtos(scheduleMedicalRepository.findByCustomerAndStatusTrue(customer));
 		
 	}
 
@@ -146,6 +146,11 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		// TODO Auto-generated method stub
 		return scheduleMedicalMapper.mapToDtos(scheduleMedicalRepository.findByDateRegisterBetweenOrderByTimeRegisterAscDateRegisterDesc(fromDate, toDate));
 	}
+	
+	private String getToday() {
+	    return DateUtils.formatDate(CommonConstant.DATE_PATTERN, new Date());
+	}
+
 
 
 }

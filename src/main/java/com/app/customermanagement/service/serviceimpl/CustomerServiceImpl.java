@@ -3,6 +3,7 @@ package com.app.customermanagement.service.serviceimpl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import lombok.AllArgsConstructor;
 public class CustomerServiceImpl implements CustomerService {
 	private final CustomerRepository customerRepository;
 	private final CustomerMapper customerMapper;
+
 	
     @Override
     public Customer addCustomer(CustomerDto customer) {
@@ -76,17 +78,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public List<Customer> list(Integer page) {
-		// TODO Auto-generated method stub
-//		Pageable pageable =  PageRequest.of(page, 10);
-//		return customerRepository.findAll(pageable).getContent();
-		//panigator at client
 		return customerRepository.findAll();
 	}
 
 	@Override
 	public Customer updateCustomer(CustomerDto customerDto) {
 		// TODO Auto-generated method stub
-		customerDto.setUpdatedBy("tnd");
+		customerDto.setUpdatedBy(CommonConstant.ADMIN);
 		customerDto.setUpdatedAt(new Date());
 		return customerRepository.save(customerMapper.maptoModel(customerDto));
 	}
