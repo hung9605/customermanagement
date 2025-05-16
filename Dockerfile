@@ -36,7 +36,7 @@ RUN ./mvnw package -DskipTests
 # Build final image
 FROM eclipse-temurin:17-jre
 
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build target/*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
