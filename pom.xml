@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.app</groupId>
     <artifactId>customermanagement</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>customermanagement</name>
     <description>customermanagement</description>
     <packaging>jar</packaging>
@@ -123,8 +123,7 @@
                 </configuration>
             </plugin>
         </plugins>
-<!-- để tạo ra target/app.jar -->
-<finalName>app</finalName>
+
     </build>
 
 </project>
