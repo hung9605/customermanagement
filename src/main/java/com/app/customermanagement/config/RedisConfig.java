@@ -26,7 +26,7 @@ public class RedisConfig {
 	        try {
 	            // Thử kết nối Redis (timeout ngắn để tránh chậm start)
 	            redisConnectionFactory.getConnection().ping();
-	            System.out.println("✅ Connected to Redis - using RedisCacheManager");
+	            System.out.println("✅ Connected to Redis - using RedisCacheManager tnd test!!!");
 
 	            RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
 	                    .entryTtl(Duration.ofMinutes(30))
