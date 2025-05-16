@@ -3,6 +3,8 @@ package com.app.customermanagement.service.serviceimpl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -76,9 +78,16 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepository.findByLastNameContainingAndFirstNameContainingAndMidNameContainingAndPhoneNumberContaining(lastName, firstName, midName, phoneNumber);
 	}
 
+	@Cacheable(value = "customer")
 	@Override
 	public List<Customer> list(Integer page) {
 		return customerRepository.findAll();
+	}
+	
+	@CacheEvict(value = "customer", allEntries = true)
+	public void refreshCache() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

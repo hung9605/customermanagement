@@ -19,7 +19,7 @@ public class MenuServiceImpl implements MenuService{
 	private final MenuRepository menuRepository;
 	private final MenuMapper mapper;
 	
-	@Cacheable(value = "menuCache")
+	@Cacheable(value = "menuCache" , key = "'allMenus'")
 	@Override
 	public List<MenuDto> getAll() {
 		return mapper.mapToDtos(menuRepository.findAllByOrderByOrderNumber());
