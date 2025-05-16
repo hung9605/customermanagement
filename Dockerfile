@@ -12,3 +12,31 @@ EXPOSE 8080
 
 # Chạy ứng dụng Spring Boot
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+
+# Use build image with Maven
+FROM openjdk:17
+
+WORKDIR /app
+
+# Copy only pom.xml to cache dependencies
+COPY pom.xml .
+COPY mvnw .
+COPY .mvn .mvn
+
+# Download dependencies (cached if pom.xml unchanged)
+RUN ./mvnw dependency:go-offline -B
+
+# Copy rest of source code
+COPY src src
+
+# Package the application
+RUN ./mvnw package -DskipTests
+
+# Build final image
+FROM openjdk:17
+
+COPY target/customermanagement-0.0.1.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
