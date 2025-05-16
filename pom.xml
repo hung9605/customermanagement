@@ -123,6 +123,8 @@
                 </configuration>
             </plugin>
         </plugins>
+<!-- để tạo ra target/app.jar -->
+<finalName>app</finalName>
     </build>
 
 </project>

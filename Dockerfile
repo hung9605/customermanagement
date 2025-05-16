@@ -17,7 +17,7 @@
 # Use build image with Maven
 FROM openjdk:17
 
-
+WORKDIR /app
 
 # Copy only pom.xml to cache dependencies
 COPY pom.xml .
@@ -36,7 +36,7 @@ RUN ./mvnw package -DskipTests
 # Build final image
 FROM openjdk:17
 
-COPY target/customermanagement-0.0.1.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
