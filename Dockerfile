@@ -15,7 +15,7 @@
 
 
 # Use build image with Maven
-FROM openjdk:17
+FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
@@ -34,7 +34,7 @@ COPY src src
 RUN ./mvnw package -DskipTests
 
 # Build final image
-FROM openjdk:17
+FROM eclipse-temurin:17-jre
 
 COPY --from=build /app/target/*.jar app.jar
 
