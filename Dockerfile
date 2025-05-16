@@ -1,43 +1,24 @@
-# Chọn base image từ OpenJDK
-#FROM openjdk:17
+# --- Build stage ---
+FROM eclipse-temurin:17-jdk AS build
 
-# Thiết lập thư mục làm việc trong container
-#WORKDIR /app
+WORKDIR /app
 
-# Sao chép file JAR đã build vào container
-#COPY target/customermanagement-0.0.1.jar app.jar
+COPY pom.xml .
+COPY mvnw .
+COPY .mvn .mvn
+RUN ./mvnw dependency:go-offline -B
 
-# Mở cổng 8080 trong container (Spring Boot mặc định chạy trên cổng 8080)
-#EXPOSE 8080
+COPY src src
+RUN ./mvnw package -DskipTests
 
-# Chạy ứng dụng Spring Boot
-#ENTRYPOINT ["java", "-jar", "app.jar"]
-
-
-# Use build image with Maven
+# --- Runtime stage ---
 FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
-# Copy only pom.xml to cache dependencies
-COPY pom.xml .
-COPY mvnw .
-COPY .mvn .mvn
+# Copy JAR from build stage
+COPY --from=build /app/target/*.jar app.jar
 
-# Download dependencies (cached if pom.xml unchanged)
-RUN ./mvnw dependency:go-offline -B
-
-# Copy rest of source code
-COPY src src
-
-# Package the application
-RUN ./mvnw package -DskipTests
-
-# Build final image
-FROM eclipse-temurin:17-jre
-
-COPY target/customermanagement-0.0.2.jar app.jar
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
