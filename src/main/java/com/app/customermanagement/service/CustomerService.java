@@ -18,4 +18,5 @@ public interface CustomerService {
     List<Customer> list(Integer page);
     Customer updateCustomer(CustomerDto customerDto); 
     Integer updateName(CustomerDto customerDto);
+    public void refreshCache();
 }

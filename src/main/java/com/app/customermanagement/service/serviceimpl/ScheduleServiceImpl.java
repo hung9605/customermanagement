@@ -3,6 +3,7 @@ package com.app.customermanagement.service.serviceimpl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -112,6 +113,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 
 	}
 
+	@Cacheable(value = "historyCache", key = "#formDate + '_' + #toDate")
 	@Override
 	public List<ScheduleDto> getListHistory(String formDate, String toDate) {
 		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterBetweenAndStatusOrderByTimeRegister(formDate,toDate, CommonConstant.EXAMINED);
@@ -124,6 +126,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	    return !scheduleMedicalRepository.existsByTimeRegisterAndDateRegister(time, getToday());
 	}
 
+	@Cacheable(value = "historyCache1", key = "#date + '_' + #toDate")
 	@Override
 	public List<ScheduleDto> getListMedicalHistory(Customer customer) {
 		// TODO Auto-generated method stub
@@ -136,6 +139,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	 * @param toDate
 	 * @return
 	 */
+	@Cacheable(value = "historyExportCache", key = "#formDate + '_' + #toDate")
 	@Override
 	public List<ExamDetail> getListHistoryExport(String formDate, String toDate) {
 		return scheduleMedicalRepository.getListHistory(formDate,toDate);

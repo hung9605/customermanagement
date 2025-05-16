@@ -1,12 +1,22 @@
 package com.app.customermanagement.dto.model;
 
-public interface MoneyDto {
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
-     Integer getId();
-     String getFullName();
-     String getDateExam();
-     String getTotalMoney();
-     Integer getStatus();
-     Integer getIdExam();
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class MoneyDto {
+
+     Integer id;
+     String fullName;
+     String dateExam;
+     String totalMoney;
+     Integer status;
+     Integer idExam;
 
 }
