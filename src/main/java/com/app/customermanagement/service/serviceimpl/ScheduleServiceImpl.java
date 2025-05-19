@@ -3,9 +3,10 @@ package com.app.customermanagement.service.serviceimpl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.constants.CommonConstant;
@@ -153,6 +154,17 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	
 	private String getToday() {
 	    return DateUtils.formatDate(CommonConstant.DATE_PATTERN, new Date());
+	}
+
+
+	@Caching(evict = {
+		    @CacheEvict(value = "historyCache", key = "#formDate + '_' + #toDate"),
+		    @CacheEvict(value = "historyExportCache", key = "#formDate + '_' + #toDate")
+		})
+	@Override
+	public void clearCacheByDateRange(String formDate, String toDate) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
