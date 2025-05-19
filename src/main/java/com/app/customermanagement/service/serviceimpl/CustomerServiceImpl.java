@@ -5,16 +5,11 @@ import java.util.List;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.MessageSource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.CustomerDto;
 import com.app.customermanagement.mapper.CustomerMapper;
-import com.app.customermanagement.mapper.CustomerMapperImpl;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.repository.CustomerRepository;
 import com.app.customermanagement.service.CustomerService;

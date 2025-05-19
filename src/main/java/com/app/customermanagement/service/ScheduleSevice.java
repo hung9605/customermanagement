@@ -21,6 +21,7 @@ public interface ScheduleSevice {
     boolean checkTimeRegister(String time);
     List<ScheduleDto> getListMedicalHistory(Customer customer);
     List<ExamDetail> getListHistoryExport(String formDate, String toDate);
-    
     List<ScheduleDto> getListRegisterAll(String fromDate, String toDate);
+    void clearCacheByDateRange(String formDate, String toDate);
+
 }

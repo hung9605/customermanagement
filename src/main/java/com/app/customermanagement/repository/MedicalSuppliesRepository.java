@@ -25,4 +25,9 @@ public interface MedicalSuppliesRepository extends JpaRepository<MedicalSupplies
 	@Query("update MedicalSupplies m set m.isDelete = :isDelete where m.id = :id")
 	void updateRemove(@Param("isDelete") Boolean isDelete, @Param("id") Integer id);
 	
+	@Transactional
+	@Modifying
+	@Query("update MedicalSupplies m set m.quantity = :quantity where m.id = :id")
+	void updateQuantity(@Param("quantity") Integer quantity, @Param("id") Integer id);
+	
 }
