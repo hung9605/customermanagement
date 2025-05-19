@@ -14,6 +14,8 @@ import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.service.MedicalExamService;
+import com.app.customermanagement.service.ScheduleSevice;
+import com.app.customermanagement.util.DateUtils;
 
 import lombok.AllArgsConstructor;
 
@@ -24,6 +26,7 @@ import lombok.AllArgsConstructor;
 public class MedicalExamController extends BaseController{
 	
 	private final MedicalExamService medicalExamService;
+	private final ScheduleSevice scheduleSevice;
 	
 	public ResponseEntity<?> list(){
 		return response(null);
@@ -31,10 +34,12 @@ public class MedicalExamController extends BaseController{
 	
 	@PostMapping("/add")
 	public ResponseEntity<?> add(@RequestBody MedicalExamination medicalExamination){
+		scheduleSevice.clearCacheByDateRange(DateUtils.getToday(), DateUtils.getToday());
 		return response(new ResponseBean(medicalExamService.addMedicalExamination(medicalExamination)));
 	}
 	@PostMapping("/update")
 	public ResponseEntity<?> update(@RequestBody MedicalExamination medicalExamination){
+		scheduleSevice.clearCacheByDateRange(DateUtils.getToday(), DateUtils.getToday());
 		return response(new ResponseBean(medicalExamService.updateMedicalExamination(medicalExamination)));
 	}
 	

@@ -2,7 +2,7 @@ package com.app.customermanagement.config;
 
 import java.time.Duration;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -13,20 +13,19 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.slf4j.Logger;
 
 @Configuration
 @EnableCaching
 public class RedisConfig {
-	@Configuration
-	@EnableCaching
-	public class DynamicCacheConfig {
+	private static final Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 
 	    @Bean
 	    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
 	        try {
 	            // Thử kết nối Redis (timeout ngắn để tránh chậm start)
 	            redisConnectionFactory.getConnection().ping();
-	            System.out.println("✅ Connected to Redis - using RedisCacheManager");
+	            logger.info("✅ Connected to Redis - using RedisCacheManager");
 
 	            RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
 	                    .entryTtl(Duration.ofMinutes(30))
@@ -42,6 +41,6 @@ public class RedisConfig {
 	            return new ConcurrentMapCacheManager(); // RAM cache
 	        }
 	    }
-	}
+	
 
 }
