@@ -145,6 +145,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return scheduleMedicalRepository.getListHistory(formDate,toDate);
 	}
 
+	
 	@Override
 	public List<ScheduleDto> getListRegisterAll(String fromDate, String toDate) {
 		// TODO Auto-generated method stub
