@@ -13,6 +13,8 @@ import com.app.customermanagement.repository.MedicalSuppliesRepository;
 import com.app.customermanagement.repository.PrescriptionRepository;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
 import com.app.customermanagement.service.MedicalExamService;
+
+import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +32,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	private final PrescriptionRepository prescriptionRepository;
 	private final MedicalSuppliesRepository medicalSuppliesRepository;
 
+
 	/**
 	 * @param medicalExamination
 	 * @return
@@ -37,12 +40,12 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
     	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero();
+    	
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
     	List<Prescription> lstPrescription = new ArrayList<>();
     	String[] typeMedicine = medicalExamination.getTypeOfMedicine().split(",");
     	String[] quantity = medicalExamination.getQuantity().split(",");
     	Prescription prescription;
-    	List<MedicalSupplies> lMedicalSupplies = new ArrayList<>();
     	for (int i = 0; i < quantity.length; i++) {
     		String typeMedicineVal = typeMedicine[i];
     		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal)).findFirst().get();
@@ -51,16 +54,13 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 			prescription.setCreatedBy(CommonConstant.ADMIN);
 			lstPrescription.add(prescription);
 			supplies.setQuantity(String.valueOf(Integer.parseInt(supplies.getQuantity()) - Integer.parseInt(prescription.getQuantity())));
-			supplies.setUpdatedAt(new Date());
-			supplies.setUpdatedBy(CommonConstant.ADMIN);
-			lMedicalSupplies.add(supplies);
+			medicalSuppliesRepository.updateQuantity(Integer.parseInt(supplies.getQuantity()), supplies.getId());
 		}
     	
     	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(mExamination.getMedical().getId()).get();
     	scheduleMedical.setStatus(CommonConstant.EXAMINED);
     	scheduleMedicalRepository.save(scheduleMedical);
     	prescriptionRepository.saveAll(lstPrescription);
-    	medicalSuppliesRepository.saveAll(lMedicalSupplies);
         return mExamination;
     }
 
