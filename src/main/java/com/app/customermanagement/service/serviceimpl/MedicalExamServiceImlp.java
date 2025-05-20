@@ -40,7 +40,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
     	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero();
-    	
+    	medicalExamination.setId(null);
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
     	List<Prescription> lstPrescription = new ArrayList<>();
     	String[] typeMedicine = medicalExamination.getTypeOfMedicine().split(",");
@@ -49,7 +49,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	for (int i = 0; i < quantity.length; i++) {
     		String typeMedicineVal = typeMedicine[i];
     		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal)).findFirst().get();
-			prescription = new Prescription(0, quantity[i], supplies, mExamination);
+			prescription = new Prescription(null, quantity[i], supplies, mExamination);
 			prescription.setCreatedAt(new Date());
 			prescription.setCreatedBy(CommonConstant.ADMIN);
 			lstPrescription.add(prescription);

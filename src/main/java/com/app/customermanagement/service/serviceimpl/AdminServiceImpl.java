@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.config.ParamConfig;
+import com.app.customermanagement.config.RedisConfig;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.Login;
 import com.app.customermanagement.service.AdminService;
@@ -22,7 +25,7 @@ public class AdminServiceImpl implements AdminService{
 	
 	public final ParamConfig paramConfig;
 	private final MessageSource messageSource;
-	
+	private static final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
 
 	@Override
 	public void sqlDump(HttpServletResponse response) throws Exception {
@@ -50,7 +53,7 @@ public class AdminServiceImpl implements AdminService{
 	                outputStream.write(buffer, 0, length);
 	            }
 	        } catch (IOException e) {
-	            System.out.println(e.getMessage());
+	        	logger.error(e.getMessage());
 	        }
 	}
 

@@ -1,6 +1,19 @@
 package com.app.customermanagement.controller;
 
-import com.app.customermanagement.dto.model.CustomerDto;
+import java.io.IOException;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.customermanagement.config.ParamConfig;
+import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.Login;
 import com.app.customermanagement.dto.model.TimeConfig;
 import com.app.customermanagement.dto.response.ResponseBean;
@@ -9,19 +22,6 @@ import com.app.customermanagement.service.TimeService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
-
-import com.app.customermanagement.config.ParamConfig;
-import com.app.customermanagement.constants.CommonConstant;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputFilter.Config;
-import java.io.OutputStream;
 
 @RestController
 @RequestMapping("/admin")
