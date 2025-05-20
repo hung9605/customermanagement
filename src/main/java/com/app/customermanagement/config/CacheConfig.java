@@ -21,26 +21,26 @@ public class CacheConfig {
     @CacheEvict(value = "menuCache", allEntries = true)
     @Scheduled(cron = "0 30 * * * *") 
     public void resetMenuCache() {
-        System.out.println("🧹 Reset menu cache lúc " + java.time.LocalDateTime.now());
+        logger.info("🧹 Reset menu cache lúc " + java.time.LocalDateTime.now());
     }
     
     @CacheEvict(value = "moneyCache", allEntries = true)
     @Scheduled(cron = "0 30 * * * *") 
     public void resetMonneyCache() {
-        System.out.println("🧹 Reset money cache lúc " + java.time.LocalDateTime.now());
+    	logger.info("🧹 Reset money cache lúc " + java.time.LocalDateTime.now());
     }
     
     
     @CacheEvict(value = "moneyExportCache", allEntries = true)
     @Scheduled(cron = "0 30 * * * *") 
     public void resetMoneyExportCache() {
-        System.out.println("🧹 Reset money export cache lúc " + java.time.LocalDateTime.now());
+    	logger.info("🧹 Reset money export cache lúc " + java.time.LocalDateTime.now());
     }
     
     @CacheEvict(value = "medicalSuppliesCache", allEntries = true)
     @Scheduled(cron = "0 30 * * * *") 
     public void resetsuppliesCache() {
-        System.out.println("🧹 Reset medical supplies cache lúc " + java.time.LocalDateTime.now());
+    	logger.info("🧹 Reset medical supplies cache lúc " + java.time.LocalDateTime.now());
     }
     
     

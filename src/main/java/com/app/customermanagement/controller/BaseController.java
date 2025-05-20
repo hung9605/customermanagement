@@ -28,7 +28,7 @@ public class BaseController {
         if (responseBean == null) {
             throw new IllegalArgumentException(RESPONSE_NULL);
         }
-        return new ResponseEntity<ResponseBean>(responseBean, HttpStatus.OK);
+        return new ResponseEntity<>(responseBean, HttpStatus.OK);
     }
 
     /**
@@ -38,10 +38,8 @@ public class BaseController {
      * @return
      */
     protected ResponseEntity<ResponseBean> responseError(ResponseBean responseBean, Exception exception) {
-       // logger.error(ERROR, exception);
-        //responseBean.setData(responseBean);
         responseBean.setStatus(AppHttpStatus.INTERNAL_SERVER_ERROR);
-        return new ResponseEntity<ResponseBean>(responseBean, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(responseBean, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
