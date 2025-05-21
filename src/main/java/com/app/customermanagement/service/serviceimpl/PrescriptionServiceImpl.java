@@ -2,16 +2,15 @@ package com.app.customermanagement.service.serviceimpl;
 
 import java.util.List;
 
-import com.app.customermanagement.dto.model.PrescriptionDto;
 import org.springframework.stereotype.Service;
 
+import com.app.customermanagement.dto.model.PrescriptionDto;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.Prescription;
 import com.app.customermanagement.repository.PrescriptionRepository;
 import com.app.customermanagement.service.PrescriptionService;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Service
 @AllArgsConstructor
