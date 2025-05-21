@@ -45,6 +45,12 @@ public class CacheConfig {
     	logCacheReset("suppliesCache");
     }
     
+    @CacheEvict(value = "historyAllCache", allEntries = true)
+    @Scheduled(cron = "${app.cache.cron}") 
+    public void resetHistoryAllCache() {
+    	logCacheReset("historyAllCache");
+    }
+    
     private void logCacheReset(String cacheName) {
         logger.info("🧹 Reset [{}] cache lúc {}", cacheName, LocalDateTime.now());
     }

@@ -146,6 +146,7 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return scheduleMedicalRepository.getListHistory(formDate,toDate);
 	}
 
+	@Cacheable(value = "historyAllCache", key = "#fromDate + '_' + #toDate")
 	@Override
 	public List<ScheduleDto> getListRegisterAll(String fromDate, String toDate) {
 		// TODO Auto-generated method stub
