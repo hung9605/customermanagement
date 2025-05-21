@@ -21,13 +21,14 @@ public class TimeServiceImpl implements TimeService{
 	@Override
 	public void configTime(String timeStart, String endTime, String timeInterval) throws Exception{
 		// TODO Auto-generated method stub
+		timeRepository.deleteAllTimes();
 		
 		LocalTime start = LocalTime.parse(timeStart);
 		LocalTime end = LocalTime.parse(endTime);
 		List<Time> times = new ArrayList<>();
         LocalTime currentTime = start;
         while(!currentTime.isAfter(end)) {
-        	times.add(new Time(0, currentTime.format(DateTimeFormatter.ofPattern("HH:mm")),false));
+        	times.add(new Time(null, currentTime.format(DateTimeFormatter.ofPattern("HH:mm")),false));
             currentTime = currentTime.plusMinutes(Long.parseLong(timeInterval));
         }
         timeRepository.saveAll(times);

@@ -19,19 +19,28 @@ import lombok.AllArgsConstructor;
 public class ImageServiceImpl implements ImageService  {
 	
 	private final ImageRepository imageRepository;
-	private final String HTTP_IMAGE = "http://localhost:8085/api/upload/images/";
+	private final static String HTTP_IMAGE = "http://localhost:8085/api/upload/images/";
+	
 
 	@Override
 	public List<ImageDto> getImage(Integer suppliesId) {
 		// TODO Auto-generated method stub
 		List<Image> lstImage =  imageRepository.findBySuppliesId(suppliesId);
-		List<ImageDto> lstImageDtos = new ArrayList<>();
-		lstImage.stream().forEach(item ->{
-			String link = HTTP_IMAGE + item.getFolderName() + CommonConstant.SLASH + item.getFileName();
-			ImageDto imageDto = new ImageDto(item.getId(),link, link, "", "");
-			lstImageDtos.add(imageDto);
-		});
-		return lstImageDtos;
+		
+		return lstImage.stream()
+				.map(item -> {
+					String link = HTTP_IMAGE + item.getFolderName() + CommonConstant.SLASH + item.getFileName();
+					return new ImageDto(item.getId(), link, link, "", "");
+				})
+				.collect(Collectors.toList());
+		
+//		List<ImageDto> lstImageDtos = new ArrayList<>();
+//		lstImage.stream().forEach(item ->{
+//			String link = HTTP_IMAGE + item.getFolderName() + CommonConstant.SLASH + item.getFileName();
+//			ImageDto imageDto = new ImageDto(item.getId(),link, link, "", "");
+//			lstImageDtos.add(imageDto);
+//		});
+//		return lstImageDtos;
 	}
 
 	@Override

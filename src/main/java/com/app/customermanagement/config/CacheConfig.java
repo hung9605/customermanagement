@@ -1,5 +1,7 @@
 package com.app.customermanagement.config;
 
+import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -15,35 +17,38 @@ public class CacheConfig {
 	/**
      * logger
      */
-    public final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(CacheConfig.class);
     
     
     @CacheEvict(value = "menuCache", allEntries = true)
-    @Scheduled(cron = "0 30 * * * *") 
+    @Scheduled(cron = "${app.cache.cron}") 
     public void resetMenuCache() {
-        System.out.println("🧹 Reset menu cache lúc " + java.time.LocalDateTime.now());
+    	logCacheReset("menuCache");
     }
     
     @CacheEvict(value = "moneyCache", allEntries = true)
-    @Scheduled(cron = "0 30 * * * *") 
+    @Scheduled(cron = "${app.cache.cron}") 
     public void resetMonneyCache() {
-        System.out.println("🧹 Reset money cache lúc " + java.time.LocalDateTime.now());
+    	logCacheReset("moneyCache");
     }
     
     
     @CacheEvict(value = "moneyExportCache", allEntries = true)
-    @Scheduled(cron = "0 30 * * * *") 
+    @Scheduled(cron = "${app.cache.cron}") 
     public void resetMoneyExportCache() {
-        System.out.println("🧹 Reset money export cache lúc " + java.time.LocalDateTime.now());
+    	logCacheReset("moneyCacheExport");
     }
     
     @CacheEvict(value = "medicalSuppliesCache", allEntries = true)
-    @Scheduled(cron = "0 30 * * * *") 
-    public void resetsuppliesCache() {
-        System.out.println("🧹 Reset medical supplies cache lúc " + java.time.LocalDateTime.now());
+    @Scheduled(cron = "${app.cache.cron}") 
+    public void resetSuppliesCache() {
+    	logCacheReset("suppliesCache");
     }
     
-    
+    private void logCacheReset(String cacheName) {
+        logger.info("🧹 Reset [{}] cache lúc {}", cacheName, LocalDateTime.now());
+    }
+
     
 
 }

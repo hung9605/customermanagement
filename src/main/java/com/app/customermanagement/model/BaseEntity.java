@@ -1,9 +1,9 @@
 package com.app.customermanagement.model;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.app.customermanagement.constants.CommonConstant;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;

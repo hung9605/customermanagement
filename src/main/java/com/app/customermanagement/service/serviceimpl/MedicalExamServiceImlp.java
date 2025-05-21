@@ -31,7 +31,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
 	private final PrescriptionRepository prescriptionRepository;
 	private final MedicalSuppliesRepository medicalSuppliesRepository;
-
+	private final EntityManager entityManager;
 
 	/**
 	 * @param medicalExamination
@@ -40,7 +40,10 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     @Override
     public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
     	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero();
-    	
+    	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(medicalExamination.getMedical().getId())
+    	.orElseThrow(() -> new RuntimeException("Schedule not found"));
+    	//medicalExamination.setMedical(scheduleMedical);
+    	medicalExamination.setId(null);
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
     	List<Prescription> lstPrescription = new ArrayList<>();
     	String[] typeMedicine = medicalExamination.getTypeOfMedicine().split(",");
@@ -49,7 +52,8 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	for (int i = 0; i < quantity.length; i++) {
     		String typeMedicineVal = typeMedicine[i];
     		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal)).findFirst().get();
-			prescription = new Prescription(0, quantity[i], supplies, mExamination);
+    		entityManager.detach(supplies);
+			prescription = new Prescription(null, quantity[i], supplies, mExamination);
 			prescription.setCreatedAt(new Date());
 			prescription.setCreatedBy(CommonConstant.ADMIN);
 			lstPrescription.add(prescription);
@@ -57,7 +61,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 			medicalSuppliesRepository.updateQuantity(Integer.parseInt(supplies.getQuantity()), supplies.getId());
 		}
     	
-    	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(mExamination.getMedical().getId()).get();
+    	
     	scheduleMedical.setStatus(CommonConstant.EXAMINED);
     	scheduleMedicalRepository.save(scheduleMedical);
     	prescriptionRepository.saveAll(lstPrescription);

@@ -22,5 +22,11 @@ public interface TimeRepository extends JpaRepository<Time, Integer>{
     @Transactional  // Đảm bảo rằng phương thức này sẽ thực hiện trong một transaction
     @Query("UPDATE Time t SET t.status = true where t.time = :time")
 	void updateTimeisRegister(String time);
+	
+	@Modifying
+	@Transactional
+	@Query("DELETE FROM Time")
+	void deleteAllTimes();
+
 
 }

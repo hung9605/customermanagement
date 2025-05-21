@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-import com.app.customermanagement.mapper.SuppliesMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.SuppliesDetail;
 import com.app.customermanagement.dto.model.SuppliesListDto;
-import com.app.customermanagement.mapper.SuppliesMapperImpl;
+import com.app.customermanagement.mapper.SuppliesMapper;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.repository.MedicalSuppliesRepository;
 import com.app.customermanagement.service.MedicalSupplyService;
