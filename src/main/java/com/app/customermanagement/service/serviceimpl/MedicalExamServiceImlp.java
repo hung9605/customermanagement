@@ -42,7 +42,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero();
     	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(medicalExamination.getMedical().getId())
     	.orElseThrow(() -> new RuntimeException("Schedule not found"));
-    	//medicalExamination.setMedical(scheduleMedical);
+    	medicalExamination.setMedical(scheduleMedical);
     	medicalExamination.setId(null);
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
     	List<Prescription> lstPrescription = new ArrayList<>();
