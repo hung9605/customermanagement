@@ -31,7 +31,12 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	private final TimeRepository timeRepository;
 	private final ScheduleMedicalMapper scheduleMedicalMapper;
 	private final MessageSource messageSource;
-	
+
+	/**
+	 * @param scheduleDto
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public ScheduleMedical register(ScheduleDto scheduleDto) throws Exception {
 		if(checkRegisterExists(scheduleDto.getFullName(), scheduleDto.getPhoneNumber()))
@@ -68,6 +73,10 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return null;
 	}
 
+	/**
+	 * @param scheduleDto
+	 * @return
+	 */
 	@Override
 	public Integer updateScheduleMedical(ScheduleDto scheduleDto) {
 		// TODO Auto-generated method stub
@@ -75,18 +84,30 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return scheduleMedicalRepository.updateSchedule(scheduleDto.getFullName(), scheduleDto.getTimeRegister(), scheduleDto.getId());
 	}
 
+	/**
+	 * @param name
+	 * @param day
+	 * @return
+	 */
 	@Override
 	public List<ScheduleMedical> getListByName(String name,String day) {
 		// TODO Auto-generated method stub
 		return scheduleMedicalRepository.findByFullNameAndDateRegister(name, day);
 	}
 
+	/**
+	 * @return
+	 */
 	@Override
 	public List<ScheduleDto> getListRegister() {
 		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(getToday(), CommonConstant.NO_EXAMINED);
 		return scheduleMedicalMapper.mapToDtos(sMedicals);
 	}
 
+	/**
+	 * @param date
+	 * @return
+	 */
 	@Override
 	public List<ScheduleDto> getListHistory(String date) {
 		List<ScheduleMedical> sMedicals = scheduleMedicalRepository.findByDateRegisterAndStatusOrderByTimeRegister(date, CommonConstant.EXAMINED);
@@ -99,6 +120,11 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return null;
 	}
 
+	/**
+	 * @param fullName
+	 * @param phoneNumber
+	 * @return
+	 */
 	@Override
 	public boolean checkRegisterExists(String fullName,String phoneNumber) {
 		// TODO Auto-generated method stub
@@ -114,6 +140,11 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 
 	}
 
+	/**
+	 * @param formDate
+	 * @param toDate
+	 * @return
+	 */
 	@Cacheable(value = "historyCache", key = "#formDate + '_' + #toDate")
 	@Override
 	public List<ScheduleDto> getListHistory(String formDate, String toDate) {
@@ -121,12 +152,20 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return scheduleMedicalMapper.mapToDtos(sMedicals);
 	}
 
+	/**
+	 * @param time
+	 * @return
+	 */
 	@Override
 	public boolean checkTimeRegister(String time) {
 		// TODO Auto-generated method stub
 	    return !scheduleMedicalRepository.existsByTimeRegisterAndDateRegister(time, getToday());
 	}
 
+	/**
+	 * @param customer
+	 * @return
+	 */
 	@Cacheable(value = "historyCache1", key = "#date + '_' + #toDate")
 	@Override
 	public List<ScheduleDto> getListMedicalHistory(Customer customer) {
@@ -146,7 +185,12 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return scheduleMedicalRepository.getListHistory(formDate,toDate);
 	}
 
-	
+
+	/**
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
 	@Override
 	public List<ScheduleDto> getListRegisterAll(String fromDate, String toDate) {
 		// TODO Auto-generated method stub
@@ -158,6 +202,10 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	}
 
 
+	/**
+	 * @param formDate
+	 * @param toDate
+	 */
 	@Caching(evict = {
 		    @CacheEvict(value = "historyCache", key = "#formDate + '_' + #toDate"),
 		    @CacheEvict(value = "historyExportCache", key = "#formDate + '_' + #toDate")
