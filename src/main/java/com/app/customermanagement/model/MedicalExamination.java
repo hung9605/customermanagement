@@ -34,7 +34,7 @@ public class MedicalExamination extends BaseEntity {
     String quantity;
     String timeActual;
     
-    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_medical_id",referencedColumnName = "id")
     ScheduleMedical medical;
     
