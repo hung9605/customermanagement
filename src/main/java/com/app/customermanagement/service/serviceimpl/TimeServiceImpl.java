@@ -4,6 +4,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.app.customermanagement.model.Time;
 import com.app.customermanagement.repository.TimeRepository;
@@ -18,11 +21,10 @@ public class TimeServiceImpl implements TimeService{
 	
 	private final TimeRepository timeRepository;
 	
+
 	@Override
 	public void configTime(String timeStart, String endTime, String timeInterval) throws Exception{
-		// TODO Auto-generated method stub
 		timeRepository.deleteAllTimes();
-		
 		LocalTime start = LocalTime.parse(timeStart);
 		LocalTime end = LocalTime.parse(endTime);
 		List<Time> times = new ArrayList<>();
@@ -37,7 +39,6 @@ public class TimeServiceImpl implements TimeService{
 
 	@Override
 	public List<Time> getTime() throws Exception{
-		// TODO Auto-generated method stub
 		return timeRepository.findByStatusFalse();
 	}
 
