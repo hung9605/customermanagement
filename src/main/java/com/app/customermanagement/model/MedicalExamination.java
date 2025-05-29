@@ -36,6 +36,7 @@ public class MedicalExamination extends BaseEntity {
     String totalMoney;
     String quantity;
     String timeActual;
+    String finalOpinion;
     
     @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_medical_id",referencedColumnName = "id",unique = true)
