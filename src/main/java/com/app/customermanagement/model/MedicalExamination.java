@@ -15,7 +15,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "medical_examination")
+@Table(name = "medical_examination",
+uniqueConstraints = {
+        @UniqueConstraint(columnNames = "schedule_medical_id")
+    })
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MedicalExamination extends BaseEntity {
 
@@ -35,7 +38,7 @@ public class MedicalExamination extends BaseEntity {
     String timeActual;
     
     @OneToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_medical_id",referencedColumnName = "id")
+    @JoinColumn(name = "schedule_medical_id",referencedColumnName = "id",unique = true)
     ScheduleMedical medical;
     
     @OneToMany(fetch = FetchType.LAZY)
