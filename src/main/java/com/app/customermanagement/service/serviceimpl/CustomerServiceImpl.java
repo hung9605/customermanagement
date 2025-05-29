@@ -14,10 +14,10 @@ import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.repository.CustomerRepository;
 import com.app.customermanagement.service.CustomerService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 	private final CustomerRepository customerRepository;
 	private final CustomerMapper customerMapper;
@@ -39,37 +39,31 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer getCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return customerRepository.findById(customer.getId()).get();
+		  return customerRepository.findById(customer.getId()).orElse(null);
 	}
 
 	@Override
 	public Customer searchCustomer(Customer customer) {
-		// TODO Auto-generated method stub
 		return customerRepository.findByPhoneNumber(customer.getPhoneNumber());
 	}
 
 	@Override
 	public List<Customer> searchCustomerLastName(String name) {
-		// TODO Auto-generated method stub
 		return customerRepository.findByLastNameContaining(name);
 	}
 
 	@Override
 	public List<Customer> searchCustomerFirstNameOrLastName(String name) {
-		// TODO Auto-generated method stub
 		return customerRepository.findByLastNameContainingOrFirstNameContaining(name, name);
 	}
 
 	@Override
 	public List<Customer> searchCustomerFirstNameOrMidNameOrLastName(String name) {
-		// TODO Auto-generated method stub
 		return customerRepository.findByLastNameContainingOrFirstNameContainingOrMidNameContaining(name, name, name);
 	}
 
 	@Override
 	public Customer searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(String firstName, String midName, String lastName, String phoneNumber) {
-		// TODO Auto-generated method stub
 		return customerRepository.findByLastNameContainingAndFirstNameContainingAndMidNameContainingAndPhoneNumberContaining(lastName, firstName, midName, phoneNumber);
 	}
 
@@ -81,13 +75,11 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@CacheEvict(value = "customer", allEntries = true)
 	public void refreshCache() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Customer updateCustomer(CustomerDto customerDto) {
-		// TODO Auto-generated method stub
 		customerDto.setUpdatedBy(CommonConstant.ADMIN);
 		customerDto.setUpdatedAt(new Date());
 		return customerRepository.save(customerMapper.maptoModel(customerDto));
@@ -95,7 +87,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Integer updateName(CustomerDto customerDto) {
-		// TODO Auto-generated method stub
 		return customerRepository.updateName(customerDto.getFirstName(), customerDto.getMidName(), customerDto.getLastName(), customerDto.getId());
 	}
 }

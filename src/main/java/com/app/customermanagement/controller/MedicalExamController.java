@@ -34,8 +34,12 @@ public class MedicalExamController extends BaseController{
 	
 	@PostMapping("/add")
 	public ResponseEntity<?> add(@RequestBody MedicalExamination medicalExamination){
-		scheduleSevice.clearCacheByDateRange(DateUtils.getToday(), DateUtils.getToday());
-		return response(new ResponseBean(medicalExamService.addMedicalExamination(medicalExamination)));
+		try {
+			scheduleSevice.clearCacheByDateRange(DateUtils.getToday(), DateUtils.getToday());
+			return response(new ResponseBean(medicalExamService.addMedicalExamination(medicalExamination)));
+		}catch (Exception e) {
+			return responseError(new ResponseBean(e.getMessage()),e);
+		}
 	}
 	@PostMapping("/update")
 	public ResponseEntity<?> update(@RequestBody MedicalExamination medicalExamination){

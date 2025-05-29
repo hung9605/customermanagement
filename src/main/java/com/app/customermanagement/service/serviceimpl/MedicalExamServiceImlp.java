@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -38,7 +39,8 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	 * @return
 	 */
     @Override
-    public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) {
+    @Transactional
+    public MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) throws Exception{
     	List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findByIsDeleteFalseAndQuantityGreaterThanZero();
     	ScheduleMedical scheduleMedical = scheduleMedicalRepository.findById(medicalExamination.getMedical().getId())
     	.orElseThrow(() -> new RuntimeException("Schedule not found"));
@@ -51,7 +53,8 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	Prescription prescription;
     	for (int i = 0; i < quantity.length; i++) {
     		String typeMedicineVal = typeMedicine[i];
-    		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal)).findFirst().get();
+    		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal))
+    				.findFirst().orElseThrow(() -> new RuntimeException("Medical supply not found: " + typeMedicineVal));
     		entityManager.detach(supplies);
 			prescription = new Prescription(null, quantity[i], supplies, mExamination);
 			prescription.setCreatedAt(new Date());
