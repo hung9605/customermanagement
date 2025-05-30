@@ -61,6 +61,7 @@ public class CustomerController extends BaseController{
 	
 	@PostMapping("/update")
 	public ResponseEntity<?> update(@RequestBody CustomerDto customer){
+		customerService.refreshCache();
 		return response(new ResponseBean(customerService.updateCustomer(customer)));
 	}
 	
