@@ -18,7 +18,8 @@ public class ParamConfig {
 	public String urlDumpWin;
 	@Value("${urlUpload}")
 	public String urlUpload;
-	
+	@Value("${urlDumpLinux}")
+	public String urlDumpLinux;
 	
 
 }

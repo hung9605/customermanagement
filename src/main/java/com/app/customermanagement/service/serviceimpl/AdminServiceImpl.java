@@ -38,6 +38,9 @@ public class AdminServiceImpl implements AdminService{
 	        if(osName.equals("mac")) {
 	            urlDump = paramConfig.getUrlDumpMac();
 	        }
+	        if(osName.equals("lin")) {
+	            urlDump = paramConfig.getUrlDumpLinux();
+	        }
 	        String command = String.format(urlDump, paramConfig.getUser(), paramConfig.getPazzword(), host,port, dbName);
 	        // Thiết lập response để tải file SQL dumpcmd
 	        response.setContentType("application/sql");
