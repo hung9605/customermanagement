@@ -87,8 +87,9 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	Prescription prescription;
     	for (int i = 0; i < quantity.length; i++) {
     		String typeMedicineVal = typeMedicine[i];
-    		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal)).findFirst().get();
-			prescription = new Prescription(0, quantity[i], supplies, mExamination);
+    		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal)).findFirst()
+    				.orElseThrow(() -> new RuntimeException("Medical supply not found: " + typeMedicineVal));
+			prescription = new Prescription(null, quantity[i], supplies, mExamination);
 			prescription.setCreatedAt(new Date());
 			prescription.setCreatedBy(CommonConstant.ADMIN);
 			lstPrescription.add(prescription);
