@@ -4,7 +4,7 @@ sudo npm install -g angular-cli-ghpages
 
 sudo apt-get install ibus-unikey
 ng build --localize
-ng serve --configuration=vi
+ng serve --configuration=vi   
 ng extract-i18n 
 
 sudo apt update
@@ -14,3 +14,13 @@ ibus restart
 
 find src/app -type f -name "*.ts" -exec sed -i '/BrowserModule/d' {} +
 grep -rn "BrowserModule" src/app
+
+
+.pipe(
+  tap(...),           // side effects
+  map(...),           // xử lý giá trị
+  catchError(...),    // xử lý lỗi sớm
+  takeUntil(...),     // đảm bảo hủy khi destroy
+  finalize(...)       // cleanup cuối cùng
+)
+

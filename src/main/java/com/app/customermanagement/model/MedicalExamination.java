@@ -42,9 +42,9 @@ public class MedicalExamination extends BaseEntity {
     @JoinColumn(name = "schedule_medical_id",referencedColumnName = "id",unique = true)
     ScheduleMedical medical;
     
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medical_examination_id",referencedColumnName = "id")
-    @JsonIgnore
-    List<Prescription> prescription;
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "medical_examination_id",referencedColumnName = "id")
+//    @JsonIgnore
+//    List<Prescription> prescription;
 
 }

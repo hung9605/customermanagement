@@ -166,10 +166,9 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	 * @param customer
 	 * @return
 	 */
-	@Cacheable(value = "historyCache1", key = "#date + '_' + #toDate")
+	
 	@Override
 	public List<ScheduleDto> getListMedicalHistory(Customer customer) {
-		// TODO Auto-generated method stub
 		return scheduleMedicalMapper.mapToDtos(scheduleMedicalRepository.findByCustomerAndStatusTrue(customer));
 		
 	}
