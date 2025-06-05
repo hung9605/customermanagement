@@ -24,3 +24,5 @@ grep -rn "BrowserModule" src/app
   finalize(...)       // cleanup cuối cùng
 )
 
+
+bin/kafka-console-producer.sh --topic register-topic --bootstrap-server localhost:9092
