@@ -37,7 +37,7 @@ bin/kafka-topics.sh --bootstrap-server localhost:9092
 
 bin/kafka-server-start.sh config/kraft/server.properties
 
---reset offset to lastest
+--reset offset to lastestlastest
 bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group console-consumer-74131 --reset-offsets --to-latest --all-topics --execute
 
 

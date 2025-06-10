@@ -15,6 +15,7 @@ public class PrescriptionDto {
     Integer id;
     String medicineName;
     Integer IdSupplies;
+    Integer IdExam;
     String quantity;
     String unitPrice;
     

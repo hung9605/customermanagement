@@ -65,7 +65,6 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 			prescription.setCreatedAt(new Date());
 			prescription.setCreatedBy(CommonConstant.ADMIN);
 			lstPrescription.add(prescription);
-			
 			supplies.setQuantity(String.valueOf(Integer.parseInt(supplies.getQuantity()) - Integer.parseInt(prescription.getQuantity())));
 			medicalSuppliesRepository.updateQuantity(Integer.parseInt(supplies.getQuantity()), supplies.getId());
 		}
@@ -82,6 +81,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     		        dto.setId(prescription.getId());
     		        dto.setMedicineName(prescription.getMedicalSupplies().getMedicineName());
     		        dto.setIdSupplies(prescription.getMedicalSupplies().getId());
+    		        dto.setIdSupplies(prescription.getMedicalExamination().getId());
     		        dto.setQuantity(String.valueOf(prescription.getQuantity()));
     		        dto.setUnitPrice(String.valueOf(prescription.getMedicalSupplies().getUnitPrice()));
     		        kafkaService.sendMessage(CommonConstant.TOPPIC_SUPPLIES, dto);
