@@ -26,3 +26,18 @@ grep -rn "BrowserModule" src/app
 
 
 bin/kafka-console-producer.sh --topic register-topic --bootstrap-server localhost:9092
+
+
+bin/kafka-console-consumer.sh --topic SUPPLIES_TOPIC --from-beginning --bootstrap-server localhost:9092
+
+bin/kafka-topics.sh --bootstrap-server localhost:9092 
+  --create --topic registerregister-topic 
+  --partitions 1 \
+  --replication-factor 1
+
+bin/kafka-server-start.sh config/kraft/server.properties
+
+--reset offset to lastest
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group console-consumer-74131 --reset-offsets --to-latest --all-topics --execute
+
+

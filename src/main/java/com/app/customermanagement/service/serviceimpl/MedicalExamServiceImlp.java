@@ -3,6 +3,7 @@ package com.app.customermanagement.service.serviceimpl;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.MoneyDetail;
 import com.app.customermanagement.dto.model.MoneyDto;
+import com.app.customermanagement.dto.model.PrescriptionDto;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.MedicalSupplies;
@@ -12,13 +13,16 @@ import com.app.customermanagement.repository.MedicalExaminationRepository;
 import com.app.customermanagement.repository.MedicalSuppliesRepository;
 import com.app.customermanagement.repository.PrescriptionRepository;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
+import com.app.customermanagement.service.KafkaService;
 import com.app.customermanagement.service.MedicalExamService;
 
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -33,6 +37,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	private final PrescriptionRepository prescriptionRepository;
 	private final MedicalSuppliesRepository medicalSuppliesRepository;
 	private final EntityManager entityManager;
+	private final KafkaService kafkaService;
 
 	/**
 	 * @param medicalExamination
@@ -60,15 +65,28 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 			prescription.setCreatedAt(new Date());
 			prescription.setCreatedBy(CommonConstant.ADMIN);
 			lstPrescription.add(prescription);
+			
 			supplies.setQuantity(String.valueOf(Integer.parseInt(supplies.getQuantity()) - Integer.parseInt(prescription.getQuantity())));
 			medicalSuppliesRepository.updateQuantity(Integer.parseInt(supplies.getQuantity()), supplies.getId());
 		}
-    	
-    	
     	scheduleMedical.setStatus(CommonConstant.EXAMINED);
     	scheduleMedicalRepository.save(scheduleMedical);
-    	prescriptionRepository.saveAll(lstPrescription);
+    	lstPrescription = prescriptionRepository.saveAll(lstPrescription);
+    	sendKafka(lstPrescription);
         return mExamination;
+    }
+    
+    private void sendKafka(List<Prescription> prescriptions) {
+    	prescriptions.stream().forEach(prescription -> {
+    		        PrescriptionDto dto = new PrescriptionDto();
+    		        dto.setId(prescription.getId());
+    		        dto.setMedicineName(prescription.getMedicalSupplies().getMedicineName());
+    		        dto.setIdSupplies(prescription.getMedicalSupplies().getId());
+    		        dto.setQuantity(String.valueOf(prescription.getQuantity()));
+    		        dto.setUnitPrice(String.valueOf(prescription.getMedicalSupplies().getUnitPrice()));
+    		        kafkaService.sendMessage(CommonConstant.TOPPIC_SUPPLIES, dto);
+    		    });
+
     }
 
 	/**
@@ -94,7 +112,8 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 			prescription.setCreatedBy(CommonConstant.ADMIN);
 			lstPrescription.add(prescription);
 		}
-    	prescriptionRepository.saveAll(lstPrescription);
+    	lstPrescription = prescriptionRepository.saveAll(lstPrescription);
+    	sendKafka(lstPrescription);
         return mExamination;
     }
 

@@ -20,4 +20,5 @@ public class CommonConstant {
 	public static final String HTTP = "http://";
 	public static final String OK = "OK";
 	public static final String PORT = "27562";
+	public static final String TOPPIC_SUPPLIES = "SUPPLIES_TOPIC";
 }
