@@ -32,4 +32,6 @@ public class Inventory extends BaseEntity{
     @Column(name = "quantity", nullable = false)
     Integer quantity;
 
+
+
 }

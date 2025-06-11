@@ -15,11 +15,11 @@ import lombok.AllArgsConstructor;
 @Service
 public class InventoryServiceImpl implements InventoryService{
 	
-	public final InventoryRepository inventoryRepositoty;
+	public final InventoryRepository inventoryRepository;
 
 	@Override
 	public List<Inventory> findByMedicalSupplies(MedicalSupplies medicalSupplies) throws Exception {
-		return inventoryRepositoty.findByMedicalSupplies(medicalSupplies);
+		return inventoryRepository.findByMedicalSupplies(medicalSupplies);
 	}
 
 }

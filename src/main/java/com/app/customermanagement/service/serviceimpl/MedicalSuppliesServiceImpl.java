@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import com.app.customermanagement.model.Inventory;
+import com.app.customermanagement.repository.InventoryRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,7 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	private final ParamConfig paramConfig;
 	private final EntityManager entityManager;
 	private final SuppliesMapper mapper;
+	private final InventoryRepository inventoryRepository;
 
 	@Override
 	public MedicalSupplies add(MedicalSupplies medicalSupplies) throws Exception {
@@ -43,6 +46,10 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 		medicalSupplies.setStatus(true);
 		medicalSupplies.setIsDelete(false);
 		medicalSupplies =  medicalSuppliesRepository.save(medicalSupplies);
+		if(medicalSupplies.getIsInventory()){
+			Inventory inventory = new Inventory(null,medicalSupplies,"MAIN",Integer.parseInt(medicalSupplies.getQuantity()));
+			inventoryRepository.save(inventory);
+		}
 		createFolder(String.valueOf(medicalSupplies.getId()));
 		return medicalSupplies;
 	}   
