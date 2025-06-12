@@ -12,4 +12,6 @@ public interface InventoryService {
 	
 	List<InventoryDTO> fetchInventoryWithMedicalSupplies() throws Exception;
 
+	Inventory add(Inventory inventory) throws Exception;
+
 }

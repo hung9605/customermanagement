@@ -29,4 +29,14 @@ public class InventoryServiceImpl implements InventoryService{
 		return inventoryRepository.fetchInventoryWithMedicalSupplies();
 	}
 
+	/**
+	 * @param inventory
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public Inventory add(Inventory inventory) throws Exception {
+		return inventoryRepository.save(inventory);
+	}
+
 }
