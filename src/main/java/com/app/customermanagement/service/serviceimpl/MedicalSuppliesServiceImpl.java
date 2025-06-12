@@ -47,7 +47,11 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 		medicalSupplies.setIsDelete(false);
 		medicalSupplies =  medicalSuppliesRepository.save(medicalSupplies);
 		if(medicalSupplies.getIsInventory()){
-			Inventory inventory = new Inventory(null,medicalSupplies,"MAIN",Integer.parseInt(medicalSupplies.getQuantity()));
+			Inventory inventory = new Inventory();
+			inventory.setId(null);
+			inventory.setQuantity(Integer.parseInt(medicalSupplies.getQuantity()));
+			inventory.setStatus("in_stock");
+			inventory.setMedicalSupplies(medicalSupplies);
 			inventoryRepository.save(inventory);
 		}
 		createFolder(String.valueOf(medicalSupplies.getId()));

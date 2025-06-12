@@ -10,6 +10,8 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
+import com.app.customermanagement.constants.CommonConstant;
+
 @Entity
 @Table(name = "inventory")
 @Data
@@ -21,16 +23,14 @@ public class Inventory extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
+    Integer quantity;
+    String location = CommonConstant.STOCK_LOCATION;
+    String status = CommonConstant.STOCK_STATUS;
+    String expiryDate;
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medical_supplies_id")
     MedicalSupplies medicalSupplies;
-
-    @Column(name = "location", nullable = false)
-    String location = "MAIN";
-
-    @Column(name = "quantity", nullable = false)
-    Integer quantity;
 
 
 

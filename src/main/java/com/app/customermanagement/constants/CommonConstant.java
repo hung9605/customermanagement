@@ -21,4 +21,6 @@ public class CommonConstant {
 	public static final String OK = "OK";
 	public static final String PORT = "27562";
 	public static final String TOPPIC_SUPPLIES = "SUPPLIES_TOPIC";
+	public static final String STOCK_LOCATION = "MAIN";
+	public static final String STOCK_STATUS = "IN_STOCK";
 }

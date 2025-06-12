@@ -24,6 +24,7 @@ public class MedicalSupplies extends BaseEntity{
     Boolean status;
     String link;
     Boolean isDelete;
+    String supplier;
 
     @Column(name = "description", columnDefinition = "TEXT")
     String description;
