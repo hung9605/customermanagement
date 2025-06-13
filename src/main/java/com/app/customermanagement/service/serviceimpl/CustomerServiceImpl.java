@@ -63,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(String firstName, String midName, String lastName, String phoneNumber) {
+	public Customer searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(String firstName, String midName, String lastName, String phoneNumber) throws Exception{
 		return customerRepository.findByLastNameContainingAndFirstNameContainingAndMidNameContainingAndPhoneNumberContaining(lastName, firstName, midName, phoneNumber);
 	}
 

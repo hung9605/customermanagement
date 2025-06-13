@@ -1,12 +1,6 @@
 package com.app.customermanagement.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +24,11 @@ public class MedicalSupplies extends BaseEntity{
     Boolean status;
     String link;
     Boolean isDelete;
+    String supplier;
 
     @Column(name = "description", columnDefinition = "TEXT")
     String description;
 
+    @Transient
+    Boolean isInventory;
 }

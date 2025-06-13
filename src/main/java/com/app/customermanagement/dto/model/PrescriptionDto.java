@@ -6,11 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class PrescriptionDto {
 
-public interface PrescriptionDto {
-
-    Integer getId();
-    String getMedicineName();
-    String getQuantity();
-    String getUnitPrice();
+    Integer id;
+    String medicineName;
+    Integer IdSupplies;
+    Integer IdExam;
+    String quantity;
+    String unitPrice;
+    
 }

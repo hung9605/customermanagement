@@ -127,17 +127,8 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	 */
 	@Override
 	public boolean checkRegisterExists(String fullName,String phoneNumber) {
-		// TODO Auto-generated method stub
-//		List<ScheduleDto> listRegister = getListRegister();
-//		List<ScheduleDto> listCheck = listRegister.stream().filter( item ->{
-//			return fullName.equals(item.getFullName()) && phoneNumber.equals(item.getPhoneNumber());
-//		}
-//		).collect(Collectors.toList());
-//		return listCheck.size() > 0 ;
-		
 		return getListRegister().stream()
 			    .anyMatch(item -> fullName.equals(item.getFullName()) && phoneNumber.equals(item.getPhoneNumber()));
-
 	}
 
 	/**
@@ -166,7 +157,6 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	 * @param customer
 	 * @return
 	 */
-	
 	@Override
 	public List<ScheduleDto> getListMedicalHistory(Customer customer) {
 		return scheduleMedicalMapper.mapToDtos(scheduleMedicalRepository.findByCustomerAndStatusTrue(customer));

@@ -40,9 +40,13 @@ public class CustomerController extends BaseController{
 			,@RequestParam String lastName
 			,@RequestParam String phoneNumber
 			){
-		ResponseBean responseBean = new ResponseBean();
-		responseBean.setData(customerService.searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(firstName,midName,lastName,phoneNumber));
-		return response(responseBean);
+		try {
+			return response(new ResponseBean(customerService.searchCustomerFirstNameAndMidNameAndLastNameAndPhoneNumber(firstName,midName,lastName,phoneNumber)));
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
+		
 	}
 	
 	@PostMapping("/add")
