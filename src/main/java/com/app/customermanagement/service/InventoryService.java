@@ -14,4 +14,5 @@ public interface InventoryService {
 
 	Inventory add(Inventory inventory) throws Exception;
 
+	void update(Inventory inventory) throws Exception;
 }

@@ -1,18 +1,24 @@
 package com.app.customermanagement.service.serviceimpl;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.InventoryDTO;
 import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.repository.InventoryRepository;
 import com.app.customermanagement.service.InventoryService;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaUpdate;
+import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -20,6 +26,7 @@ import lombok.AllArgsConstructor;
 public class InventoryServiceImpl implements InventoryService{
 	
 	public final InventoryRepository inventoryRepository;
+	private final EntityManager entityManager;
 
 	@Override
 	public List<Inventory> findByMedicalSupplies(MedicalSupplies medicalSupplies) throws Exception {
@@ -43,6 +50,11 @@ public class InventoryServiceImpl implements InventoryService{
 			 inventory.setReceivedDate(LocalDateTime.now());
 		 }
 		return inventoryRepository.save(inventory);
+	}
+
+	@Override
+	public void update(Inventory inventory) throws Exception {
+		inventoryRepository.update(inventory.getQuantity(),inventory.getStatus(), inventory.getLocation(), inventory.getId());
 	}
 
 }

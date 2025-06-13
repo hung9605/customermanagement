@@ -98,7 +98,7 @@ public class MedicalSuppliesServiceImpl implements MedicalSupplyService {
 	@Override
 	@Transactional
 	public void updateDetail(SuppliesDetail suppliesDetail) throws Exception {
-		// TODO Auto-generated method stub
+
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaUpdate<MedicalSupplies> update = criteriaBuilder.createCriteriaUpdate(MedicalSupplies.class);
 		Root<MedicalSupplies> root = update.from(MedicalSupplies.class);

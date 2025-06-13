@@ -5,6 +5,7 @@ import com.app.customermanagement.model.MedicalSupplies;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.service.InventoryService;
 
@@ -23,8 +24,6 @@ public class InventoryController extends BaseController {
 		try {
 			return response(new ResponseBean( inventoryService.fetchInventoryWithMedicalSupplies()));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return responseError(new ResponseBean(e.getMessage()), e);
 		}
 	}
@@ -34,10 +33,18 @@ public class InventoryController extends BaseController {
 		try {
 			return response(new ResponseBean(inventoryService.add(inventory)));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return responseError(new ResponseBean(e.getMessage()), e);
 		}
 	}
-
+	
+	@PostMapping("/update")
+	public ResponseEntity<?> update(@RequestBody Inventory inventory){
+		try {
+			inventoryService.update(inventory);
+			return response(new ResponseBean(CommonConstant.OK));
+		} catch (Exception e) {
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
+	}
+	
 }
