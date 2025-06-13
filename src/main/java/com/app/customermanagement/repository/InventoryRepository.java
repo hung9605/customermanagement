@@ -27,7 +27,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer>{
             "i.updatedBy" +
             ") " +
             "FROM Inventory i " +
-            "INNER JOIN i.medicalSupplies ms")
+            "INNER JOIN i.medicalSupplies ms ORDER BY ms.medicineName,i.receivedDate")
     List<InventoryDTO> fetchInventoryWithMedicalSupplies();
 
 }

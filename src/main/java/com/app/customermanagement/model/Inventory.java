@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 import com.app.customermanagement.constants.CommonConstant;
 
 @Entity
-@Table(name = "inventory")
+@Table(name = "inventory",
+uniqueConstraints = @UniqueConstraint(columnNames = {"location", "status","receivedDate", "medical_supplies_id"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,11 +28,9 @@ public class Inventory extends BaseEntity{
     String location = CommonConstant.STOCK_LOCATION;
     String status = CommonConstant.STOCK_STATUS;
     String expiryDate;
+    LocalDateTime receivedDate;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medical_supplies_id")
     MedicalSupplies medicalSupplies;
-
-
-
 }

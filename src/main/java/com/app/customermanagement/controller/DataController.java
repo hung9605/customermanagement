@@ -33,7 +33,7 @@ public class DataController extends BaseController{
 			){
 		try {
 			ResponseBean responseBean = new ResponseBean();
-			Map<String, List<MasterData>> groupedData = new HashMap();
+			Map<String, List<MasterData>> groupedData = new HashMap<String, List<MasterData>>();
 			groupedData.put("status", masterDataService.getDataByKey(key));
 			groupedData.put("location", masterDataService.getDataByKey("location"));
 			responseBean.setData(groupedData);

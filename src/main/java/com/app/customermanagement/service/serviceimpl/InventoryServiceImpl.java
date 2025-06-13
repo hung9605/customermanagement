@@ -1,8 +1,11 @@
 package com.app.customermanagement.service.serviceimpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.app.customermanagement.dto.model.InventoryDTO;
 import com.app.customermanagement.model.Inventory;
@@ -36,6 +39,9 @@ public class InventoryServiceImpl implements InventoryService{
 	 */
 	@Override
 	public Inventory add(Inventory inventory) throws Exception {
+		 if(Objects.isNull(inventory.getReceivedDate())) {
+			 inventory.setReceivedDate(LocalDateTime.now());
+		 }
 		return inventoryRepository.save(inventory);
 	}
 
