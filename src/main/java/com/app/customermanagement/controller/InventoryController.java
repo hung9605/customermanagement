@@ -22,7 +22,7 @@ public class InventoryController extends BaseController {
 	@GetMapping("/list")
 	public ResponseEntity<?> list(){
 		try {
-			return response(new ResponseBean( inventoryService.fetchInventoryWithMedicalSupplies()));
+			return response(new ResponseBean( inventoryService.getData()));
 		} catch (Exception e) {
 			return responseError(new ResponseBean(e.getMessage()), e);
 		}
