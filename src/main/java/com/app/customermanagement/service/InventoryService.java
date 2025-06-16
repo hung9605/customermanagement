@@ -3,6 +3,7 @@ package com.app.customermanagement.service;
 import java.util.List;
 
 import com.app.customermanagement.dto.model.InventoryDTO;
+import com.app.customermanagement.dto.model.InventoryReportDTO;
 import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalSupplies;
 
@@ -15,4 +16,7 @@ public interface InventoryService {
 	Inventory add(Inventory inventory) throws Exception;
 
 	void update(Inventory inventory) throws Exception;
+	
+	List<InventoryReportDTO> getData() throws Exception;
+	
 }

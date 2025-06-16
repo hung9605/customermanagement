@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.InventoryDTO;
+import com.app.customermanagement.dto.model.InventoryReportDTO;
 import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.repository.InventoryRepository;
@@ -55,6 +56,12 @@ public class InventoryServiceImpl implements InventoryService{
 	@Override
 	public void update(Inventory inventory) throws Exception {
 		inventoryRepository.update(inventory.getQuantity(),inventory.getStatus(), inventory.getLocation(), inventory.getId());
+	}
+
+	@Override
+	public List<InventoryReportDTO> getData() throws Exception {
+		// TODO Auto-generated method stub
+		return inventoryRepository.getInventoryReport();
 	}
 
 }
