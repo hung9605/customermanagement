@@ -72,51 +72,60 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer>{
 	
 	@Query(value = """
 		    WITH inventory_detail AS (
-		        SELECT 
-		            i.id,
-		            i.medical_supplies_id,
-		            ms.medicine_name,
-		            ms.unit_price,
-		            i.quantity,
-		            i.location,
-		            i.status,
-		            ms.supplier,
-		            i.created_at,
-		            i.created_by,
-		            i.updated_at,
-		            i.updated_by,
-		            i.received_date,
-		            NULL AS total_quantity,
-		            'DETAIL' AS record_type
-		        FROM inventory i
-		        JOIN medical_supplies ms ON ms.id = i.medical_supplies_id
-		    ),
-		    inventory_summary AS (
-		        SELECT 
-		            NULL AS id,
-		            i.medical_supplies_id,
-		            NULL AS medicine_name,
-		            NULL AS unit_price,
-		            NULL AS quantity,
-		            NULL AS location,
-		            i.status,
-		            NULL AS supplier,
-		            NULL AS created_at,
-		            NULL AS created_by,
-		            NULL AS updated_at,
-		            NULL AS updated_by,
-		            NULL AS received_date,
-		            SUM(i.quantity) AS total_quantity,
-		            'SUMMARY' AS record_type
-		        FROM inventory i
-		        GROUP BY i.medical_supplies_id, i.status
-		    )
-		    SELECT * FROM inventory_detail
-		    UNION ALL
-		    SELECT * FROM inventory_summary
-		    ORDER BY medical_supplies_id, received_date
+    SELECT 
+        i.id,
+        i.medical_supplies_id,
+        ms.medicine_name,
+        ms.unit_price,
+        i.quantity,
+        i.location,
+        i.status,
+        ms.supplier,
+        i.created_at,
+        i.created_by,
+        i.updated_at,
+        i.updated_by,
+        i.received_date,
+        NULL AS total_quantity,
+        'DETAIL' AS record_type
+    FROM inventory i
+    JOIN medical_supplies ms ON ms.id = i.medical_supplies_id
+),
+inventory_summary AS (
+    SELECT 
+        NULL AS id,
+        i.medical_supplies_id,
+        ms.medicine_name,
+        ms.unit_price,
+        NULL AS quantity,
+        i.location,
+        i.status,
+        ms.supplier,
+        NULL AS created_at,
+        NULL AS created_by,
+        NULL AS updated_at,
+        NULL AS updated_by,
+        NULL AS received_date,
+        SUM(i.quantity) AS total_quantity,
+        'SUMMARY' AS record_type
+    FROM inventory i
+    JOIN medical_supplies ms ON ms.id = i.medical_supplies_id
+    GROUP BY i.medical_supplies_id, i.status, ms.medicine_name, ms.unit_price,i.location, ms.supplier
+),
+combined AS (
+    SELECT * FROM inventory_detail
+    UNION ALL
+    SELECT * FROM inventory_summary
+)
+
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY medical_supplies_id, status ORDER BY record_type DESC, received_date) AS row_order
+    FROM combined
+
+ORDER BY medical_supplies_id, status, row_order
+
 		    """, nativeQuery = true)
-		List<InventoryReportDTO> getInventoryReport();
+	List<InventoryReportDTO> getInventoryReport();
 
 
 	
