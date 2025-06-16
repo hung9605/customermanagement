@@ -33,6 +33,42 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer>{
             "INNER JOIN i.medicalSupplies ms ORDER BY ms.medicineName,i.receivedDate")
     List<InventoryDTO> fetchInventoryWithMedicalSupplies();
 	
+
+//	WITH inventory_detail AS (
+//		    SELECT 
+//		        i1_0.medical_supplies_id,
+//		        ms1_0.medicine_name,
+//		        i1_0.status,
+//		        i1_0.quantity,
+//		        i1_0.location,
+//		        i1_0.received_date,
+//		        NULL AS total_quantity,       -- placeholder để đồng nhất với summary
+//		        'DETAIL' AS record_type       -- để phân biệt dòng chi tiết
+//		    FROM inventory i1_0 
+//		    JOIN medical_supplies ms1_0 
+//		        ON ms1_0.id = i1_0.medical_supplies_id
+//		),
+//
+//		inventory_summary AS (
+//		    SELECT 
+//		        i.medical_supplies_id,
+//		        NULL AS medicine_name,
+//		        i.status,
+//		        NULL AS quantity,
+//		        NULL AS location,
+//		        NULL AS received_date,
+//		        SUM(i.quantity) AS total_quantity,
+//		        'SUMMARY' AS record_type
+//		    FROM inventory i
+//		    GROUP BY i.medical_supplies_id, i.status
+//		)
+//
+//		-- UNION cả 2 lại
+//		SELECT * FROM inventory_detail
+//		UNION ALL
+//		SELECT * FROM inventory_summary
+//		ORDER BY medical_supplies_id,received_date;
+	
 	@Transactional
 	@Modifying
 	@Query("update Inventory i set i.quantity = :quantity,i.status = :status,i.location= :location where i.id = :id")
