@@ -20,9 +20,11 @@ public class InventoryController extends BaseController {
 	private final InventoryService inventoryService;
 	
 	@GetMapping("/list")
-	public ResponseEntity<?> list(){
+	public ResponseEntity<?> list(
+			 @RequestParam(defaultValue = "0") String fromDate
+			,@RequestParam(defaultValue = "0") String toDate){
 		try {
-			return response(new ResponseBean( inventoryService.getData()));
+			return response(new ResponseBean( inventoryService.getData(fromDate,toDate)));
 		} catch (Exception e) {
 			return responseError(new ResponseBean(e.getMessage()), e);
 		}

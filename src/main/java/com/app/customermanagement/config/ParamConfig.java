@@ -20,6 +20,8 @@ public class ParamConfig {
 	public String urlUpload;
 	@Value("${urlDumpLinux}")
 	public String urlDumpLinux;
+	@Value("${isKafka}")
+    private Integer isKafka;
 	
 
 }
