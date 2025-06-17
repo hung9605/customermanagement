@@ -59,9 +59,9 @@ public class InventoryServiceImpl implements InventoryService{
 	}
 
 	@Override
-	public List<InventoryReportDTO> getData() throws Exception {
+	public List<InventoryReportDTO> getData(String fromDate,String toDate) throws Exception {
 		// TODO Auto-generated method stub
-		return inventoryRepository.getInventoryReport();
+		return inventoryRepository.getInventoryReport(fromDate, toDate);
 	}
 
 }

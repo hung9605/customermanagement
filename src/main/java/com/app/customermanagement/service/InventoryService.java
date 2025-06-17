@@ -17,6 +17,6 @@ public interface InventoryService {
 
 	void update(Inventory inventory) throws Exception;
 	
-	List<InventoryReportDTO> getData() throws Exception;
+	List<InventoryReportDTO> getData(String fromDate,String toDate)throws Exception;
 	
 }
