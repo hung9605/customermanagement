@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.InventoryDTO;
 import com.app.customermanagement.dto.model.InventoryReportDTO;
@@ -27,7 +28,8 @@ import lombok.AllArgsConstructor;
 public class InventoryServiceImpl implements InventoryService{
 	
 	public final InventoryRepository inventoryRepository;
-	private final EntityManager entityManager;
+	public final EntityManager entityManager;
+	public final ParamConfig paramConfig;
 
 	@Override
 	public List<Inventory> findByMedicalSupplies(MedicalSupplies medicalSupplies) throws Exception {
@@ -49,6 +51,9 @@ public class InventoryServiceImpl implements InventoryService{
 	public Inventory add(Inventory inventory) throws Exception {
 		 if(Objects.isNull(inventory.getReceivedDate())) {
 			 inventory.setReceivedDate(LocalDateTime.now());
+		 }
+		 if(paramConfig.getIsKafka() == 1) {
+			 System.out.println("Send to kafka ... ");
 		 }
 		return inventoryRepository.save(inventory);
 	}
