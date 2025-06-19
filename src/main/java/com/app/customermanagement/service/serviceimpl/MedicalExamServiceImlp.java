@@ -87,7 +87,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     		        dto.setId(prescription.getId());
     		        dto.setMedicineName(prescription.getMedicalSupplies().getMedicineName());
     		        dto.setIdSupplies(prescription.getMedicalSupplies().getId());
-    		        dto.setIdSupplies(prescription.getMedicalExamination().getId());
+    		        dto.setIdExam(prescription.getMedicalExamination().getId());
     		        dto.setQuantity(String.valueOf(prescription.getQuantity()));
     		        dto.setUnitPrice(String.valueOf(prescription.getMedicalSupplies().getUnitPrice()));
     		        kafkaService.sendMessage(CommonConstant.TOPPIC_SUPPLIES, dto);
