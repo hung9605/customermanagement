@@ -33,4 +33,6 @@ public class Inventory extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medical_supplies_id")
     MedicalSupplies medicalSupplies;
+    
+    String description;
 }

@@ -119,7 +119,9 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 			lstPrescription.add(prescription);
 		}
     	lstPrescription = prescriptionRepository.saveAll(lstPrescription);
-    	sendKafka(lstPrescription);
+    	if(paramConfig.getIsKafka() == 1) {
+    		sendKafka(lstPrescription);
+    	}
         return mExamination;
     }
 
