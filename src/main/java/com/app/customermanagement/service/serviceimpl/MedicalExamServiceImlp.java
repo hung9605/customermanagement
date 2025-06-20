@@ -1,5 +1,6 @@
 package com.app.customermanagement.service.serviceimpl;
 
+import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.MoneyDetail;
 import com.app.customermanagement.dto.model.MoneyDto;
@@ -38,6 +39,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	private final MedicalSuppliesRepository medicalSuppliesRepository;
 	private final EntityManager entityManager;
 	private final KafkaService kafkaService;
+	private final ParamConfig paramConfig;
 
 	/**
 	 * @param medicalExamination
@@ -71,7 +73,11 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	scheduleMedical.setStatus(CommonConstant.EXAMINED);
     	scheduleMedicalRepository.save(scheduleMedical);
     	lstPrescription = prescriptionRepository.saveAll(lstPrescription);
-    	sendKafka(lstPrescription);
+    	 if(paramConfig.getIsKafka() == 1) {
+			 System.out.println("Send to kafka ... ");
+			 sendKafka(lstPrescription);
+		 }
+    	
         return mExamination;
     }
     
@@ -81,7 +87,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     		        dto.setId(prescription.getId());
     		        dto.setMedicineName(prescription.getMedicalSupplies().getMedicineName());
     		        dto.setIdSupplies(prescription.getMedicalSupplies().getId());
-    		        dto.setIdSupplies(prescription.getMedicalExamination().getId());
+    		        dto.setIdExam(prescription.getMedicalExamination().getId());
     		        dto.setQuantity(String.valueOf(prescription.getQuantity()));
     		        dto.setUnitPrice(String.valueOf(prescription.getMedicalSupplies().getUnitPrice()));
     		        kafkaService.sendMessage(CommonConstant.TOPPIC_SUPPLIES, dto);
@@ -113,7 +119,9 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 			lstPrescription.add(prescription);
 		}
     	lstPrescription = prescriptionRepository.saveAll(lstPrescription);
-    	sendKafka(lstPrescription);
+    	if(paramConfig.getIsKafka() == 1) {
+    		sendKafka(lstPrescription);
+    	}
         return mExamination;
     }
 

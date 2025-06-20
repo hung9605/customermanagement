@@ -1,26 +1,17 @@
 package com.app.customermanagement.service.serviceimpl;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
 import com.app.customermanagement.config.ParamConfig;
-import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.InventoryDTO;
 import com.app.customermanagement.dto.model.InventoryReportDTO;
 import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.repository.InventoryRepository;
 import com.app.customermanagement.service.InventoryService;
-
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaUpdate;
-import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -38,7 +29,6 @@ public class InventoryServiceImpl implements InventoryService{
 
 	@Override
 	public List<InventoryDTO> fetchInventoryWithMedicalSupplies() throws Exception {
-		// TODO Auto-generated method stub
 		return inventoryRepository.fetchInventoryWithMedicalSupplies();
 	}
 
@@ -65,7 +55,6 @@ public class InventoryServiceImpl implements InventoryService{
 
 	@Override
 	public List<InventoryReportDTO> getData(String fromDate,String toDate) throws Exception {
-		// TODO Auto-generated method stub
 		return inventoryRepository.getInventoryReport(fromDate, toDate);
 	}
 
