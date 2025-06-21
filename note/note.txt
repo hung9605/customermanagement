@@ -41,6 +41,10 @@ bin/kafka-server-start.sh config/kraft/server.properties
 bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group console-consumer-74131 --reset-offsets --to-latest --all-topics --execute
 
 
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092   --group inventory-service-group   --topic SUPPLIES_TOPIC   --reset-offsets --to-earliest --execute
+reset offset = 0
+
+
 show key
 SELECT CONSTRAINT_NAME, TABLE_NAME, COLUMN_NAME
 FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
