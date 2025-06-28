@@ -18,4 +18,5 @@ public interface InventoryReportDTO {
     String getUpdatedBy();
     Integer getTotalQuantity();
     String getRecordType();
+    String getDescription();
 }

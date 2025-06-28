@@ -51,7 +51,8 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer>{
 		        i.updated_by,
 		        i.received_date,
 		        NULL AS total_quantity,
-		        'DETAIL' AS record_type
+		        'DETAIL' AS record_type,
+		        i.description
 		    FROM inventory i
 		    JOIN medical_supplies ms ON ms.id = i.medical_supplies_id
 		    WHERE DATE(i.created_at) BETWEEN :fromDate AND :toDate
@@ -72,7 +73,8 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer>{
 		        NULL AS updated_by,
 		        NULL AS received_date,
 		        SUM(quantity) AS total_quantity,
-		        'SUMMARY' AS record_type
+		        'SUMMARY' AS record_type,
+		        NULL AS description
 		    FROM inventory_detail_filtered
 		    GROUP BY medical_supplies_id, medicine_name, unit_price, location, status, supplier
 		),
