@@ -6,32 +6,36 @@ import com.app.customermanagement.dto.model.MoneyDetail;
 import com.app.customermanagement.dto.model.MoneyDto;
 import com.app.customermanagement.dto.model.PrescriptionDto;
 import com.app.customermanagement.model.Customer;
+import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.model.Prescription;
 import com.app.customermanagement.model.ScheduleMedical;
-import com.app.customermanagement.repository.MedicalExaminationRepository;
-import com.app.customermanagement.repository.MedicalSuppliesRepository;
-import com.app.customermanagement.repository.PrescriptionRepository;
-import com.app.customermanagement.repository.ScheduleMedicalRepository;
+import com.app.customermanagement.repository.*;
 import com.app.customermanagement.service.KafkaService;
 import com.app.customermanagement.service.MedicalExamService;
 
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
 public class MedicalExamServiceImlp implements MedicalExamService {
+
+    private final InventoryRepository inventoryRepository;
 	
 	private final MedicalExaminationRepository medicalExaminationRepository;
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
@@ -40,6 +44,8 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	private final EntityManager entityManager;
 	private final KafkaService kafkaService;
 	private final ParamConfig paramConfig;
+
+
 
 	/**
 	 * @param medicalExamination
@@ -76,6 +82,8 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	 if(paramConfig.getIsKafka() == 1) {
 			 System.out.println("Send to kafka ... ");
 			 sendKafka(lstPrescription);
+		 }else {
+			 insertInventoryWhenKafkaNotStart(lstPrescription);
 		 }
     	
         return mExamination;
@@ -90,10 +98,45 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     		        dto.setIdExam(prescription.getMedicalExamination().getId());
     		        dto.setQuantity(String.valueOf(prescription.getQuantity()));
     		        dto.setUnitPrice(String.valueOf(prescription.getMedicalSupplies().getUnitPrice()));
-    		        kafkaService.sendMessage(CommonConstant.TOPPIC_SUPPLIES, dto);
+    		        CompletableFuture<SendResult<String, Object>> future = 
+    		        		kafkaService.sendMessage(CommonConstant.TOPPIC_SUPPLIES, dto);
+    		        future.whenComplete((result,e) -> {
+    					if(e != null) {
+    						System.out.println("error send kafka" + e);
+    						executeWhenKafkaError(prescription);
+    					}else {
+    						System.out.println("Send ok");
+    					}
+    				});
     		    });
 
     }
+
+	private void executeWhenKafkaError(Prescription prescription) {
+		Inventory inventory = convertToInventory(prescription);
+		inventoryRepository.save(inventory);
+	}
+	
+	private void insertInventoryWhenKafkaNotStart(List<Prescription> prescriptions) {
+		List<Inventory> listInventories = new ArrayList<>();
+		prescriptions.stream().forEach(item -> {
+			Inventory inventory = convertToInventory(item);
+			listInventories.add(inventory);
+		});
+		
+		inventoryRepository.saveAll(listInventories);
+	}
+	
+	private Inventory convertToInventory(Prescription prescription) {
+	    Inventory inventory = new Inventory();
+	    inventory.setId(null);
+	    inventory.setQuantity(Integer.parseInt(prescription.getQuantity()));
+	    inventory.setStatus(CommonConstant.STOCK_STATUS_OUT);
+	    inventory.setReceivedDate(LocalDateTime.now());
+	    inventory.setMedicalSupplies(prescription.getMedicalSupplies());
+	    return inventory;
+	}
+
 
 	/**
 	 *
@@ -121,6 +164,8 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	lstPrescription = prescriptionRepository.saveAll(lstPrescription);
     	if(paramConfig.getIsKafka() == 1) {
     		sendKafka(lstPrescription);
+    	}else {
+    		 insertInventoryWhenKafkaNotStart(lstPrescription);
     	}
         return mExamination;
     }
