@@ -23,4 +23,5 @@ public class CommonConstant {
 	public static final String TOPPIC_SUPPLIES = "SUPPLIES_TOPIC";
 	public static final String STOCK_LOCATION = "MAIN";
 	public static final String STOCK_STATUS = "IN_STOCK";
+	public static final String STOCK_STATUS_OUT = "out_of_stock";
 }
