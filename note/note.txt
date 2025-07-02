@@ -45,6 +45,10 @@ bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092   --group invento
 reset offset = 0
 
 
+-- check chi tiet topic 
+./kafka-configs.sh --bootstrap-server localhost:9092 --entity-type topics --entity-name SUPPLIES_TOPIC --describe
+
+
 show key
 SELECT CONSTRAINT_NAME, TABLE_NAME, COLUMN_NAME
 FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
