@@ -53,3 +53,14 @@ show key
 SELECT CONSTRAINT_NAME, TABLE_NAME, COLUMN_NAME
 FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
 WHERE TABLE_NAME = 'inventory'
+
+mvn install:install-file \
+  -Dfile=/home/user/project/javaplugin/target/JavaPlugin-1.jar \
+  -DgroupId=JavaPlugin \
+  -DartifactId=JavaPlugin \
+  -Dversion=1 \
+  -Dpackaging=jar
+
+~/Downloads/apache-maven-3.9.10-bin/apache-maven-3.9.10/bin mvn clean install
+
+~/Downloads/apache-maven-3.9.10-bin/apache-maven-3.9.10/bin/mvn clean compile

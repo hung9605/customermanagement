@@ -25,5 +25,8 @@ public class Ogranization extends BaseEntity {
 	String fullName;
 	String dateOfBirth;
 	String image;
+	String styleClass;
+	String role;
+	Integer parentId;
 
 }
