@@ -45,7 +45,22 @@ bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092   --group invento
 reset offset = 0
 
 
+-- check chi tiet topic 
+./kafka-configs.sh --bootstrap-server localhost:9092 --entity-type topics --entity-name SUPPLIES_TOPIC --describe
+
+
 show key
 SELECT CONSTRAINT_NAME, TABLE_NAME, COLUMN_NAME
 FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
 WHERE TABLE_NAME = 'inventory'
+
+mvn install:install-file \
+  -Dfile=/home/user/project/javaplugin/target/JavaPlugin-1.jar \
+  -DgroupId=JavaPlugin \
+  -DartifactId=JavaPlugin \
+  -Dversion=1 \
+  -Dpackaging=jar
+
+~/Downloads/apache-maven-3.9.10-bin/apache-maven-3.9.10/bin mvn clean install
+
+~/Downloads/apache-maven-3.9.10-bin/apache-maven-3.9.10/bin/mvn clean compile
