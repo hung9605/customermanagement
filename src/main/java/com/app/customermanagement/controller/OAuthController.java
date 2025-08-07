@@ -44,12 +44,14 @@ public class OAuthController {
     }
 	
     @PostMapping("/refresh-token")
-    public Mono<Map<String, Object>> refreshToken(@RequestParam String refreshToken) {
+    public Mono<Map<String, Object>> refreshToken(@RequestBody Map<String, String> request) {
+    	String basicAuth = "Basic " + Base64.getEncoder().encodeToString("client:secret".getBytes());
         return webClient.post()
                 .uri("http://localhost:9005/oauth2/token")
-                .headers(headers -> headers.setBasicAuth("client", "secret"))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .header(HttpHeaders.AUTHORIZATION, basicAuth)
                 .body(BodyInserters.fromFormData("grant_type", "refresh_token")
-                        .with("refresh_token", refreshToken))
+                        .with("refresh_token", request.get("refreshToken")))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<>() {});
     }

@@ -18,7 +18,7 @@ public class SecurityConfig {
 	        .authorizeHttpRequests(auth -> auth
 	            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ Cho phép OPTIONS
 	            .requestMatchers(HttpMethod.POST,"/oauth2/exchange-token").permitAll()
-	            .requestMatchers(HttpMethod.POST,"/oauth2/exchange-token","/oauth2/refresh-token").permitAll()
+	            .requestMatchers(HttpMethod.POST,"/oauth2/refresh-token").permitAll()
 	            .anyRequest().authenticated()
 	        )
 	        .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
