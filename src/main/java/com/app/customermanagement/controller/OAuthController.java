@@ -4,6 +4,7 @@ import java.util.Base64;
 import java.util.Map;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class OAuthController {
     public Mono<Map<String, Object>> exchangeToken(@RequestBody Map<String, String> request) {
         String code = request.get("code");
         String basicAuth = "Basic " + Base64.getEncoder().encodeToString("client:secret".getBytes());
-
+        System.out.println(paramConfig.getRedirectUri());
         return webClient.post()
                 .uri(paramConfig.getIssuerUri() + "/oauth2/token")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -42,6 +43,11 @@ public class OAuthController {
                         "&code=" + code +
                         "&" + paramConfig.getRedirectUri())
                 .retrieve()
+                .onStatus(status -> status.isError(), clientResponse -> 
+                clientResponse.bodyToMono(String.class).flatMap(errorBody -> 
+                    Mono.error(new RuntimeException("OAuth2 server error: " + errorBody))
+                )
+            )
                 .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {});
     }
 	
