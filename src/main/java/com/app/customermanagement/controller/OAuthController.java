@@ -14,18 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.app.customermanagement.config.ParamConfig;
+
+import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/oauth2")
 @CrossOrigin(origins = "*")
+@AllArgsConstructor
 public class OAuthController {
 
-	private WebClient webClient;
+	private final WebClient webClient;
+	private final ParamConfig paramConfig;
 
-	public OAuthController(WebClient webClient) {
-		this.webClient = webClient;
-	}
 	
 	@PostMapping("/exchange-token")
     public Mono<Map<String, Object>> exchangeToken(@RequestBody Map<String, String> request) {
@@ -33,12 +35,12 @@ public class OAuthController {
         String basicAuth = "Basic " + Base64.getEncoder().encodeToString("client:secret".getBytes());
 
         return webClient.post()
-                .uri("http://localhost:9005/oauth2/token")
+                .uri(paramConfig.getIssuerUri() + "/oauth2/token")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .header(HttpHeaders.AUTHORIZATION, basicAuth)
                 .bodyValue("grant_type=authorization_code" +
                         "&code=" + code +
-                        "&redirect_uri=http://localhost:4200/oauth2/callback")
+                        "&" + paramConfig.getRedirectUri())
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {});
     }
@@ -47,7 +49,7 @@ public class OAuthController {
     public Mono<Map<String, Object>> refreshToken(@RequestBody Map<String, String> request) {
     	String basicAuth = "Basic " + Base64.getEncoder().encodeToString("client:secret".getBytes());
         return webClient.post()
-                .uri("http://localhost:9005/oauth2/token")
+                .uri(paramConfig.getIssuerUri() + "/oauth2/token")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .header(HttpHeaders.AUTHORIZATION, basicAuth)
                 .body(BodyInserters.fromFormData("grant_type", "refresh_token")

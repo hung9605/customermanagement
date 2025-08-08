@@ -22,6 +22,10 @@ public class ParamConfig {
 	public String urlDumpLinux;
 	@Value("${isKafka}")
     private Integer isKafka;
+	@Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+	private String issuerUri;
+	@Value("${redirect_uri}")
+	private String redirectUri;
 	
 
 }
