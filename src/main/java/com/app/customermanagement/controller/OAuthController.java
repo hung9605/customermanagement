@@ -41,7 +41,7 @@ public class OAuthController {
                 .header(HttpHeaders.AUTHORIZATION, basicAuth)
                 .bodyValue("grant_type=authorization_code" +
                         "&code=" + code +
-                        "&" + paramConfig.getRedirectUri())
+                        "&redirect_uri=" + paramConfig.getRedirectUri())
                 .retrieve()
                 .onStatus(status -> status.isError(), clientResponse -> 
                 clientResponse.bodyToMono(String.class).flatMap(errorBody -> 
