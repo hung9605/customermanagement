@@ -13,10 +13,10 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		  http
-	        .cors(Customizer.withDefaults()) // ✅ Bật CORS
-	        .csrf(csrf -> csrf.disable())    // ✅ Disable CSRF cho REST API
+	        .cors(Customizer.withDefaults())
+	        .csrf(csrf -> csrf.disable())    
 	        .authorizeHttpRequests(auth -> auth
-	            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ Cho phép OPTIONS
+	            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
 	            .requestMatchers(HttpMethod.POST,"/oauth2/exchange-token").permitAll()
 	            .requestMatchers(HttpMethod.POST,"/oauth2/refresh-token").permitAll()
 	            .anyRequest().authenticated()
