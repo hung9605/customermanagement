@@ -26,11 +26,22 @@ public class AppConfigController extends BaseController {
 	private final AppConfigService appConfigService;
 	
 	@GetMapping("/get")
-	public ResponseEntity<?> checkCustomer(
+	public ResponseEntity<?> get(
 			@RequestParam String key
 			){
 		try {
 			return response(new ResponseBean(appConfigService.getByKey(key)));
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}	
+	}
+	
+	@GetMapping("/getall")
+	public ResponseEntity<?> getAll(
+			){
+		try {
+			return response(new ResponseBean(appConfigService.getAll()));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			return responseError(new ResponseBean(e.getMessage()), e);
