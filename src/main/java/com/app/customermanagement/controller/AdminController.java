@@ -3,7 +3,6 @@ package com.app.customermanagement.controller;
 import java.io.IOException;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.Login;
@@ -19,7 +17,6 @@ import com.app.customermanagement.dto.model.TimeConfig;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.service.AdminService;
 import com.app.customermanagement.service.TimeService;
-
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 
@@ -27,7 +24,6 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/admin")
 @AllArgsConstructor
 @CrossOrigin("*")
-@Component
 public class AdminController extends  BaseController{
 
     public final ParamConfig paramConfig;

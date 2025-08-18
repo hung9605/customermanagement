@@ -83,7 +83,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 			 System.out.println("Send to kafka ... ");
 			 sendKafka(lstPrescription);
 		 }else {
-			 insertInventoryWhenKafkaNotStart(lstPrescription);
+			 insertInventoryWhenKafkaNotStart(lstPrescription,mExamination.getId());
 		 }
     	
         return mExamination;
@@ -117,10 +117,11 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 		inventoryRepository.save(inventory);
 	}
 	
-	private void insertInventoryWhenKafkaNotStart(List<Prescription> prescriptions) {
+	private void insertInventoryWhenKafkaNotStart(List<Prescription> prescriptions,Integer idExam) {
 		List<Inventory> listInventories = new ArrayList<>();
 		prescriptions.stream().forEach(item -> {
 			Inventory inventory = convertToInventory(item);
+			inventory.setDescription(String.valueOf(idExam));
 			listInventories.add(inventory);
 		});
 		
@@ -165,7 +166,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     	if(paramConfig.getIsKafka() == 1) {
     		sendKafka(lstPrescription);
     	}else {
-    		 insertInventoryWhenKafkaNotStart(lstPrescription);
+    		 insertInventoryWhenKafkaNotStart(lstPrescription,mExamination.getId());
     	}
         return mExamination;
     }
