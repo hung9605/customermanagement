@@ -1,5 +1,7 @@
 package com.app.customermanagement.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,9 +61,9 @@ public class AppConfigController extends BaseController {
 	}
 	
 	@PostMapping("/update")
-	public ResponseEntity<?> update(@RequestBody AppConfig config){
+	public ResponseEntity<?> update(@RequestBody List<AppConfig> config){
 		try {
-			return response(new ResponseBean(appConfigService.add(config)));
+			return response(new ResponseBean(appConfigService.update(config)));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			return responseError(new ResponseBean(e.getMessage()), e);

@@ -26,6 +26,8 @@ public class ParamConfig {
 	private String issuerUri;
 	@Value("${redirect_uri}")
 	private String redirectUri;
+	@Value("${urlUploadWin}")
+	public String urlUploadWin;
 	
 
 }

@@ -28,9 +28,9 @@ public class AppConfigServiceImpl implements AppConfigService {
 	}
 
 	@Override
-	public AppConfig update(AppConfig config) throws Exception {
+	public List<AppConfig> update(List<AppConfig> config) throws Exception {
 		// TODO Auto-generated method stub
-		return appConfigRepository.save(config);
+		return appConfigRepository.saveAll(config);
 	}
 
 	@Override

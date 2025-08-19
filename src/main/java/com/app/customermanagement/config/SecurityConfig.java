@@ -19,6 +19,7 @@ public class SecurityConfig {
 	            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
 	            .requestMatchers(HttpMethod.POST,"/oauth2/exchange-token").permitAll()
 	            .requestMatchers(HttpMethod.POST,"/oauth2/refresh-token").permitAll()
+	            .requestMatchers(HttpMethod.GET,"/upload/**").permitAll()
 	            .anyRequest().authenticated()
 	        )
 	        .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
