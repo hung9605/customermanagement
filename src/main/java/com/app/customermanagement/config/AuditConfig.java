@@ -12,6 +12,5 @@ public class AuditConfig {
     @Bean
     public AuditorAware<String> auditorProvider() {
         return () -> Optional.of(SecurityContextHolder.getContext().getAuthentication().getName()); 
-        // hoặc lấy từ SecurityContextHolder.getContext().getAuthentication().getName()
     }
 }
