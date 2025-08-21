@@ -28,5 +28,6 @@ public class AppConfig extends BaseEntity {
 		Integer id;
 		String configKey;
 		String configValue;
-		String type;	
+		String type;
+		String label;
 }
