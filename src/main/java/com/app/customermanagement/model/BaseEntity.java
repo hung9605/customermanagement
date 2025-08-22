@@ -2,12 +2,15 @@ package com.app.customermanagement.model;
 
 import java.util.Date;
 
-import com.app.customermanagement.constants.CommonConstant;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -15,23 +18,18 @@ import lombok.experimental.FieldDefaults;
 @MappedSuperclass
 @Data
 @FieldDefaults(level =AccessLevel.PRIVATE )
+@EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
     @Column(updatable = false)
+    @CreatedBy
     String createdBy;
     @Column(updatable = false)
+    @CreatedDate
     Date createdAt;
+    @LastModifiedBy
     String updatedBy;
+    @LastModifiedDate
     Date updatedAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = new Date();
-        this.createdBy = CommonConstant.ADMIN;
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = new Date();
-        this.updatedBy = CommonConstant.ADMIN;
-    }
+   
 }

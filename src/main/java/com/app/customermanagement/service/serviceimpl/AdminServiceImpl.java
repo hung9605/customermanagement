@@ -30,9 +30,9 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void sqlDump(HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
-		 String dbName = CommonConstant.DB_NAME;
+		 	String dbName = CommonConstant.DB_NAME;
 	        String host = CommonConstant.HOST;
-		String port = CommonConstant.PORT;
+	        String port = CommonConstant.PORT;
 	        String osName = System.getProperty("os.name").toLowerCase().substring(0, 3);
 	        String urlDump = paramConfig.getUrlDumpWin();
 	        if(osName.equals("mac")) {

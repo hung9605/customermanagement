@@ -1,5 +1,6 @@
 package com.app.customermanagement.model;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.context.annotation.Primary;
 
 import jakarta.persistence.Entity;
@@ -19,6 +20,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "app_config")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@DynamicUpdate
 public class AppConfig extends BaseEntity {
 		
 		@Id
@@ -26,5 +28,6 @@ public class AppConfig extends BaseEntity {
 		Integer id;
 		String configKey;
 		String configValue;
-	
+		String type;
+		String label;
 }

@@ -20,9 +20,13 @@ import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -89,6 +93,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
         return mExamination;
     }
     
+   
     private void sendKafka(List<Prescription> prescriptions) {
     	prescriptions.stream().forEach(prescription -> {
     		        PrescriptionDto dto = new PrescriptionDto();
@@ -98,6 +103,7 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     		        dto.setIdExam(prescription.getMedicalExamination().getId());
     		        dto.setQuantity(String.valueOf(prescription.getQuantity()));
     		        dto.setUnitPrice(String.valueOf(prescription.getMedicalSupplies().getUnitPrice()));
+    		        
     		        CompletableFuture<SendResult<String, Object>> future = 
     		        		kafkaService.sendMessage(CommonConstant.TOPPIC_SUPPLIES, dto);
     		        future.whenComplete((result,e) -> {
@@ -113,14 +119,14 @@ public class MedicalExamServiceImlp implements MedicalExamService {
     }
 
 	private void executeWhenKafkaError(Prescription prescription) {
-		Inventory inventory = convertToInventory(prescription);
+		Inventory inventory = convertToInventory(prescription,CommonConstant.STOCK_STATUS_OUT);
 		inventoryRepository.save(inventory);
 	}
 	
 	private void insertInventoryWhenKafkaNotStart(List<Prescription> prescriptions,Integer idExam) {
 		List<Inventory> listInventories = new ArrayList<>();
 		prescriptions.stream().forEach(item -> {
-			Inventory inventory = convertToInventory(item);
+			Inventory inventory = convertToInventory(item,CommonConstant.STOCK_STATUS_OUT);
 			inventory.setDescription(String.valueOf(idExam));
 			listInventories.add(inventory);
 		});
@@ -128,11 +134,11 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 		inventoryRepository.saveAll(listInventories);
 	}
 	
-	private Inventory convertToInventory(Prescription prescription) {
+	private Inventory convertToInventory(Prescription prescription,String status) {
 	    Inventory inventory = new Inventory();
 	    inventory.setId(null);
 	    inventory.setQuantity(Integer.parseInt(prescription.getQuantity()));
-	    inventory.setStatus(CommonConstant.STOCK_STATUS_OUT);
+	    inventory.setStatus(status);
 	    inventory.setReceivedDate(LocalDateTime.now());
 	    inventory.setMedicalSupplies(prescription.getMedicalSupplies());
 	    return inventory;
@@ -146,27 +152,44 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	 */
 	@Override
     public MedicalExamination updateMedicalExamination(MedicalExamination medicalExamination) {
-    	prescriptionRepository.deletePrescription(medicalExamination);
+    	//prescriptionRepository.deletePrescription(medicalExamination);
 		List<MedicalSupplies> medicalSupplies = medicalSuppliesRepository.findAll();
     	MedicalExamination mExamination = medicalExaminationRepository.save(medicalExamination);
     	List<Prescription> lstPrescription = new ArrayList<>();
+    	//get old prescription 
+    	List<Prescription> lstPresOld = prescriptionRepository.findByMedicalExamination(medicalExamination);
+    	Map<String, Prescription> oldMap = lstPresOld.stream().collect(Collectors.toMap(p -> p.getMedicalSupplies().getMedicineName(), p -> p));
+    	
     	String[] typeMedicine = medicalExamination.getTypeOfMedicine().split(",");
     	String[] quantity = medicalExamination.getQuantity().split(",");
+    	Set<String> newMedicineSet = new HashSet<>(Arrays.asList(typeMedicine)); 
     	Prescription prescription;
     	for (int i = 0; i < quantity.length; i++) {
-    		String typeMedicineVal = typeMedicine[i];
-    		MedicalSupplies supplies =  medicalSupplies.stream().filter(item -> item.getMedicineName().equals(typeMedicineVal)).findFirst()
+    			String typeMedicineVal = typeMedicine[i];
+    			MedicalSupplies supplies =  medicalSupplies.stream().filter(
+    				item -> item.getMedicineName().equals(typeMedicineVal)).findFirst()
     				.orElseThrow(() -> new RuntimeException("Medical supply not found: " + typeMedicineVal));
-			prescription = new Prescription(null, quantity[i], supplies, mExamination);
-			prescription.setCreatedAt(new Date());
-			prescription.setCreatedBy(CommonConstant.ADMIN);
-			lstPrescription.add(prescription);
+	    		Prescription oldPrescription = oldMap.get(typeMedicineVal);
+	    		if(null == oldPrescription) {
+				prescription = new Prescription(null, quantity[i], supplies, mExamination);
+				prescription.setCreatedAt(new Date());
+				prescription.setCreatedBy(CommonConstant.ADMIN);
+				lstPrescription.add(prescription);
+    		}else {
+    			oldPrescription.setQuantity(quantity[i]);
+    			lstPrescription.add(oldPrescription);
+    		}
 		}
+    	
+    	List<Prescription> toDelete = lstPresOld.stream()
+    	        .filter(p -> !newMedicineSet.contains(p.getMedicalSupplies().getMedicineName()))
+    	        .collect(Collectors.toList());
+    	prescriptionRepository.deleteAll(toDelete);
     	lstPrescription = prescriptionRepository.saveAll(lstPrescription);
     	if(paramConfig.getIsKafka() == 1) {
     		sendKafka(lstPrescription);
     	}else {
-    		 insertInventoryWhenKafkaNotStart(lstPrescription,mExamination.getId());
+    		insertInventoryWhenKafkaNotStart(lstPrescription,mExamination.getId());
     	}
         return mExamination;
     }
