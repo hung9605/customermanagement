@@ -70,6 +70,17 @@ public class AdminController extends  BaseController{
 		}
         
     }
-    
+
+	@GetMapping("/getcodesupabase")
+	public ResponseEntity<?> getCodeSupaBase(){
+		try {
+			return response(new ResponseBean("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlb2h1aHRmeG9la3R4d2ZnYWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5NjQ1ODcsImV4cCI6MjA3MTU0MDU4N30.C3UxcyWe3HRx9rG_ie7rkxjU95TvbZZydcZjEqgeovU"));
+		} catch (Exception e) {
+			return responseError(new ResponseBean(e.getMessage()), e);
+		}
+
+	}
+
+
 
 }
