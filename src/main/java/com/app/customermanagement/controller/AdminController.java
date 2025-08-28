@@ -26,7 +26,7 @@ import lombok.AllArgsConstructor;
 @CrossOrigin("*")
 public class AdminController extends  BaseController{
 
-    public final ParamConfig paramConfig;
+    public  final ParamConfig paramConfig;
     private final AdminService adminService;
     private final TimeService timeService;
     
