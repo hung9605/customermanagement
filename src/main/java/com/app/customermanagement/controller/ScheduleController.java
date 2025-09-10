@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.customermanagement.dto.model.ScheduleDto;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.model.Customer;
+import com.app.customermanagement.service.DashBoardService;
 import com.app.customermanagement.service.serviceimpl.ScheduleServiceImpl;
 import lombok.AllArgsConstructor;
 
@@ -21,6 +22,7 @@ import lombok.AllArgsConstructor;
 public class ScheduleController extends BaseController {
 	
 	private final ScheduleServiceImpl serviceImpl;
+	private final DashBoardService dashBoardService;
 	
 	@GetMapping("/listday")
 	public ResponseEntity<?> listday(@RequestParam(defaultValue = "0") int page,
@@ -113,6 +115,11 @@ public class ScheduleController extends BaseController {
 			,@RequestParam(defaultValue = "0", required = false) String toDate
 			){
 		return response(new ResponseBean(serviceImpl.getListRegisterAll(date,toDate)));
+	}
+	
+	@GetMapping("/getDataExamDashBoard")
+	public ResponseEntity<?> getDataExamDashBoard(){
+		return response(new ResponseBean(dashBoardService.getExamDashBoard()));
 	}
 
 	
