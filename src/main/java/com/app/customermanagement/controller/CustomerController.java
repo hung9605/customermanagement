@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.customermanagement.dto.model.CustomerDto;
 import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.service.CustomerService;
+import com.app.customermanagement.service.DashBoardService;
 
 import lombok.AllArgsConstructor;
 
@@ -22,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class CustomerController extends BaseController{
 	
 	private final CustomerService customerService;
+	private final DashBoardService dashBoardService;
 	
 	@GetMapping("/list")
 	public ResponseEntity<?> list(
@@ -74,6 +76,10 @@ public class CustomerController extends BaseController{
 		return response(new ResponseBean(customerService.updateName(customer)));
 	}
 	
-	
+	@GetMapping("/getDataAccountDashBoard")
+	public ResponseEntity<?> getDataAccountDashBoard(){
+		return response(new ResponseBean(dashBoardService.getAccountDashBoard()));
+	}
+
 	
 }

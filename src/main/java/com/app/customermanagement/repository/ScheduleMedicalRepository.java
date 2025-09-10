@@ -3,6 +3,7 @@ package com.app.customermanagement.repository;
 import java.util.List;
 
 import com.app.customermanagement.dto.model.ExamDetail;
+import com.app.customermanagement.dto.response.Examination;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,10 +27,7 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 	@EntityGraph(attributePaths = {"customer"})
 	List<ScheduleMedical> findByCustomerAndStatusTrue(Customer customerOpt);
 	ScheduleMedical findByTimeRegisterAndDateRegister(String timeRegister,String date);
-	
 	boolean existsByTimeRegisterAndDateRegister(String timeRegister, String dateRegister);
-
-	
 	@Transactional
 	@Modifying
 	@Query("UPDATE ScheduleMedical s SET s.fullName = :fullName, s.timeRegister = :timeRegister WHERE s.id = :id")
@@ -47,6 +45,15 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 	
 	@EntityGraph(attributePaths = {"customer", "customer.gender"})
 	List<ScheduleMedical> findByDateRegisterBetweenOrderByTimeRegisterAscDateRegisterDesc(String startDate, String endDate);
+	
+	@Query(value = "SELECT COUNT(id) as total, "
+            + "SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) as numberExam, "
+            + "SUM(CASE WHEN status = 0 THEN 1 ELSE 0 END) as numberNotExam "
+            + "FROM schedule_medical "
+            + "WHERE created_at BETWEEN DATE_FORMAT(CURDATE(), '%Y-%m-01') AND LAST_DAY(CURDATE())",
+      nativeQuery = true)
+	Examination getDataDashBoardExam();
+
 
 
 }

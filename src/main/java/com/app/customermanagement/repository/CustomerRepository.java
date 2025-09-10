@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.app.customermanagement.dto.response.Account;
+import com.app.customermanagement.dto.response.Examination;
 import com.app.customermanagement.model.Customer;
 
 @Repository
@@ -24,5 +26,13 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 	@Modifying
 	@Query("UPDATE Customer c SET c.firstName = :firstName, c.midName = :midName, c.lastName = :lastName WHERE c.id = :id")
 	int updateName(@Param("firstName") String firstName, @Param("midName") String midName, @Param("lastName") String lastName, @Param("id") Integer id);
+	
+	@Query(value = "select \n"
+			+ "	count(id) as `total` \n"
+			+ "	,sum(case when status = 1 then 1 else 0 end) as 'numberNotActive' \n"
+			+ "	,sum(case when status = 0 then 1 else 0 end) as 'numberActive' \n"
+			+ "from account;",
+      nativeQuery = true)
+	Account getDataDashBoardAccount();
 
 }
