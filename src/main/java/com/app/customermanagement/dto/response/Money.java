@@ -1,5 +1,6 @@
 package com.app.customermanagement.dto.response;
 
-public class Money {
-
+public interface Money {
+	String getMonth();
+	Long getTotalMoney();
 }

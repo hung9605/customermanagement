@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.app.customermanagement.dto.model.MoneyDetail;
 import com.app.customermanagement.dto.model.MoneyDto;
+import com.app.customermanagement.dto.response.Money;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
 
@@ -30,6 +31,14 @@ public interface MedicalExaminationRepository extends JpaRepository<MedicalExami
 			"where  m.dayOfExamination BETWEEN :fromDate AND  :toDate")
 	List<MoneyDetail> listMoneyExport(String fromDate, String toDate);
 	
+	@Query(value = "select  \n"
+			+ "	date_format(created_at,'%M') as `month` \n"
+			+ "    ,sum(total_money) as `total_money` \n"
+			+ " from medical_examination \n"
+			+ " where year(created_at) = year(curdate()) \n"
+			+ " group by date_format(created_at,'%M');",
+      nativeQuery = true)
+	List<Money> getDataDashBoardMoney();
 	
 	
 }

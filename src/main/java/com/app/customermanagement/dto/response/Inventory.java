@@ -1,5 +1,7 @@
 package com.app.customermanagement.dto.response;
 
-public class Inventory {
-
+public interface Inventory {
+	String getMonth();
+	String getStatus();
+	Long getQuantity();
 }

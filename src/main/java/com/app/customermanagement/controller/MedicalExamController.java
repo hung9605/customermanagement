@@ -13,6 +13,7 @@ import com.app.customermanagement.dto.response.ResponseBean;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
+import com.app.customermanagement.service.DashBoardService;
 import com.app.customermanagement.service.MedicalExamService;
 import com.app.customermanagement.service.ScheduleSevice;
 import com.app.customermanagement.util.DateUtils;
@@ -27,6 +28,7 @@ public class MedicalExamController extends BaseController{
 	
 	private final MedicalExamService medicalExamService;
 	private final ScheduleSevice scheduleSevice;
+	private final DashBoardService dashBoardService;
 	
 	public ResponseEntity<?> list(){
 		return response(null);
@@ -72,5 +74,11 @@ public class MedicalExamController extends BaseController{
             return responseError(new ResponseBean(e.getMessage()),e);
         }
     }
+	
+	@GetMapping("/getDataMoneyDashBoard")
+	public ResponseEntity<?> getDataMoneyDashBoard(){
+		return response(new ResponseBean(dashBoardService.getmoneyDashBoard()));
+	}
+	
 	
 }

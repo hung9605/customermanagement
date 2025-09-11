@@ -46,13 +46,17 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 	@EntityGraph(attributePaths = {"customer", "customer.gender"})
 	List<ScheduleMedical> findByDateRegisterBetweenOrderByTimeRegisterAscDateRegisterDesc(String startDate, String endDate);
 	
-	@Query(value = "SELECT COUNT(id) as total, "
-            + "SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) as numberExam, "
-            + "SUM(CASE WHEN status = 0 THEN 1 ELSE 0 END) as numberNotExam "
-            + "FROM schedule_medical "
-            + "WHERE created_at BETWEEN DATE_FORMAT(CURDATE(), '%Y-%m-01') AND LAST_DAY(CURDATE())",
+	@Query(value = "SELECT \n"
+			+ "    DATE_FORMAT(created_at, '%Y-%m') AS `month`, \n"
+			+ "    COUNT(id) AS `total`, \n"
+			+ "    SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) AS `number_exam`, \n"
+			+ "    SUM(CASE WHEN status = 0 THEN 1 ELSE 0 END) AS `number_not_exam` \n"
+			+ "FROM schedule_medical \n"
+			+ "WHERE YEAR(created_at) = YEAR(CURDATE())   -- chỉ lấy trong năm hiện tại \n"
+			+ "GROUP BY DATE_FORMAT(created_at, '%Y-%m') \n"
+			+ "ORDER BY `month` ASC;",
       nativeQuery = true)
-	Examination getDataDashBoardExam();
+	List<Examination> getDataDashBoardExam();
 
 
 
