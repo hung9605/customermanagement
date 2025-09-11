@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.customermanagement.dto.model.InventoryDTO;
 import com.app.customermanagement.dto.model.InventoryReportDTO;
+import com.app.customermanagement.dto.response.Examination;
 import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalSupplies;
 
@@ -95,5 +96,17 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer>{
 	@Modifying
 	@Query("update Inventory i set i.quantity = :quantity,i.status = :status,i.location= :location where i.id = :id")
 	void update(@Param("quantity") Integer quantity,@Param("status") String status,@Param("location") String location, @Param("id") Long id);
+	
+	@Query(value = " \n"
+			+ "select  \n"
+			+ "	date_format(created_at,'%M') as `month` \n"
+			+ "    ,status as `status` \n"
+			+ "    ,sum(quantity) as `quantity`  \n"
+			+ "from inventory  \n"
+			+ "where  \n"
+			+ "	YEAR(created_at) = YEAR(curdate()) \n"
+			+ "GROUP BY status,date_format(created_at,'%M');",
+      nativeQuery = true)
+	List<com.app.customermanagement.dto.response.Inventory> getDataDashBoardInventory();
 
 }

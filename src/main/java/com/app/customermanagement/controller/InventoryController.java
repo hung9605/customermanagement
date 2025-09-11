@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.response.ResponseBean;
+import com.app.customermanagement.service.DashBoardService;
 import com.app.customermanagement.service.InventoryService;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.AllArgsConstructor;
 public class InventoryController extends BaseController {
 	
 	private final InventoryService inventoryService;
+	private final DashBoardService dashBoardService;
 	
 	@GetMapping("/list")
 	public ResponseEntity<?> list(
@@ -47,6 +49,11 @@ public class InventoryController extends BaseController {
 		} catch (Exception e) {
 			return responseError(new ResponseBean(e.getMessage()), e);
 		}
+	}
+	
+	@GetMapping("/getDataInventoryDashBoard")
+	public ResponseEntity<?> getDataInventoryDashBoard(){
+		return response(new ResponseBean(dashBoardService.getInventoryDashBoard()));
 	}
 	
 }
