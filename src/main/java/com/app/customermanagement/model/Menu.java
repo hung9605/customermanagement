@@ -30,4 +30,5 @@ public class Menu extends BaseEntity {
 	Integer idParent;
 	Integer orderNumber;
 	Boolean visible;
+	String role;
 }
