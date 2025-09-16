@@ -23,5 +23,6 @@ public class MenuDto {
 	String updatedBy;
 	Integer idParent;
 	Boolean visible;
+	String role;
 
 }
