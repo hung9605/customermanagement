@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.customermanagement.dto.response.Account;
+import com.app.customermanagement.dto.response.AccountChartDto;
 import com.app.customermanagement.dto.response.Examination;
 import com.app.customermanagement.model.Customer;
 
@@ -34,5 +35,16 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 			+ "from account;",
       nativeQuery = true)
 	Account getDataDashBoardAccount();
+	
+	@Query(value = "select \r\n"
+			+ "	count(id) as `total` \r\n"
+			+ "	,monthname(created_at) as `month` \r\n"
+			+ "from account \r\n"
+			+ "where \r\n"
+			+ "	year(created_at) = year(curdate()) \r\n"
+			+ "group by monthname(created_at),month(created_at)\r\n"
+			+ "order by month(created_at);",
+      nativeQuery = true)
+	List<AccountChartDto> getDataChart();
 
 }

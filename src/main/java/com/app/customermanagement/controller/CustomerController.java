@@ -80,6 +80,11 @@ public class CustomerController extends BaseController{
 	public ResponseEntity<?> getDataAccountDashBoard(){
 		return response(new ResponseBean(dashBoardService.getAccountDashBoard()));
 	}
+	
+	@GetMapping("/getDataChart")
+	public ResponseEntity<?> getDataChart(){
+		return response(new ResponseBean(customerService.getDataChart()));
+	}
 
 	
 }
