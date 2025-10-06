@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.CustomerDto;
+import com.app.customermanagement.dto.response.Account;
+import com.app.customermanagement.dto.response.AccountChartDto;
 import com.app.customermanagement.mapper.CustomerMapper;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.repository.CustomerRepository;
@@ -88,5 +90,11 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Integer updateName(CustomerDto customerDto) {
 		return customerRepository.updateName(customerDto.getFirstName(), customerDto.getMidName(), customerDto.getLastName(), customerDto.getId());
+	}
+
+	@Override
+	public List<AccountChartDto> getDataChart() {
+		// TODO Auto-generated method stub
+		return customerRepository.getDataChart();
 	}
 }

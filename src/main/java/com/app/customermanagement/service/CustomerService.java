@@ -3,6 +3,8 @@ package com.app.customermanagement.service;
 import java.util.List;
 
 import com.app.customermanagement.dto.model.CustomerDto;
+import com.app.customermanagement.dto.response.Account;
+import com.app.customermanagement.dto.response.AccountChartDto;
 import com.app.customermanagement.model.Customer;
 
 public interface CustomerService {
@@ -19,4 +21,5 @@ public interface CustomerService {
     Customer updateCustomer(CustomerDto customerDto); 
     Integer updateName(CustomerDto customerDto);
     public void refreshCache();
+    List<AccountChartDto> getDataChart();
 }
