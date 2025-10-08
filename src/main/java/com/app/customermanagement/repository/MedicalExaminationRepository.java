@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.app.customermanagement.dto.model.MoneyDetail;
 import com.app.customermanagement.dto.model.MoneyDto;
+import com.app.customermanagement.dto.response.AccountChartDto;
+import com.app.customermanagement.dto.response.HistoryChartDto;
 import com.app.customermanagement.dto.response.Money;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
@@ -39,6 +41,8 @@ public interface MedicalExaminationRepository extends JpaRepository<MedicalExami
 			+ " group by date_format(created_at,'%M');",
       nativeQuery = true)
 	List<Money> getDataDashBoardMoney();
+	
+	
 	
 	
 }

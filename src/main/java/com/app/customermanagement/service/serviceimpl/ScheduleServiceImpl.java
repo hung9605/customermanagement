@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.ExamDetail;
 import com.app.customermanagement.dto.model.ScheduleDto;
+import com.app.customermanagement.dto.response.HistoryChartDto;
 import com.app.customermanagement.mapper.ScheduleMedicalMapper;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.ScheduleMedical;
@@ -204,6 +205,12 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	public void clearCacheByDateRange(String formDate, String toDate) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public List<HistoryChartDto> getDataChart(String fromDate, String toDate) {
+		// TODO Auto-generated method stub
+		return scheduleMedicalRepository.getDataChart(fromDate,toDate);
 	}
 
 

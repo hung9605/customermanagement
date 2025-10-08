@@ -2,6 +2,7 @@ package com.app.customermanagement.service;
 
 import com.app.customermanagement.dto.model.ExamDetail;
 import com.app.customermanagement.dto.model.ScheduleDto;
+import com.app.customermanagement.dto.response.HistoryChartDto;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
@@ -23,5 +24,6 @@ public interface ScheduleSevice {
     List<ExamDetail> getListHistoryExport(String formDate, String toDate);
     List<ScheduleDto> getListRegisterAll(String fromDate, String toDate);
     void clearCacheByDateRange(String formDate, String toDate);
+    List<HistoryChartDto> getDataChart(String fromDate, String toDate);
 
 }

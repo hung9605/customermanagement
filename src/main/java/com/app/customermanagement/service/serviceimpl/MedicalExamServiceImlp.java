@@ -1,27 +1,8 @@
 package com.app.customermanagement.service.serviceimpl;
 
-import com.app.customermanagement.config.ParamConfig;
-import com.app.customermanagement.constants.CommonConstant;
-import com.app.customermanagement.dto.model.MoneyDetail;
-import com.app.customermanagement.dto.model.MoneyDto;
-import com.app.customermanagement.dto.model.PrescriptionDto;
-import com.app.customermanagement.model.Customer;
-import com.app.customermanagement.model.Inventory;
-import com.app.customermanagement.model.MedicalExamination;
-import com.app.customermanagement.model.MedicalSupplies;
-import com.app.customermanagement.model.Prescription;
-import com.app.customermanagement.model.ScheduleMedical;
-import com.app.customermanagement.repository.*;
-import com.app.customermanagement.service.KafkaService;
-import com.app.customermanagement.service.MedicalExamService;
-
-import jakarta.persistence.EntityManager;
-import lombok.AllArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +15,28 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.app.customermanagement.config.ParamConfig;
+import com.app.customermanagement.constants.CommonConstant;
+import com.app.customermanagement.dto.model.MoneyDetail;
+import com.app.customermanagement.dto.model.MoneyDto;
+import com.app.customermanagement.dto.model.PrescriptionDto;
+import com.app.customermanagement.model.Customer;
+import com.app.customermanagement.model.Inventory;
+import com.app.customermanagement.model.MedicalExamination;
+import com.app.customermanagement.model.MedicalSupplies;
+import com.app.customermanagement.model.Prescription;
+import com.app.customermanagement.model.ScheduleMedical;
+import com.app.customermanagement.repository.InventoryRepository;
+import com.app.customermanagement.repository.MedicalExaminationRepository;
+import com.app.customermanagement.repository.MedicalSuppliesRepository;
+import com.app.customermanagement.repository.PrescriptionRepository;
+import com.app.customermanagement.repository.ScheduleMedicalRepository;
+import com.app.customermanagement.service.KafkaService;
+import com.app.customermanagement.service.MedicalExamService;
+
+import jakarta.persistence.EntityManager;
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
@@ -246,6 +249,9 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	private void updateMedicalSupplies(List<MedicalSupplies> lstSupplies,Prescription prescription) {
 		MedicalSupplies medicalSupplies =  lstSupplies.stream().filter(item -> item.getId().equals(prescription.getMedicalSupplies().getId())).findFirst().get();
 	}
+
+
+	
 
 
 
