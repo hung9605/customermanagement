@@ -122,5 +122,12 @@ public class ScheduleController extends BaseController {
 		return response(new ResponseBean(dashBoardService.getExamDashBoard()));
 	}
 
+	@GetMapping("/getDataChart")
+	public ResponseEntity<?> getDataChart(
+			 @RequestParam(defaultValue = "0") String fromDate
+			,@RequestParam(defaultValue = "0", required = false) String toDate
+			){
+		return response(new ResponseBean(serviceImpl.getDataChart(fromDate,toDate)));
+	}
 	
 }

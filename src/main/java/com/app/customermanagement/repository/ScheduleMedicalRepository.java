@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.app.customermanagement.dto.model.ExamDetail;
 import com.app.customermanagement.dto.response.Examination;
+import com.app.customermanagement.dto.response.HistoryChartDto;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -57,6 +58,16 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 			+ "ORDER BY `month` ASC;",
       nativeQuery = true)
 	List<Examination> getDataDashBoardExam();
+	
+	@Query(value = "select \r\n"
+			+ "	count(id) as 'total'\r\n"
+			+ "	,monthname(created_at) as 'month'\r\n"
+			+ " from schedule_medical\r\n"
+			+ " where date_register between :fromDate and :toDate \r\n"
+			+ " group by monthname(created_at),month(created_at)\r\n"
+			+ " order by month(created_at);",
+      nativeQuery = true)
+	List<HistoryChartDto> getDataChart(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 
 
 

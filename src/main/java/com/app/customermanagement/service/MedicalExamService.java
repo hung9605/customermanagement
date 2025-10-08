@@ -1,12 +1,13 @@
 package com.app.customermanagement.service;
 
+import java.util.List;
+
 import com.app.customermanagement.dto.model.MoneyDetail;
 import com.app.customermanagement.dto.model.MoneyDto;
+import com.app.customermanagement.dto.response.HistoryChartDto;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
-
-import java.util.List;
 
 public interface MedicalExamService {
     MedicalExamination addMedicalExamination(MedicalExamination medicalExamination) throws Exception;
@@ -15,4 +16,5 @@ public interface MedicalExamService {
     MedicalExamination getByIdSchedule(ScheduleMedical sMedical);
     List<MoneyDto> listMoney(Integer page, String date, String toDate);
     List<MoneyDetail> listMoneyExport(Integer page, String date, String toDate) throws  Exception;
+
 }
