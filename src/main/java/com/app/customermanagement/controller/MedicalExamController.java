@@ -80,5 +80,12 @@ public class MedicalExamController extends BaseController{
 		return response(new ResponseBean(dashBoardService.getmoneyDashBoard()));
 	}
 	
+	@GetMapping("/getDataChart")
+	public ResponseEntity<?> getDataChart(
+			 @RequestParam(defaultValue = "0") String fromDate
+			,@RequestParam(defaultValue = "0", required = false) String toDate){
+		return response(new ResponseBean(medicalExamService.getDataChart(fromDate,toDate)));
+	}
+	
 	
 }
