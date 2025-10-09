@@ -21,6 +21,7 @@ import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.MoneyDetail;
 import com.app.customermanagement.dto.model.MoneyDto;
 import com.app.customermanagement.dto.model.PrescriptionDto;
+import com.app.customermanagement.dto.response.MoneyChartDto;
 import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalExamination;
@@ -248,6 +249,13 @@ public class MedicalExamServiceImlp implements MedicalExamService {
 	 */
 	private void updateMedicalSupplies(List<MedicalSupplies> lstSupplies,Prescription prescription) {
 		MedicalSupplies medicalSupplies =  lstSupplies.stream().filter(item -> item.getId().equals(prescription.getMedicalSupplies().getId())).findFirst().get();
+	}
+
+
+	@Override
+	public List<MoneyChartDto> getDataChart(String fromDate, String toDate) {
+		// TODO Auto-generated method stub
+		return medicalExaminationRepository.getDataChartMoney(fromDate, toDate);
 	}
 
 

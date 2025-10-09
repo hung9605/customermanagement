@@ -9,6 +9,7 @@ import com.app.customermanagement.dto.model.MoneyDto;
 import com.app.customermanagement.dto.response.AccountChartDto;
 import com.app.customermanagement.dto.response.HistoryChartDto;
 import com.app.customermanagement.dto.response.Money;
+import com.app.customermanagement.dto.response.MoneyChartDto;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
 
@@ -42,7 +43,12 @@ public interface MedicalExaminationRepository extends JpaRepository<MedicalExami
       nativeQuery = true)
 	List<Money> getDataDashBoardMoney();
 	
-	
+	@Query(value = " select monthname(created_at) as `month`,sum(total_money) as `total` from medical_examination\r\n"
+			+ "where day_of_examination between :fromDate and :toDate \r\n"
+			+ "group by monthname(created_at),month(created_at)\r\n"
+			+ "order by month(created_at);",
+      nativeQuery = true)
+	List<MoneyChartDto> getDataChartMoney(String fromDate, String toDate);
 	
 	
 }
