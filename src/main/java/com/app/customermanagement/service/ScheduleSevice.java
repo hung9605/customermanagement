@@ -25,5 +25,5 @@ public interface ScheduleSevice {
     List<ScheduleDto> getListRegisterAll(String fromDate, String toDate);
     void clearCacheByDateRange(String formDate, String toDate);
     List<HistoryChartDto> getDataChart(String fromDate, String toDate);
-
+    List<HistoryChartDto> getDataChartAll(String fromDate, String toDate);
 }

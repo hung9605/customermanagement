@@ -4,5 +4,6 @@ public interface HistoryChartDto {
 	
 	Integer getTotal();
 	String getMonth();
+	String getStatus();
 
 }
