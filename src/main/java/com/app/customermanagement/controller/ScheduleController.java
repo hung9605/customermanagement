@@ -130,4 +130,12 @@ public class ScheduleController extends BaseController {
 		return response(new ResponseBean(serviceImpl.getDataChart(fromDate,toDate)));
 	}
 	
+	@GetMapping("/getDataChartAll")
+	public ResponseEntity<?> getDataChartAll(
+			 @RequestParam(defaultValue = "0") String fromDate
+			,@RequestParam(defaultValue = "0", required = false) String toDate
+			){
+		return response(new ResponseBean(serviceImpl.getDataChartAll(fromDate,toDate)));
+	}
+	
 }

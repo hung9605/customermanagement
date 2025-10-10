@@ -68,7 +68,14 @@ public interface ScheduleMedicalRepository extends JpaRepository<ScheduleMedical
 			+ " order by month(created_at);",
       nativeQuery = true)
 	List<HistoryChartDto> getDataChart(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
-
+	
+	@Query(value = "select monthname(created_at) as `month`,count(status) `total`,\r\n"
+			+ "case when status = 1 then 'Examined' when status = 0 then 'No Examined' end status from schedule_medical \r\n"
+			+ " where date_register between :fromDate and :toDate \r\n"
+			+ "group by monthname(created_at),month(created_at),status\r\n"
+			+ "order by month(created_at);",
+      nativeQuery = true)
+	List<HistoryChartDto> getDataChartAll(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 
 
 }

@@ -213,6 +213,12 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 		return scheduleMedicalRepository.getDataChart(fromDate,toDate);
 	}
 
+	@Override
+	public List<HistoryChartDto> getDataChartAll(String fromDate, String toDate) {
+		// TODO Auto-generated method stub
+		return scheduleMedicalRepository.getDataChartAll(fromDate, toDate);
+	}
+
 
 
 }
