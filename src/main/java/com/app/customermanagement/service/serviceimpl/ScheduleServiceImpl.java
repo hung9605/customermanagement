@@ -48,10 +48,10 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	@Override
 	public ScheduleMedical register(ScheduleDto scheduleDto) throws Exception {
 		if(checkRegisterExists(scheduleDto.getFullName(), scheduleDto.getPhoneNumber()))
-			throw new Exception("Registration already exists for today !");
+			throw new Exception(StringUtils.getMessage(messageSource,"error.register.exists"));
 		Optional<Customer> customer = findByCustomerWithPhoneNumber(scheduleDto.getPhoneNumber());
 		if(!customer.isPresent()) {
-			throw new Exception("Server Error");
+			throw new Exception(StringUtils.getMessage(messageSource,"error.server"));
 		}
 		scheduleDto.setCustomer(customer.get());
 		ScheduleMedical scheduleMedical = scheduleMedicalMapper.maptoModel(scheduleDto);
