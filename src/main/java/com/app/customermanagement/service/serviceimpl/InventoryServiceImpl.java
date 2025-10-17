@@ -1,16 +1,22 @@
 package com.app.customermanagement.service.serviceimpl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
+
 import org.springframework.stereotype.Service;
+
 import com.app.customermanagement.config.ParamConfig;
 import com.app.customermanagement.dto.model.InventoryDTO;
 import com.app.customermanagement.dto.model.InventoryReportDTO;
+import com.app.customermanagement.dto.response.InventoryChartDto;
 import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalSupplies;
 import com.app.customermanagement.repository.InventoryRepository;
 import com.app.customermanagement.service.InventoryService;
+
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 
@@ -56,6 +62,16 @@ public class InventoryServiceImpl implements InventoryService{
 	@Override
 	public List<InventoryReportDTO> getData(String fromDate,String toDate) throws Exception {
 		return inventoryRepository.getInventoryReport(fromDate, toDate);
+	}
+
+
+	@Override
+	public List<InventoryChartDto> getDataChart(String fromDate, String toDate) {
+		    LocalDate start = LocalDate.parse(fromDate);
+		    LocalDate end = LocalDate.parse(toDate);
+		    LocalDateTime startDateTime = start.atStartOfDay();     
+		    LocalDateTime endDateTime = end.atTime(LocalTime.MAX);
+		return inventoryRepository.getDataChart(startDateTime, endDateTime);
 	}
 
 }

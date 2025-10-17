@@ -95,13 +95,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public List<AccountChartDto> getDataChart() {
-		// TODO Auto-generated method stub
 		return customerRepository.getDataChart();
 	}
 
 	@Override
 	public Optional<Customer> findByPhoneNumber(String phoneNumber) {
-		// TODO Auto-generated method stub
 		return customerRepository.findByPhoneNumber(phoneNumber);
 	}
 }
