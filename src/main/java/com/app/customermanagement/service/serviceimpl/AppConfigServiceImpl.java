@@ -23,8 +23,7 @@ public class AppConfigServiceImpl implements AppConfigService {
 	private final AppConfigRepository appConfigRepository;
 	private final ParamConfig paramConfig;
 	private Map<String, String> cache = new HashMap<>();
-	
-	
+
 	@PostConstruct
     public void loadAll() {
         cache = appConfigRepository.findAll()

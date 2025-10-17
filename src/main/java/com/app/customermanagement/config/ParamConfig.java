@@ -1,5 +1,7 @@
 package com.app.customermanagement.config;
 
+import com.app.customermanagement.service.AppConfigService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,17 @@ public class ParamConfig {
 	private String redirectUri;
 	@Value("${urlUploadWin}")
 	public String urlUploadWin;
+
+//	private final AppConfigService appConfigService;
+//
+//	public ParamConfig(AppConfigService appConfigService) {
+//		this.appConfigService = appConfigService;
+//	}
+
+	@PostConstruct
+	public void init() {
+
+	}
 	
 
 }
