@@ -1,6 +1,7 @@
 package com.app.customermanagement.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.app.customermanagement.dto.model.CustomerDto;
 import com.app.customermanagement.dto.response.Account;
@@ -22,4 +23,5 @@ public interface CustomerService {
     Integer updateName(CustomerDto customerDto);
     public void refreshCache();
     List<AccountChartDto> getDataChart();
+    Optional<Customer> findByPhoneNumber(String phoneNumber);
 }

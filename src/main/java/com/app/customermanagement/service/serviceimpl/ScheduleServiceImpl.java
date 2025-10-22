@@ -2,13 +2,14 @@ package com.app.customermanagement.service.serviceimpl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-
+import com.app.customermanagement.config.RedisConfig;
 import com.app.customermanagement.constants.CommonConstant;
 import com.app.customermanagement.dto.model.ExamDetail;
 import com.app.customermanagement.dto.model.ScheduleDto;
@@ -18,6 +19,7 @@ import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.ScheduleMedical;
 import com.app.customermanagement.repository.ScheduleMedicalRepository;
 import com.app.customermanagement.repository.TimeRepository;
+import com.app.customermanagement.service.CustomerService;
 import com.app.customermanagement.service.ScheduleSevice;
 import com.app.customermanagement.util.DateUtils;
 import com.app.customermanagement.util.StringUtils;
@@ -27,11 +29,16 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class ScheduleServiceImpl implements ScheduleSevice {
+
+    private final RedisConfig redisConfig;
 	
 	private final ScheduleMedicalRepository scheduleMedicalRepository;
 	private final TimeRepository timeRepository;
 	private final ScheduleMedicalMapper scheduleMedicalMapper;
 	private final MessageSource messageSource;
+	private final CustomerService customerService;
+
+    
 
 	/**
 	 * @param scheduleDto
@@ -41,7 +48,12 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	@Override
 	public ScheduleMedical register(ScheduleDto scheduleDto) throws Exception {
 		if(checkRegisterExists(scheduleDto.getFullName(), scheduleDto.getPhoneNumber()))
-			throw new Exception("Registration already exists for today !");
+			throw new Exception(StringUtils.getMessage(messageSource,"error.register.exists"));
+		Optional<Customer> customer = findByCustomerWithPhoneNumber(scheduleDto.getPhoneNumber());
+		if(!customer.isPresent()) {
+			throw new Exception(StringUtils.getMessage(messageSource,"error.server"));
+		}
+		scheduleDto.setCustomer(customer.get());
 		ScheduleMedical scheduleMedical = scheduleMedicalMapper.maptoModel(scheduleDto);
 		String dateRegister = DateUtils.formatDate(CommonConstant.DATE_PATTERN,new Date());
 		scheduleMedical.setStatus(CommonConstant.NO_EXAMINED);
@@ -80,8 +92,6 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	 */
 	@Override
 	public Integer updateScheduleMedical(ScheduleDto scheduleDto) {
-		// TODO Auto-generated method stub
-		
 		return scheduleMedicalRepository.updateSchedule(scheduleDto.getFullName(), scheduleDto.getTimeRegister(), scheduleDto.getId());
 	}
 
@@ -217,6 +227,11 @@ public class ScheduleServiceImpl implements ScheduleSevice {
 	public List<HistoryChartDto> getDataChartAll(String fromDate, String toDate) {
 		// TODO Auto-generated method stub
 		return scheduleMedicalRepository.getDataChartAll(fromDate, toDate);
+	}
+
+	@Override
+	public Optional<Customer> findByCustomerWithPhoneNumber(String phoneNumber) {
+		return customerService.findByPhoneNumber(phoneNumber);
 	}
 
 
