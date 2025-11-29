@@ -1,6 +1,7 @@
 package com.app.customermanagement.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,13 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.customermanagement.dto.response.Account;
 import com.app.customermanagement.dto.response.AccountChartDto;
-import com.app.customermanagement.dto.response.Examination;
 import com.app.customermanagement.model.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 	
-	Customer findByPhoneNumber(String phoneNumber);
+	Optional<Customer> findByPhoneNumber(String phoneNumber);
 	List<Customer> findByLastNameContaining(String name);
 	List<Customer> findByLastNameContainingOrFirstNameContaining(String lastname, String firstName);
 	List<Customer> findByLastNameContainingOrFirstNameContainingOrMidNameContaining(String lastName,String firstName,String midName);
@@ -46,5 +46,6 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 			+ "order by month(created_at);",
       nativeQuery = true)
 	List<AccountChartDto> getDataChart();
+	
 
 }

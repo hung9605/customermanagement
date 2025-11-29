@@ -56,4 +56,11 @@ public class InventoryController extends BaseController {
 		return response(new ResponseBean(dashBoardService.getInventoryDashBoard()));
 	}
 	
+	@GetMapping("/getDataChart")
+	public ResponseEntity<?> getDataChart(
+			 @RequestParam(defaultValue = "0") String fromDate
+			,@RequestParam(defaultValue = "0", required = false) String toDate){
+		return response(new ResponseBean(inventoryService.getDataChart(fromDate, toDate)));
+	}
+	
 }

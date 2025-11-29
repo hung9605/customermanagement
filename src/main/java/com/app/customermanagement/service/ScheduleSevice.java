@@ -7,6 +7,7 @@ import com.app.customermanagement.model.Customer;
 import com.app.customermanagement.model.MedicalExamination;
 import com.app.customermanagement.model.ScheduleMedical;
 import java.util.List;
+import java.util.Optional;
 
 public interface ScheduleSevice {
     ScheduleMedical register(ScheduleDto scheduleDto) throws Exception;
@@ -26,4 +27,5 @@ public interface ScheduleSevice {
     void clearCacheByDateRange(String formDate, String toDate);
     List<HistoryChartDto> getDataChart(String fromDate, String toDate);
     List<HistoryChartDto> getDataChartAll(String fromDate, String toDate);
+    Optional<Customer> findByCustomerWithPhoneNumber(String phoneNumber);
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.app.customermanagement.dto.model.InventoryDTO;
 import com.app.customermanagement.dto.model.InventoryReportDTO;
+import com.app.customermanagement.dto.response.HistoryChartDto;
+import com.app.customermanagement.dto.response.InventoryChartDto;
 import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalSupplies;
 
@@ -18,5 +20,8 @@ public interface InventoryService {
 	void update(Inventory inventory) throws Exception;
 	
 	List<InventoryReportDTO> getData(String fromDate,String toDate)throws Exception;
+	
+	
+	List<InventoryChartDto> getDataChart(String fromDate, String toDate);
 	
 }

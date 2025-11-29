@@ -2,6 +2,7 @@ package com.app.customermanagement.service.serviceimpl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
+	
 	private final CustomerRepository customerRepository;
 	private final CustomerMapper customerMapper;
-
 	
     @Override
     public Customer addCustomer(CustomerDto customer) {
@@ -46,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer searchCustomer(Customer customer) {
-		return customerRepository.findByPhoneNumber(customer.getPhoneNumber());
+		return customerRepository.findByPhoneNumber(customer.getPhoneNumber()).orElse(null);
 	}
 
 	@Override
@@ -94,7 +95,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public List<AccountChartDto> getDataChart() {
-		// TODO Auto-generated method stub
 		return customerRepository.getDataChart();
+	}
+
+	@Override
+	public Optional<Customer> findByPhoneNumber(String phoneNumber) {
+		return customerRepository.findByPhoneNumber(phoneNumber);
 	}
 }

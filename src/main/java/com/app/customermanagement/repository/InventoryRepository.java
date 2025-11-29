@@ -1,5 +1,6 @@
 package com.app.customermanagement.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.customermanagement.dto.model.InventoryDTO;
 import com.app.customermanagement.dto.model.InventoryReportDTO;
-import com.app.customermanagement.dto.response.Examination;
+import com.app.customermanagement.dto.response.InventoryChartDto;
 import com.app.customermanagement.model.Inventory;
 import com.app.customermanagement.model.MedicalSupplies;
 
@@ -108,5 +109,15 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer>{
 			+ "GROUP BY status,date_format(created_at,'%M');",
       nativeQuery = true)
 	List<com.app.customermanagement.dto.response.Inventory> getDataDashBoardInventory();
+	
+	@Query(value = "select \r\n"
+			+ "	 sum(quantity) as `total`\r\n"
+			+ "    ,status\r\n"
+			+ "    ,monthname(created_at) as `month` \r\n"
+			+ " from inventory\r\n"
+			+ " where received_date between :fromDate and :toDate"
+			+ " group by status,monthname(created_at);",
+      nativeQuery = true)
+	List<InventoryChartDto> getDataChart(LocalDateTime fromDate, LocalDateTime toDate);
 
 }
