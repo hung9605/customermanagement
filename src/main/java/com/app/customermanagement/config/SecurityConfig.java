@@ -20,7 +20,7 @@ public class SecurityConfig {
 	            .requestMatchers(HttpMethod.POST,"/oauth2/exchange-token").permitAll()
 	            .requestMatchers(HttpMethod.POST,"/oauth2/refresh-token").permitAll()
 	            .requestMatchers(HttpMethod.GET,"/upload/**").permitAll()
-					.requestMatchers(HttpMethod.GET,"/poll/**","/admin/getcodesupabase").permitAll()
+				.requestMatchers(HttpMethod.GET,"/poll/**","/admin/getcodesupabase").permitAll()
 	            .requestMatchers("/actuator/**").permitAll()
 	            .anyRequest().authenticated()
 	        )
