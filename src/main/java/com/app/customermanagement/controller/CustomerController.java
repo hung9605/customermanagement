@@ -37,7 +37,7 @@ public class CustomerController extends BaseController{
 	
 	@GetMapping("/checkcustomer")
 	public ResponseEntity<?> checkCustomer(
-			@RequestParam String firstName
+			 @RequestParam String firstName
 			,@RequestParam String midName
 			,@RequestParam String lastName
 			,@RequestParam String phoneNumber
